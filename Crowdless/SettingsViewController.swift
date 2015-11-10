@@ -3,7 +3,7 @@
 //  CrowdList
 //
 //  Created by Patrick Kelly on 10/20/15.
-//  Copyright © 2015 Reactiv LLC. All rights reserved.
+//  Copyright © 2015 Crowdless, Inc. All rights reserved.
 //
 
 import UIKit

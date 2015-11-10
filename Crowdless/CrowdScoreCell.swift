@@ -3,7 +3,7 @@
 //  CrowdList
 //
 //  Created by Patrick Kelly on 10/29/15.
-//  Copyright © 2015 Parse. All rights reserved.
+//  Copyright © 2015 Crowdless, Inc. All rights reserved.
 //
 
 import UIKit
