@@ -10,7 +10,7 @@
 		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
-		81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* ViewController.swift */; };
+		81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */; };
 		81BA81771A49E0D500E65899 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81761A49E0D500E65899 /* libsqlite3.dylib */; };
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
@@ -20,7 +20,7 @@
 		D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */; };
 		D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */; };
 		D8F68C311BD690AB00E03B93 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8F68C301BD690AB00E03B93 /* LaunchScreen.storyboard */; };
-		D8F68C331BD6A0BC00E03B93 /* PlaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68C321BD6A0BC00E03B93 /* PlaceListViewController.swift */; };
+		D8F68C331BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */; };
 		D8F68C351BD6AC9000E03B93 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */; };
 		D8F68C3B1BD80B9500E03B93 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F68C3A1BD80B9500E03B93 /* CoreLocation.framework */; };
 		FF85F17C9A19CDD25A77086A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56624D778A9A32F9CB7EA585 /* Pods.framework */; };
@@ -34,7 +34,7 @@
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Crowdless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crowdless.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		81BA814C1A49DA1800E65899 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		81BA81761A49E0D500E65899 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		81BA81781A49E0DB00E65899 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -46,7 +46,7 @@
 		D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingCrowdCell.swift; sourceTree = "<group>"; };
 		D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdScoreCell.swift; sourceTree = "<group>"; };
 		D8F68C301BD690AB00E03B93 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D8F68C321BD6A0BC00E03B93 /* PlaceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceListViewController.swift; sourceTree = "<group>"; };
+		D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdsTrendingViewController.swift; sourceTree = "<group>"; };
 		D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D8F68C3A1BD80B9500E03B93 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -114,11 +114,11 @@
 				D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */,
 				D8F68C301BD690AB00E03B93 /* LaunchScreen.storyboard */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
-				D8F68C321BD6A0BC00E03B93 /* PlaceListViewController.swift */,
+				D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */,
 				D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */,
 				D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */,
 				D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */,
-				81BA814C1A49DA1800E65899 /* ViewController.swift */,
+				81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */,
 			);
 			path = Crowdless;
 			sourceTree = "<group>";
@@ -285,8 +285,8 @@
 				D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */,
 				D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */,
 				D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */,
-				D8F68C331BD6A0BC00E03B93 /* PlaceListViewController.swift in Sources */,
-				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
+				D8F68C331BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift in Sources */,
+				81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				D8F68C351BD6AC9000E03B93 /* SettingsViewController.swift in Sources */,
 				D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */,

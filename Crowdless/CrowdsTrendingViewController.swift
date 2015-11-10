@@ -13,7 +13,7 @@ import CocoaLumberjack
 
 public let ErrorDomain: String! = "PlaceListViewControllerErrorDomain"
 
-class PlaceListViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource {
+class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource {
     
     @IBOutlet var crowdsTableView: UITableView!
     

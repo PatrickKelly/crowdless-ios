@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showLoginScreen() {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let welcomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("welcomeViewController") as! ViewController
+        let welcomeViewController = mainStoryboard.instantiateViewControllerWithIdentifier("welcomeViewController") as! WelcomeViewController
         self.window?.rootViewController = welcomeViewController
         UIView.transitionWithView(self.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromRight, animations: { () -> Void in
             self.window?.rootViewController = welcomeViewController

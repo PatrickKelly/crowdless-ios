@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Welcome View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="welcomeViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="CrowdList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="welcomeViewController" id="BYZ-38-t0r" customClass="WelcomeViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -84,7 +84,7 @@
         <!--Crowds Trending-->
         <scene sceneID="IZJ-7p-780">
             <objects>
-                <viewController storyboardIdentifier="crowdsTrendingViewController" id="iOA-BB-qtG" customClass="PlaceListViewController" customModule="CrowdList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="crowdsTrendingViewController" id="iOA-BB-qtG" customClass="CrowdsTrendingViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NkF-L6-MBG"/>
                         <viewControllerLayoutGuide type="bottom" id="Ppq-F4-8qr"/>
@@ -111,7 +111,7 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="trendingCrowdCell" rowHeight="80" id="SE6-fP-qq7" customClass="TrendingCrowdCell" customModule="CrowdList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="trendingCrowdCell" rowHeight="80" id="SE6-fP-qq7" customClass="TrendingCrowdCell" customModule="Crowdless" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SE6-fP-qq7" id="bAv-Vk-cST">
@@ -379,7 +379,7 @@
         <!--Crowd Score-->
         <scene sceneID="xIb-F0-WeH">
             <objects>
-                <viewController id="zHE-LI-zfJ" customClass="CrowdScoreViewController" customModule="CrowdList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zHE-LI-zfJ" customClass="CrowdScoreViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="htV-cv-Xen"/>
                         <viewControllerLayoutGuide type="bottom" id="k6n-8y-mmd"/>
@@ -548,7 +548,7 @@
                                     </variation>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="crowdScoreCell" rowHeight="90" id="1uH-7X-xuo" customClass="CrowdScoreCell" customModule="CrowdList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="crowdScoreCell" rowHeight="90" id="1uH-7X-xuo" customClass="CrowdScoreCell" customModule="Crowdless" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="201" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1uH-7X-xuo" id="3n3-4g-z17">
@@ -796,7 +796,7 @@
         <!--Score This Crowd-->
         <scene sceneID="0VQ-N1-Hlg">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="fnc-X7-APY" customClass="ScorecardViewController" customModule="CrowdList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="fnc-X7-APY" customClass="ScorecardViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="elp-gG-0kg"/>
                         <viewControllerLayoutGuide type="bottom" id="J5j-mH-xHk"/>
@@ -1066,7 +1066,7 @@
         <!--Settings-->
         <scene sceneID="hBa-B5-3wt">
             <objects>
-                <viewController id="M9G-vm-YR1" customClass="SettingsViewController" customModule="CrowdList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="M9G-vm-YR1" customClass="SettingsViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HwT-5G-D3x"/>
                         <viewControllerLayoutGuide type="bottom" id="I9y-qi-kSN"/>

@@ -1,5 +1,5 @@
 /**
-* Copyright (c) 2015-present, Reactiv, LLC.
+* Copyright (c) 2015-present, Crowdless, Inc.
 * All rights reserved.
 */
 
@@ -7,7 +7,7 @@ import UIKit
 import Parse
 import ParseFacebookUtilsV4
 
-class ViewController: UIViewController {
+class WelcomeViewController: UIViewController {
     
     @IBOutlet var background: UIImageView!
     @IBAction func fbLoginButtonTUI(sender: AnyObject) {
