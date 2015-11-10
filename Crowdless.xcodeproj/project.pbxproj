@@ -89,12 +89,12 @@
 		81BA813C1A49DA1800E65899 = {
 			isa = PBXGroup;
 			children = (
-				D834021A1BD56AFE00866495 /* Crowdless-Bridging-Header.h */,
 				81BA81471A49DA1800E65899 /* Crowdless */,
-				814C3AC51B69877600E307BB /* Resources */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
-				81BA81461A49DA1800E65899 /* Products */,
 				12C921FDBD7C60CB5320EC08 /* Pods */,
+				81BA81461A49DA1800E65899 /* Products */,
+				814C3AC51B69877600E307BB /* Resources */,
+				D834021A1BD56AFE00866495 /* Crowdless-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,18 +110,17 @@
 			isa = PBXGroup;
 			children = (
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
-				81BA814C1A49DA1800E65899 /* ViewController.swift */,
-				814C3AC61B69877600E307BB /* Main.storyboard */,
-				D8F68C301BD690AB00E03B93 /* LaunchScreen.storyboard */,
-				D8F68C321BD6A0BC00E03B93 /* PlaceListViewController.swift */,
-				D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */,
-				D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */,
-				D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */,
-				D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */,
 				D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */,
+				D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */,
+				D8F68C301BD690AB00E03B93 /* LaunchScreen.storyboard */,
+				814C3AC61B69877600E307BB /* Main.storyboard */,
+				D8F68C321BD6A0BC00E03B93 /* PlaceListViewController.swift */,
+				D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */,
+				D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */,
+				D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */,
+				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 			);
-			name = Crowdless;
-			path = ParseStarterProject;
+			path = Crowdless;
 			sourceTree = "<group>";
 		};
 		81BA816A1A49DB5600E65899 /* Frameworks */ = {
@@ -303,7 +302,7 @@
 				814C3AC71B69877600E307BB /* Base */,
 			);
 			name = Main.storyboard;
-			path = ../Resources;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
