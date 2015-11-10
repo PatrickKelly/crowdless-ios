@@ -608,7 +608,7 @@
                                                         <constraint firstAttribute="width" constant="35" id="dYq-zp-9yd"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="At 9:30 pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnt-na-Hm1">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="9:30 pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnt-na-Hm1">
                                                     <rect key="frame" x="85" y="23" width="208" height="20"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
@@ -717,6 +717,7 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
+                                            <outlet property="time" destination="rnt-na-Hm1" id="0lZ-vX-Anf"/>
                                             <outlet property="userComment" destination="zEg-v6-iNM" id="mhh-bo-KgS"/>
                                             <outlet property="userImage" destination="jKQ-Yi-2hy" id="Y1V-Ga-Rxi"/>
                                             <outlet property="userName" destination="wzH-Cr-GUo" id="P65-bG-X7r"/>

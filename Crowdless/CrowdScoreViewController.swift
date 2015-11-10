@@ -42,6 +42,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     private var isLoadingPlace = false;
     private var isLoadingCrowdScores = false;
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+    private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     
     private let greenColor = UIColor(red: 123/255, green: 191/255, blue: 106/255, alpha: 1.0)
     private let yellowColor = UIColor(red: 254/255, green: 215/255, blue: 0/255, alpha: 1.0)
@@ -157,6 +158,19 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             } else {
                 cell.userComment.text = user["name"] as! String + " scored this crowd without a comment."
                 cell.userComment.font = UIFont(name:"HelveticaNeue-LightItalic", size: 10.0)
+            }
+            
+            if let scoreTime = userCrowdScore.updatedAt {
+                let formatter = NSDateFormatter()
+                formatter.timeStyle = .ShortStyle
+                if currentCalendar.isDateInToday(scoreTime) {
+                    cell.time.text = formatter.stringFromDate(scoreTime)
+                } else if currentCalendar.isDateInYesterday(scoreTime) {
+                    cell.time.text = "Yesterday, " + formatter.stringFromDate(scoreTime)
+                } else {
+                    formatter.dateStyle = .ShortStyle
+                    cell.time.text = formatter.stringFromDate(scoreTime)
+                }
             }
             
             setUserCrowdScoreImagesForCell(userCrowdScore, cell: cell)
@@ -340,6 +354,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         let query = PFQuery(className: "UserScore")
         query.orderByDescending("createdAt")
         query.whereKey("place", equalTo: self.place!)
+        //query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*12))
         query.includeKey("user")
         query.findObjectsInBackgroundWithBlock({ (
             scores, error: NSError?) -> Void in
@@ -370,6 +385,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         let query = PFQuery(className: "UserScore")
         query.orderByDescending("createdAt")
         query.whereKey("place", equalTo: self.place!)
+        //query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*12))
         // Limit what could be a lot of points.
         query.limit = self.resultsLimit
         query.skip = currentPage * resultsLimit;

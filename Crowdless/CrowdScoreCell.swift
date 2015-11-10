@@ -20,6 +20,7 @@ class CrowdScoreCell: UITableViewCell {
     
     @IBOutlet var userImage: UIImageView!
     
+    @IBOutlet var time: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
     }
