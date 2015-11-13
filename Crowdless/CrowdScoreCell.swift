@@ -9,6 +9,7 @@
 import UIKit
 
 class CrowdScoreCell: UITableViewCell {
+    
     @IBOutlet var userComment: UILabel!
 
     @IBOutlet var userScoreFirstImage: UIImageView!
@@ -16,11 +17,15 @@ class CrowdScoreCell: UITableViewCell {
     @IBOutlet var userScoreSecondImage: UIImageView!
     
     @IBOutlet var userScoreThirdImage: UIImageView!
+    
+    @IBOutlet var userScoreFourthImage: UIImageView!
+    
     @IBOutlet var userName: UILabel!
     
     @IBOutlet var userImage: UIImageView!
     
     @IBOutlet var time: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

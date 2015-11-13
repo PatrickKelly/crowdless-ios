@@ -172,7 +172,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             
             let trendingCrowdCell = cell as! TrendingCrowdCell
             cell.contentView.backgroundColor = UIColor.clearColor()
-            cell.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+            cell.backgroundColor = UIColor(white: 1.0, alpha: 0.15)
             
             let trendingScore = trendingScores[indexPath.section]
             let place = trendingScore["place"]

@@ -34,13 +34,13 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet var crowdScoresTableView: UITableView!
     
     private var refreshControl:UIRefreshControl!
-    private let apiKey = "AIzaSyC_Ydzgdq62x0XXgy6vMp8p3aNs6PlOh0M";
-    private var userCrowdScores = [PFObject]();
-    private let resultsLimit = 10;
-    private var currentPage = 0;
-    private let pageLimit = 5;
-    private var isLoadingPlace = false;
-    private var isLoadingCrowdScores = false;
+    private let apiKey = "AIzaSyC_Ydzgdq62x0XXgy6vMp8p3aNs6PlOh0M"
+    private var userCrowdScores = [PFObject]()
+    private let resultsLimit = 10
+    private var currentPage = 0
+    private let pageLimit = 5
+    private var isLoadingPlace = false
+    private var isLoadingCrowdScores = false
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     
@@ -64,6 +64,10 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        isLoadingPlace = true
+        userCrowdScores.removeAll()
+        crowdScoresTableView.reloadData()
         
         clearView()
         
@@ -93,7 +97,12 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             } else {
                 crowdScoreImage.hidden = false
+                isLoadingPlace = false;
+                let alert = UIAlertController(title: "Error", message: "An Internet connection is required to get this crowd score.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
             }
+        } else {
+            DDLogError("Reachability object is nil.")
         }
     }
     
@@ -147,17 +156,17 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         if userCrowdScores.count >= indexPath.row {
             
             cell.contentView.backgroundColor = UIColor.clearColor()
-            cell.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+            cell.backgroundColor = UIColor(white: 1.0, alpha: 0.15)
             
             let userCrowdScore = userCrowdScores[indexPath.row]
             let user = userCrowdScore["user"] as! PFUser
-            cell.userName.text = user["name"] as! String + " scored:"
+            cell.userName.text = user["name"] as! String
             if let comment = userCrowdScore["comment"] {
                 cell.userComment.text = comment as? String
                 cell.userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
             } else {
                 cell.userComment.text = user["name"] as! String + " scored this crowd without a comment."
-                cell.userComment.font = UIFont(name:"HelveticaNeue-LightItalic", size: 10.0)
+                cell.userComment.font = UIFont(name:"HelveticaNeue-LightItalic", size: 12.0)
             }
             
             if let scoreTime = userCrowdScore.updatedAt {
@@ -213,12 +222,17 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showScorecardView", let destination = segue.destinationViewController as? ScorecardViewController {
             destination.place = place
+        } else if segue.identifier == "showUserScoreView", let destination = segue.destinationViewController as? UserScoreViewController {
+            let index = crowdScoresTableView.indexPathForSelectedRow!.row
+            let userCrowdScore = userCrowdScores[index]
+            destination.userScore = userCrowdScore
         }
     }
     
     private func setUserCrowdScoreImagesForCell(userCrowdScore: PFObject, cell: CrowdScoreCell) {
         
-        let userScoreImages = [cell.userScoreFirstImage, cell.userScoreSecondImage, cell.userScoreThirdImage]
+        let userScoreImages = [cell.userScoreFirstImage, cell.userScoreSecondImage,
+            cell.userScoreThirdImage, cell.userScoreFourthImage]
         var index = 0
         
         //clear the images first
@@ -226,14 +240,16 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             userScoreImage.image = nil
         }
         
-        if let userParkingDifficult = userCrowdScore["parkingDifficult"] as? Int {
-            let userParkingImage = userScoreImages[index]
-            if(userParkingDifficult == 5) {
-                userParkingImage.image = UIImage(named: "car-red")
-            } else {
-                userParkingImage.image = UIImage(named: "car-green")
+        if let drove = userCrowdScore["drove"] as? Bool where drove {
+            if let userParkingDifficult = userCrowdScore["parkingDifficult"] as? Int {
+                let userParkingImage = userScoreImages[index]
+                if(userParkingDifficult == 5) {
+                    userParkingImage.image = UIImage(named: "car-red")
+                } else {
+                    userParkingImage.image = UIImage(named: "car-green")
+                }
+                index++
             }
-            index++
         }
         
         if let userEntranceCharge = userCrowdScore["coverCharge"] as? Int {
@@ -267,9 +283,18 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 index++
             default: break
             }
-            
         }
         
+        if let crowded = userCrowdScore["crowded"] as? Int {
+            let crowdImage = userScoreImages[index]
+            switch crowded {
+            case 0:
+                crowdImage.image = UIImage(named: "people-green")
+            case 5:
+                crowdImage.image = UIImage(named: "people-red")
+            default: break
+            }
+        }
     }
     
     private func getPlaceInBackground(placeResult: PFObject -> ()) {
@@ -399,7 +424,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 self.crowdScoresTableView.reloadData()
             } else {
                 self.isLoadingCrowdScores = false
-                let alert = UIAlertController(title: "Error", message: "Could not load first crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error", message: "Could not load crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
             }
             

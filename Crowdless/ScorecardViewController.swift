@@ -112,9 +112,14 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         let score = PFObject(className:"UserScore")
         let currentUser = PFUser.currentUser()!
         score["user"] = currentUser
+        score["drove"] = driveCheckbox.on
         score["place"] = place
         score["crowded"] = crowdedCheckbox.on ? 5 : 0
-        score["parkingDifficult"] = parkingDifficultCheckbox.on ? 5 : 0
+        
+        if driveCheckbox.on {
+            score["parkingDifficult"] = parkingDifficultCheckbox.on ? 5 : 0
+        }
+        
         score["coverCharge"] = getCoverChargeScoreFromSegmentIndex(coverChargeSegment.selectedSegmentIndex)
         score["waitTime"] = getWaitTimeScoreFromSegmentIndex(waitTimeSegment.selectedSegmentIndex)
         

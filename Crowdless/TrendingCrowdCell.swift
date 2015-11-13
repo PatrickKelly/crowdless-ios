@@ -17,7 +17,9 @@ class TrendingCrowdCell: UITableViewCell {
     @IBOutlet var trendingScoreThirdImage: UIImageView!
     
     @IBOutlet var scoreImage: UIImageView!
+    
     @IBOutlet var name: UILabel!
+    
     @IBOutlet var detail: UILabel!
     
     override func awakeFromNib() {
