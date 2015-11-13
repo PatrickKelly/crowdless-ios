@@ -123,10 +123,10 @@ class UserScoreViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if let comment = userScore["comment"] {
             userComment.text = comment as? String
-            userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
+            userComment.font = UIFont(name:"HelveticaNeue", size: 14.0)
         } else {
             userComment.text = user["name"] as! String + " scored this crowd without a comment."
-            userComment.font = UIFont(name:"HelveticaNeue-LightItalic", size: 10.0)
+            userComment.font = UIFont(name:"HelveticaNeue-Italic", size: 14.0)
         }
         
         updateUserCrowdScoreImagesAndLabels();

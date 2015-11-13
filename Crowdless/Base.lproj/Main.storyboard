@@ -766,7 +766,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score Comment" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3FR-zW-MoH">
                                                     <rect key="frame" x="8" y="71" width="398" height="15"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -788,14 +788,6 @@
                                                     <color key="textColor" red="0.4823529412" green="0.74901960779999999" blue="0.41568627450000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car-green" translatesAutoresizingMaskIntoConstraints="NO" id="qM6-yL-HaS">
-                                                    <rect key="frame" x="8" y="178" width="34" height="30"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="34" id="5IG-9h-fBP"/>
-                                                        <constraint firstAttribute="height" constant="30" id="kG9-ag-lzV"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Difficult Parking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yye-OS-a4R">
                                                     <rect key="frame" x="50" y="190" width="251" height="18"/>
                                                     <animations/>
@@ -891,6 +883,14 @@
                                                         <color key="titleColor" red="0.4549019608" green="0.66274509800000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comments-white" translatesAutoresizingMaskIntoConstraints="NO" id="YS4-aq-o4g">
+                                                    <rect key="frame" x="75" y="231" width="17" height="17"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="9zR-U5-k2S"/>
+                                                        <constraint firstAttribute="width" constant="17" id="sOB-yO-6db"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IqK-XV-lX1">
                                                     <rect key="frame" x="8" y="216" width="398" height="1"/>
                                                     <animations/>
@@ -902,12 +902,12 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comments-white" translatesAutoresizingMaskIntoConstraints="NO" id="YS4-aq-o4g">
-                                                    <rect key="frame" x="75" y="231" width="17" height="17"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car-green" translatesAutoresizingMaskIntoConstraints="NO" id="qM6-yL-HaS">
+                                                    <rect key="frame" x="8" y="184" width="34" height="30"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="17" id="9zR-U5-k2S"/>
-                                                        <constraint firstAttribute="width" constant="17" id="sOB-yO-6db"/>
+                                                        <constraint firstAttribute="width" constant="34" id="5IG-9h-fBP"/>
+                                                        <constraint firstAttribute="height" constant="30" id="kG9-ag-lzV"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -918,7 +918,6 @@
                                                 <constraint firstItem="eCJ-UG-hwa" firstAttribute="centerX" secondItem="dwN-qk-9ej" secondAttribute="centerX" constant="13" id="2BR-GL-hvi"/>
                                                 <constraint firstItem="Urf-Pg-JEW" firstAttribute="top" secondItem="IqK-XV-lX1" secondAttribute="bottom" constant="14" id="4Ll-pS-uLL"/>
                                                 <constraint firstAttribute="trailing" secondItem="rrM-6j-BEc" secondAttribute="trailing" constant="8" id="78g-X4-y59"/>
-                                                <constraint firstItem="qM6-yL-HaS" firstAttribute="top" secondItem="TIW-f5-caG" secondAttribute="bottom" constant="2" id="891-io-9YZ"/>
                                                 <constraint firstItem="k81-VF-cas" firstAttribute="top" secondItem="rrM-6j-BEc" secondAttribute="bottom" constant="14" id="8Gl-X4-eLL"/>
                                                 <constraint firstItem="1nG-eL-pXg" firstAttribute="top" secondItem="dwN-qk-9ej" secondAttribute="top" constant="13" id="CEf-4t-yJJ"/>
                                                 <constraint firstItem="3FR-zW-MoH" firstAttribute="top" secondItem="ff6-r0-HEd" secondAttribute="bottom" constant="8" id="E6C-1s-MNW"/>
@@ -934,6 +933,7 @@
                                                 <constraint firstItem="3FR-zW-MoH" firstAttribute="leading" secondItem="dwN-qk-9ej" secondAttribute="leading" constant="8" id="KkW-0w-hDd"/>
                                                 <constraint firstAttribute="trailing" secondItem="IME-MB-F4N" secondAttribute="trailing" constant="98" id="LCc-I6-UYu"/>
                                                 <constraint firstAttribute="bottom" secondItem="HGu-An-es7" secondAttribute="bottom" constant="13" id="MNp-Jn-XL0"/>
+                                                <constraint firstItem="qM6-yL-HaS" firstAttribute="top" secondItem="TIW-f5-caG" secondAttribute="bottom" constant="8" id="Mlc-us-yDN"/>
                                                 <constraint firstItem="Yye-OS-a4R" firstAttribute="leading" secondItem="qM6-yL-HaS" secondAttribute="trailing" constant="8" id="Rvp-Ag-pbe"/>
                                                 <constraint firstItem="qR5-i8-QYw" firstAttribute="leading" secondItem="TIW-f5-caG" secondAttribute="trailing" constant="8" id="U2R-2B-aaU"/>
                                                 <constraint firstItem="RK3-hJ-B51" firstAttribute="top" secondItem="rrM-6j-BEc" secondAttribute="bottom" constant="8" id="UNY-De-jwX"/>

@@ -166,7 +166,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
             } else {
                 cell.userComment.text = user["name"] as! String + " scored this crowd without a comment."
-                cell.userComment.font = UIFont(name:"HelveticaNeue-LightItalic", size: 12.0)
+                cell.userComment.font = UIFont(name:"HelveticaNeue-Italic", size: 12.0)
             }
             
             if let scoreTime = userCrowdScore.updatedAt {
