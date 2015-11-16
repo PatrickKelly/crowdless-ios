@@ -342,6 +342,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                         
                         let alert = UIAlertController(title: "Error", message: "Could not load first crowd results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
                         alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
                     }
                     
                 })

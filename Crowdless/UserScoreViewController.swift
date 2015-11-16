@@ -11,20 +11,15 @@ import Parse
 import ReachabilitySwift
 import CocoaLumberjack
 
-class UserScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class UserScoreViewController: UIViewController {
     
     var userScore: PFObject!
-    private var userScoreComments = [PFObject]()
+    var userScorePeerComment: PFObject!
     
-    @IBOutlet var userScoreTableView: UITableView!
-    
-    @IBOutlet var headerContentView: UIView!
-    @IBOutlet var headerView: UIView!
     @IBOutlet var userComment: UILabel!
     @IBOutlet var userScoreTime: UILabel!
     @IBOutlet var userName: UILabel!
     @IBOutlet var reportButton: UIButton!
-    @IBOutlet var commentButton: UIButton!
     @IBOutlet var helpfulButton: UIButton!
     @IBOutlet var wait: UILabel!
     @IBOutlet var waitImage: UIImageView!
@@ -34,20 +29,17 @@ class UserScoreViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet var coverChargeImage: UIImageView!
     @IBOutlet var crowded: UILabel!
     @IBOutlet var crowdedImage: UIImageView!
-    
-    private let resultsLimit = 10
-    private var currentPage = 0
-    private let pageLimit = 5
-    
-    private var isLoadingUserScore = false
-    private var isLoadingUserScoreComments = false
+    @IBOutlet var helpful: UILabel!
     
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
+    private var reportActionSheet: UIAlertController!
+    private var currentHelpfulCount = 0
     
     private let greenColor = UIColor(red: 123/255, green: 191/255, blue: 106/255, alpha: 1.0)
     private let yellowColor = UIColor(red: 254/255, green: 215/255, blue: 0/255, alpha: 1.0)
     private let redColor = UIColor(red: 224/255, green: 64/255, blue: 51/255, alpha: 1.0)
+    private let malibuBlueColor = UIColor(red: 116/255, green: 169/255, blue: 255/255, alpha: 1.0)
     
     private var refreshControl:UIRefreshControl!
     private var reachability: Reachability?
@@ -65,40 +57,37 @@ class UserScoreViewController: UIViewController, UITableViewDelegate, UITableVie
         initView();
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        headerView.setNeedsLayout()
-        headerView.layoutIfNeeded()
-        var height: CGFloat = headerContentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + headerContentView.frame.origin.y
-        var headerFrame: CGRect = headerView.frame
-        headerFrame.size.height = height
-        self.headerView.frame = headerFrame
-        userScoreTableView.tableHeaderView = headerView
-    }
-    
     override func viewWillAppear(animated: Bool) {
         
-        isLoadingUserScore = true
-        userScoreComments.removeAll()
-        userScoreTableView.reloadData()
-        
+        retrieveUserScorePeerComment()
         updateView();
         
         super.viewWillAppear(animated);
+    }
+    
+    private func retrieveUserScorePeerComment() {
         
-        if let reachability = reachability {
-            if(reachability.isReachable()) {
-                //loadingSpinner.startAnimating()
-                loadInitialUserScoreComments()
+        let userScorePeerCommentQuery = PFQuery(className:"UserScorePeerComment")
+        userScorePeerCommentQuery.whereKey("user", equalTo: PFUser.currentUser()!)
+        userScorePeerCommentQuery.whereKey("userScore", equalTo: userScore)
+        userScorePeerCommentQuery.orderByDescending("updatedAt")
+        userScorePeerCommentQuery.findObjectsInBackgroundWithBlock( { (results, error) -> Void in
+            if let results = results {
+                if(results.count > 0) {
+                    self.userScorePeerComment = results[0]
+                    DDLogDebug("User score peer comment successfully retrieved for user: " +
+                        PFUser.currentUser()!.objectId! + "and user score: " + self.userScore.objectId!)
+                    self.updateUserScorePeerComments()
+                } else {
+                    self.userScorePeerComment = PFObject(className: "UserScorePeerComment")
+                    DDLogDebug("No user score peer comment for user: " +
+                        PFUser.currentUser()!.objectId! + "and user score: " + self.userScore.objectId!)
+                }
             } else {
-                isLoadingUserScore = false;
-                let alert = UIAlertController(title: "Error", message: "An Internet connection is required to get comments.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                DDLogError("Error retrieving  user score peer comment from Parse: \(error)")
+                self.userScorePeerComment = PFObject(className: "UserScorePeerComment")
             }
-        } else {
-            DDLogError("Reachability object is nil.")
-        }
+        })
     }
     
     private func updateView() {
@@ -129,7 +118,25 @@ class UserScoreViewController: UIViewController, UITableViewDelegate, UITableVie
             userComment.font = UIFont(name:"HelveticaNeue-Italic", size: 14.0)
         }
         
+        currentHelpfulCount = 0;
+        if let helpfulCount = userScore["helpfulCount"] {
+            if helpfulCount as! Int > 0 {
+                helpful.text = String(helpfulCount as! Int) + " found this helpful"
+                currentHelpfulCount = helpfulCount as! Int;
+            } else {
+             helpful.text = "Be the first to find this score helpful"
+            }
+        } else {
+            helpful.text = "Be the first to find this score helpful"
+        }
+        
         updateUserCrowdScoreImagesAndLabels();
+        
+    }
+    
+    private func updateUserScorePeerComments() {
+        helpfulButton.selected = userScorePeerComment["helpful"] as! Bool
+        reportButton.selected = userScorePeerComment["reported"] as! Bool
     }
     
     private func updateUserCrowdScoreImagesAndLabels() {
@@ -230,180 +237,101 @@ class UserScoreViewController: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if (isLoadingUserScoreComments) {
-            return 0;
-        }
-        
-        if(userScoreComments.count == 0) {
-            return 1;
-        }
-        
-        return userScoreComments.count
+    @IBAction func helpfulButton(sender: AnyObject) {
+        helpfulButton.selected = !helpfulButton.selected;
+        print(helpfulButton.selected)
+        userScorePeerComment["helpful"] = helpfulButton.selected
+        saveUserScorePeerComment()
+        incrementCurrentHelpfulCountBy(helpfulButton.selected ? 1 : -1)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if (userScoreComments.count == 0) {
-            let cell: UITableViewCell = UITableViewCell()
-            cell.textLabel!.text = "Leave a comment above!"
-            cell.contentView.backgroundColor = UIColor.clearColor()
-            cell.backgroundColor = UIColor.clearColor()
-            cell.textLabel?.textColor = UIColor.whiteColor()
-            cell.textLabel?.textAlignment = .Center;
-            return cell
+    @IBAction func reportButton(sender: AnyObject) {
+        if reportButton.selected {
+            self.reportButton.selected = false;
+            userScorePeerComment["reported"] = false
+            userScorePeerComment.removeObjectForKey("reportedReason")
+            saveUserScorePeerComment()
+        } else {
+            self.presentViewController(reportActionSheet, animated: true, completion: nil)
         }
-        
-        let cell = self.userScoreTableView.dequeueReusableCellWithIdentifier("userScoreCommentCell", forIndexPath: indexPath) as! UserScoreCommentCell
-        
-        if userScoreComments.count >= indexPath.row {
-            
-            cell.contentView.backgroundColor = UIColor.clearColor()
-            cell.backgroundColor = UIColor(white: 1.0, alpha: 0.15)
-            
-            let userScoreComment = userScoreComments[indexPath.row]
-            let user = userScoreComment["user"] as! PFUser
-            cell.userName.text = user["name"] as? String
-            if let comment = userScoreComment["comment"] {
-                cell.comment.text = comment as? String
-                cell.comment.font = UIFont(name:"HelveticaNeue", size: 12.0)
-            }
-            
-            if let commentTime = userScoreComment.updatedAt {
-                let formatter = NSDateFormatter()
-                formatter.timeStyle = .ShortStyle
-                if currentCalendar.isDateInToday(commentTime) {
-                    cell.time.text = formatter.stringFromDate(commentTime)
-                } else if currentCalendar.isDateInYesterday(commentTime) {
-                    cell.time.text = "Yesterday, " + formatter.stringFromDate(commentTime)
-                } else {
-                    formatter.dateStyle = .ShortStyle
-                    cell.time.text = formatter.stringFromDate(commentTime)
-                }
-            }
-            
-            let userImageFile = user["image"] as! PFFile
-            do {
-                let imageData = try NSData(data: userImageFile.getData())
-                cell.userImage.image = UIImage(data: imageData);
-            } catch {
-                DDLogError("Could not load user image.");
-            }
-            
-            // See if we need to load more user score comments
-            if (currentPage < pageLimit) {
-                let rowsToLoadFromBottom = resultsLimit;
-                let rowsLoaded = userScoreComments.count
-                if (!self.isLoadingUserScoreComments && (indexPath.row >= (rowsLoaded - rowsToLoadFromBottom)))
-                {
-                    if let reachability = reachability {
-                        if(reachability.isReachable()) {
-                            loadInitialUserScoreComments();
-                        }
-                    }
-                }
-            }
-        }
-        
-        return cell
-        
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    private func incrementCurrentHelpfulCountBy(incrementAmount: Int) {
+        currentHelpfulCount = currentHelpfulCount + incrementAmount
+        if (currentHelpfulCount) > 0 {
+            helpful.text = String(currentHelpfulCount) + " found this helpful"
+        } else {
+            helpful.text = "Be the first person to find this score helpful"
+        }
     }
     
-    private func loadInitialUserScoreComments() {
+    private func saveUserScorePeerComment() {
         
-        isLoadingUserScoreComments = true
-        let query = PFQuery(className: "UserComments")
-        query.orderByDescending("createdAt")
-        query.whereKey("userScore", equalTo: self.userScore!)
-        //query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*12))
-        query.includeKey("user")
-        query.findObjectsInBackgroundWithBlock({ (
-            comments, error: NSError?) -> Void in
-            if let comments = comments {
-                self.userScoreComments = comments;
-                self.currentPage++;
-                self.isLoadingUserScoreComments = false
-                self.userScoreTableView.reloadData()
-                if (self.refreshControl.refreshing) {
-                    self.refreshControl.endRefreshing()
-                    
-                }
+        let currentUser = PFUser.currentUser()!
+        userScorePeerComment["user"] = currentUser
+        userScorePeerComment["userScore"] = userScore
+        userScorePeerComment.saveEventually {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                DDLogInfo("User score comment successfully saved for score: " + self.userScore.objectId!)
             } else {
-                
-                DDLogError("Error loading initial user score comments : \(error)")
-                
-                if (self.refreshControl.refreshing) {
-                    self.refreshControl.endRefreshing()
-                }
-                
-                self.isLoadingUserScoreComments = false
-                
-                let alert = UIAlertController(title: "Error", message: "Could not load first crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                DDLogError("Error saving user score comment to Parse: \(error)")
             }
-            
-        })
-    }
-    
-    private func loadAdditionalUserScoreComments() {
-        
-        isLoadingUserScoreComments = true
-        let query = PFQuery(className: "UserComments")
-        query.orderByDescending("createdAt")
-        query.whereKey("userScore", equalTo: self.userScore!)
-        //query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*12))
-        // Limit what could be a lot of points.
-        query.limit = self.resultsLimit
-        query.skip = currentPage * resultsLimit;
-        query.includeKey("user")
-        query.findObjectsInBackgroundWithBlock({ (
-            comments, error: NSError?) -> Void in
-            if let comments = comments {
-                self.userScoreComments = self.userScoreComments + comments;
-                self.currentPage++;
-                self.isLoadingUserScoreComments = false
-                self.userScoreTableView.reloadData()
-            } else {
-                self.isLoadingUserScoreComments = false
-                let alert = UIAlertController(title: "Error", message: "Could not load crowd score comments results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
-            }
-            
-        })
+        }
     }
     
     private func initView() {
         
-        refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(
-            string: "Pull to Refresh",
-            attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-        refreshControl.tintColor = UIColor.whiteColor()
-        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        reportActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let offensive = UIAlertAction(title: "Offensive", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.reportButton.selected = true;
+            self.userScorePeerComment["reported"] = true
+            self.userScorePeerComment["reportedReason"] = "Offensive"
+            self.saveUserScorePeerComment()
+        })
         
-        userScoreTableView.addSubview(refreshControl)
-        userScoreTableView.backgroundColor = UIColor.clearColor()
+        let spam = UIAlertAction(title: "Spam", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.reportButton.selected = true;
+            self.userScorePeerComment["reported"] = true
+            self.userScorePeerComment["reportedReason"] = "Spam"
+            self.saveUserScorePeerComment()
+        })
+        
+        let inappropriate = UIAlertAction(title: "Inappropriate", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.reportButton.selected = true;
+            self.userScorePeerComment["reported"] = true
+            self.userScorePeerComment["reportedReason"] = "Inappropriate"
+            self.saveUserScorePeerComment()
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+        })
+        
+        reportActionSheet.addAction(offensive)
+        reportActionSheet.addAction(spam)
+        reportActionSheet.addAction(inappropriate)
+        reportActionSheet.addAction(cancel)
+        
+        helpfulButton.setImage(UIImage(named: "helpful-star"), forState: .Selected)
+        helpfulButton.setTitleColor(malibuBlueColor, forState: .Selected)
+        helpfulButton.setImage(UIImage(named: "white-outline-star"), forState: .Normal)
+        helpfulButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        
+        reportButton.setImage(UIImage(named: "flag-red"), forState: .Selected)
+        reportButton.setTitleColor(redColor, forState: .Selected)
+        reportButton.setTitle("Reported", forState: .Selected)
+        reportButton.setImage(UIImage(named: "flag-white"), forState: .Normal)
+        reportButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        reportButton.setTitle("Report", forState: .Normal)
         
         var frame: CGRect = loadingSpinner.frame
         frame.origin.x = (self.view.frame.size.width / 2 - frame.size.width / 2)
         frame.origin.y = (self.view.frame.size.height / 2 - frame.size.height / 2)
         loadingSpinner.frame = frame
         view.addSubview(loadingSpinner)
-    }
-    
-    func refresh(sender:AnyObject)
-    {
-        if let reachability = reachability {
-            if(reachability.isReachable()) {
-                loadInitialUserScoreComments()
-            } else {
-                refreshControl.endRefreshing()
-            }
-        }
     }
 }

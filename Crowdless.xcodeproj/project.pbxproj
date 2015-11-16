@@ -19,7 +19,6 @@
 		D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */; };
 		D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */; };
 		D8ACEE301BF688AD00820354 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */; };
-		D8F283EE1BF3AE4400A8CD0E /* UserScoreCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F283ED1BF3AE4400A8CD0E /* UserScoreCommentCell.swift */; };
 		D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */; };
 		D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */; };
 		D8F68C331BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */; };
@@ -47,7 +46,6 @@
 		D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserScoreViewController.swift; sourceTree = "<group>"; };
 		D834021A1BD56AFE00866495 /* Crowdless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crowdless-Bridging-Header.h"; sourceTree = "<group>"; };
 		D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D8F283ED1BF3AE4400A8CD0E /* UserScoreCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserScoreCommentCell.swift; sourceTree = "<group>"; };
 		D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingCrowdCell.swift; sourceTree = "<group>"; };
 		D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdScoreCell.swift; sourceTree = "<group>"; };
 		D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdsTrendingViewController.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 				D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */,
 				81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */,
 				D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */,
-				D8F283ED1BF3AE4400A8CD0E /* UserScoreCommentCell.swift */,
 				D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */,
 			);
 			path = Crowdless;
@@ -295,7 +292,6 @@
 				D8F68C331BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
-				D8F283EE1BF3AE4400A8CD0E /* UserScoreCommentCell.swift in Sources */,
 				D8F68C351BD6AC9000E03B93 /* SettingsViewController.swift in Sources */,
 				D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */,
 			);

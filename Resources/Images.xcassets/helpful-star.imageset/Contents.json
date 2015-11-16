@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "crowdless-lineless.png",
+      "filename" : "helpful-star.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "helpful-star-34.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "helpful-star-51.png",
       "scale" : "3x"
     }
   ],
