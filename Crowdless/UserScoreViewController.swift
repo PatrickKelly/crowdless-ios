@@ -30,10 +30,13 @@ class UserScoreViewController: UIViewController {
     @IBOutlet var crowded: UILabel!
     @IBOutlet var crowdedImage: UIImageView!
     @IBOutlet var helpful: UILabel!
+    @IBOutlet var deleteScoreButton: UIButton!
+    @IBOutlet var editScoreButton: UIButton!
     
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     private var reportActionSheet: UIAlertController!
+    private var deleteActionSheet: UIAlertController!
     private var currentHelpfulCount = 0
     
     private let greenColor = UIColor(red: 123/255, green: 191/255, blue: 106/255, alpha: 1.0)
@@ -59,7 +62,6 @@ class UserScoreViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        retrieveUserScorePeerComment()
         updateView();
         
         super.viewWillAppear(animated);
@@ -91,6 +93,20 @@ class UserScoreViewController: UIViewController {
     }
     
     private func updateView() {
+        
+        let currentUser = PFUser.currentUser()!
+        if currentUser.objectId == userScore["user"].objectId {
+            helpfulButton.hidden = true
+            reportButton.hidden = true
+            editScoreButton.hidden = false
+            deleteScoreButton.hidden = false
+        } else {
+            helpfulButton.hidden = false
+            reportButton.hidden = false
+            editScoreButton.hidden = true
+            deleteScoreButton.hidden = true
+            retrieveUserScorePeerComment()
+        }
         
         let user = userScore["user"] as! PFUser
         userName.text = user["name"] as? String
@@ -237,7 +253,17 @@ class UserScoreViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func helpfulButton(sender: AnyObject) {
+    @IBAction func deleteButtonPressed(sender: AnyObject) {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            let popPresenter: UIPopoverPresentationController = deleteActionSheet.popoverPresentationController!
+            popPresenter.permittedArrowDirections = .Up
+            popPresenter.sourceView = sender as? UIView
+            popPresenter.sourceRect = sender.bounds
+        }
+        self.presentViewController(deleteActionSheet, animated: true, completion: nil)
+    }
+    
+    @IBAction func helpfulButtonPressed(sender: AnyObject) {
         helpfulButton.selected = !helpfulButton.selected;
         print(helpfulButton.selected)
         userScorePeerComment["helpful"] = helpfulButton.selected
@@ -245,13 +271,21 @@ class UserScoreViewController: UIViewController {
         incrementCurrentHelpfulCountBy(helpfulButton.selected ? 1 : -1)
     }
     
-    @IBAction func reportButton(sender: AnyObject) {
+    @IBAction func reportButtonPressed (sender: AnyObject) {
         if reportButton.selected {
             self.reportButton.selected = false;
             userScorePeerComment["reported"] = false
             userScorePeerComment.removeObjectForKey("reportedReason")
             saveUserScorePeerComment()
         } else {
+            
+            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+                let popPresenter: UIPopoverPresentationController = reportActionSheet.popoverPresentationController!
+                popPresenter.sourceRect = sender.bounds
+                popPresenter.sourceView = sender as? UIView
+                popPresenter.permittedArrowDirections = .Up
+            }
+            
             self.presentViewController(reportActionSheet, animated: true, completion: nil)
         }
     }
@@ -278,6 +312,11 @@ class UserScoreViewController: UIViewController {
                 DDLogError("Error saving user score comment to Parse: \(error)")
             }
         }
+    }
+    
+    private func deleteUserScore() {
+        userScore.deleteInBackground()
+        self.performSegueWithIdentifier("deleteUnwindSegue", sender: self)
     }
     
     private func initView() {
@@ -307,14 +346,23 @@ class UserScoreViewController: UIViewController {
             self.saveUserScorePeerComment()
         })
         
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-        })
+        let cancelReport = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         
         reportActionSheet.addAction(offensive)
         reportActionSheet.addAction(spam)
         reportActionSheet.addAction(inappropriate)
-        reportActionSheet.addAction(cancel)
+        reportActionSheet.addAction(cancelReport)
+        
+        deleteActionSheet = UIAlertController(title: "Are you sure you want to delete this score?", message: nil, preferredStyle: .ActionSheet)
+        let delete = UIAlertAction(title: "Delete Score", style: .Destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.deleteUserScore()
+        })
+        
+        let cancelDelete = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        deleteActionSheet.addAction(delete)
+        deleteActionSheet.addAction(cancelDelete)
         
         helpfulButton.setImage(UIImage(named: "helpful-star"), forState: .Selected)
         helpfulButton.setTitleColor(malibuBlueColor, forState: .Selected)

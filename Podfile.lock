@@ -13,6 +13,7 @@ PODS:
     - CocoaLumberjack/Default
   - CocoaLumberjack/Swift (2.2.0):
     - CocoaLumberjack/Extensions
+  - DXPopover (0.1.1)
   - FBSDKCoreKit (4.7.1):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc (= 4.7.1)
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - BEMCheckBox
   - Bolts (~> 1.3)
   - CocoaLumberjack/Swift
+  - DXPopover
   - FBSDKCoreKit (~> 4.7)
   - FBSDKLoginKit (~> 4.7)
   - Parse (~> 1.9)
@@ -64,6 +66,7 @@ SPEC CHECKSUMS:
   BEMCheckBox: abb7b1ffcc24c25c31ffa7b7167a3e869f4f15ba
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
+  DXPopover: 13e6bbd1a0da4e62b2190de51f43a94850769e0f
   FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
   FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
   Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */; };
@@ -18,6 +17,8 @@
 		D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */; };
 		D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */; };
 		D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */; };
+		D83BD03B1BFA495000572FC5 /* UserCommentActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83BD0391BFA495000572FC5 /* UserCommentActionViewController.swift */; };
+		D83BD0401BFA752E00572FC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D83BD03F1BFA752E00572FC5 /* Main.storyboard */; };
 		D8ACEE301BF688AD00820354 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */; };
 		D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */; };
 		D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */; };
@@ -30,7 +31,6 @@
 /* Begin PBXFileReference section */
 		23A1B8D870BAC5020546D888 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		56624D778A9A32F9CB7EA585 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Crowdless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crowdless.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +45,8 @@
 		D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScorecardViewController.swift; sourceTree = "<group>"; };
 		D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserScoreViewController.swift; sourceTree = "<group>"; };
 		D834021A1BD56AFE00866495 /* Crowdless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crowdless-Bridging-Header.h"; sourceTree = "<group>"; };
+		D83BD0391BFA495000572FC5 /* UserCommentActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCommentActionViewController.swift; sourceTree = "<group>"; };
+		D83BD03F1BFA752E00572FC5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingCrowdCell.swift; sourceTree = "<group>"; };
 		D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdScoreCell.swift; sourceTree = "<group>"; };
@@ -111,10 +113,10 @@
 		81BA81471A49DA1800E65899 /* Crowdless */ = {
 			isa = PBXGroup;
 			children = (
+				D83BD03F1BFA752E00572FC5 /* Main.storyboard */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */,
 				D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */,
-				814C3AC61B69877600E307BB /* Main.storyboard */,
 				D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */,
 				D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */,
 				D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */,
@@ -122,6 +124,7 @@
 				81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */,
 				D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */,
 				D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */,
+				D83BD0391BFA495000572FC5 /* UserCommentActionViewController.swift */,
 			);
 			path = Crowdless;
 			sourceTree = "<group>";
@@ -210,8 +213,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D83BD0401BFA752E00572FC5 /* Main.storyboard in Resources */,
 				D8ACEE301BF688AD00820354 /* LaunchScreen.storyboard in Resources */,
-				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +291,7 @@
 				D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */,
 				D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */,
 				D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */,
+				D83BD03B1BFA495000572FC5 /* UserCommentActionViewController.swift in Sources */,
 				D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */,
 				D8F68C331BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */,
@@ -298,18 +302,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		814C3AC61B69877600E307BB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				814C3AC71B69877600E307BB /* Base */,
-			);
-			name = Main.storyboard;
-			path = .;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		81BA81621A49DA1800E65899 /* Debug */ = {

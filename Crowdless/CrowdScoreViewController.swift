@@ -44,6 +44,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     private var refreshCrowdScoreTimer: NSTimer?
+    //lazy var searchBar:UISearchBar = UISearchBar()
     
     private let greenColor = UIColor(red: 123/255, green: 191/255, blue: 106/255, alpha: 1.0)
     private let yellowColor = UIColor(red: 254/255, green: 215/255, blue: 0/255, alpha: 1.0)
@@ -60,6 +61,10 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             DDLogError("Unable to create Reachability")
             return
         }
+        
+//        searchBar.placeholder = "Search..."
+//        var rightNavBarButton = UIBarButtonItem(customView:searchBar)
+//        self.navigationItem.titleView = searchBar
         
         initView()
     }

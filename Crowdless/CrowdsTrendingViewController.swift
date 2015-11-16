@@ -11,9 +11,9 @@ import CoreLocation
 import ReachabilitySwift
 import CocoaLumberjack
 
-public let ErrorDomain: String! = "PlaceListViewControllerErrorDomain"
+public let ErrorDomain: String! = "CrowdsTrendingViewControllerErrorDomain"
 
-class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDataSource {
+class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate, UITableViewDataSource {
     
     @IBOutlet var crowdsTableView: UITableView!
     
@@ -48,7 +48,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         super.viewWillAppear(animated)
         
         if let indexPath = crowdsTableView.indexPathForSelectedRow {
-            crowdsTableView.deselectRowAtIndexPath(indexPath, animated: true)
+            crowdsTableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
     }
     
@@ -229,6 +229,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                 let index = self.searchDisplayController!.searchResultsTableView.indexPathForSelectedRow!.row
                 let filteredPlace = self.filteredPlaces[index]
                 destination.googlePlace = filteredPlace
+                self.searchDisplayController!.active = false
             }
         }
         

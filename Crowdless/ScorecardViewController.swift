@@ -33,6 +33,8 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
     
     var place: PFObject!
     
+    var userScore: PFObject!
+    
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
         if unwindSegue.identifier == "postAndUnwindSegue" {

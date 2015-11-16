@@ -97,7 +97,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <animations/>
                             </imageView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gPj-HN-ylC">
+                            <searchBar contentMode="redraw" placeholder="Search for crowds..." translatesAutoresizingMaskIntoConstraints="NO" id="gPj-HN-ylC">
                                 <rect key="frame" x="0.0" y="64" width="414" height="44"/>
                                 <animations/>
                                 <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -376,7 +376,7 @@
             </objects>
             <point key="canvasLocation" x="1505" y="355"/>
         </scene>
-        <!--Crowd Score-->
+        <!--Crowd Score View Controller-->
         <scene sceneID="xIb-F0-WeH">
             <objects>
                 <viewController id="zHE-LI-zfJ" customClass="CrowdScoreViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
@@ -663,7 +663,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="jzj-v3-16W" secondAttribute="trailing" constant="-20" id="y9G-db-xUe"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Crowd Score" id="Q13-Rp-Hpg">
+                    <navigationItem key="navigationItem" id="Q13-Rp-Hpg">
                         <barButtonItem key="backBarButtonItem" title=" " id="7F6-Dj-VLT"/>
                         <barButtonItem key="rightBarButtonItem" title="Score" id="KhS-10-SuR">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -708,7 +708,7 @@
                                 <animations/>
                             </imageView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwN-qk-9ej">
-                                <rect key="frame" x="0.0" y="64" width="414" height="318"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="348"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar-blur-cropped" translatesAutoresizingMaskIntoConstraints="NO" id="ff6-r0-HEd">
                                         <rect key="frame" x="8" y="8" width="55" height="55"/>
@@ -875,7 +875,7 @@
                                         <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="Reported" image="flag-white"/>
                                         <connections>
-                                            <action selector="reportButton:" destination="xc3-1n-98r" eventType="touchUpInside" id="THi-mz-CMt"/>
+                                            <action selector="reportButtonPressed:" destination="xc3-1n-98r" eventType="touchUpInside" id="UJA-bi-SE9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGu-An-es7">
@@ -891,7 +891,37 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="helpfulButton:" destination="xc3-1n-98r" eventType="touchUpInside" id="6GS-73-5rK"/>
+                                            <action selector="helpfulButtonPressed:" destination="xc3-1n-98r" eventType="touchUpInside" id="E5o-Dk-GHi"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Za1-Af-vue">
+                                        <rect key="frame" x="101" y="318" width="80" height="22"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="kDe-bz-Q0h"/>
+                                            <constraint firstAttribute="width" constant="80" id="n4G-qt-biH"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                        <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Edit Score" image="white-edit">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="fnc-X7-APY" kind="show" identifier="" id="ix1-Xw-UZX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBX-YU-ed2">
+                                        <rect key="frame" x="231" y="318" width="94" height="22"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="EM5-gv-mQH"/>
+                                            <constraint firstAttribute="width" constant="94" id="f1s-uF-JvF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                        <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Delete Score" image="white-delete"/>
+                                        <connections>
+                                            <action selector="deleteButtonPressed:" destination="xc3-1n-98r" eventType="touchUpInside" id="Ig9-pd-E1f"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -908,18 +938,22 @@
                                     <constraint firstItem="1nG-eL-pXg" firstAttribute="top" secondItem="dwN-qk-9ej" secondAttribute="top" constant="13" id="CEf-4t-yJJ"/>
                                     <constraint firstItem="3FR-zW-MoH" firstAttribute="top" secondItem="ff6-r0-HEd" secondAttribute="bottom" constant="8" id="E6C-1s-MNW"/>
                                     <constraint firstItem="RK3-hJ-B51" firstAttribute="leading" secondItem="k81-VF-cas" secondAttribute="trailing" constant="8" id="Ez4-VV-8Gk"/>
+                                    <constraint firstItem="pBX-YU-ed2" firstAttribute="centerX" secondItem="dwN-qk-9ej" secondAttribute="centerX" constant="71" id="Ft6-W6-Zdb"/>
                                     <constraint firstItem="RK3-hJ-B51" firstAttribute="leading" secondItem="qR5-i8-QYw" secondAttribute="trailing" constant="8" id="Gd1-V0-HFP"/>
                                     <constraint firstAttribute="trailing" secondItem="lNQ-Mp-FPp" secondAttribute="trailing" constant="8" id="Grk-Ff-4jd"/>
                                     <constraint firstItem="6bC-Sk-ATH" firstAttribute="centerX" secondItem="dwN-qk-9ej" secondAttribute="centerX" constant="62" id="HkW-OR-W8p"/>
                                     <constraint firstItem="k81-VF-cas" firstAttribute="leading" secondItem="fmA-Xq-EE0" secondAttribute="trailing" constant="8" id="HwA-9p-iGp"/>
                                     <constraint firstItem="lNQ-Mp-FPp" firstAttribute="leading" secondItem="dwN-qk-9ej" secondAttribute="leading" constant="8" id="Ib2-OP-hwX"/>
                                     <constraint firstItem="ff6-r0-HEd" firstAttribute="leading" secondItem="dwN-qk-9ej" secondAttribute="leading" constant="8" id="JWz-pt-NOa"/>
+                                    <constraint firstItem="Za1-Af-vue" firstAttribute="top" secondItem="lNQ-Mp-FPp" secondAttribute="bottom" constant="8" id="JfU-vs-Xdf"/>
                                     <constraint firstItem="IqK-XV-lX1" firstAttribute="leading" secondItem="dwN-qk-9ej" secondAttribute="leading" constant="8" id="Jgb-nU-WlD"/>
                                     <constraint firstItem="IME-MB-F4N" firstAttribute="leading" secondItem="ff6-r0-HEd" secondAttribute="trailing" constant="8" id="Jsi-8m-Exh"/>
                                     <constraint firstItem="fmA-Xq-EE0" firstAttribute="top" secondItem="rrM-6j-BEc" secondAttribute="bottom" constant="8" id="KaQ-5r-5jV"/>
                                     <constraint firstItem="3FR-zW-MoH" firstAttribute="leading" secondItem="dwN-qk-9ej" secondAttribute="leading" constant="8" id="KkW-0w-hDd"/>
                                     <constraint firstAttribute="trailing" secondItem="IME-MB-F4N" secondAttribute="trailing" constant="98" id="LCc-I6-UYu"/>
+                                    <constraint firstItem="Za1-Af-vue" firstAttribute="centerX" secondItem="dwN-qk-9ej" secondAttribute="centerX" constant="-66" id="Lr7-Wo-ssb"/>
                                     <constraint firstItem="qM6-yL-HaS" firstAttribute="top" secondItem="TIW-f5-caG" secondAttribute="bottom" constant="8" id="Mlc-us-yDN"/>
+                                    <constraint firstAttribute="bottom" secondItem="pBX-YU-ed2" secondAttribute="bottom" constant="8" id="NgW-3d-tiu"/>
                                     <constraint firstItem="Yye-OS-a4R" firstAttribute="leading" secondItem="qM6-yL-HaS" secondAttribute="trailing" constant="8" id="Rvp-Ag-pbe"/>
                                     <constraint firstItem="qR5-i8-QYw" firstAttribute="leading" secondItem="TIW-f5-caG" secondAttribute="trailing" constant="8" id="U2R-2B-aaU"/>
                                     <constraint firstItem="RK3-hJ-B51" firstAttribute="top" secondItem="rrM-6j-BEc" secondAttribute="bottom" constant="8" id="UNY-De-jwX"/>
@@ -927,6 +961,7 @@
                                     <constraint firstItem="BbL-hx-aVK" firstAttribute="top" secondItem="IqK-XV-lX1" secondAttribute="bottom" constant="5" id="WrA-41-RQK"/>
                                     <constraint firstItem="ff6-r0-HEd" firstAttribute="top" secondItem="dwN-qk-9ej" secondAttribute="top" constant="8" id="YAc-a7-7XY"/>
                                     <constraint firstItem="HqU-EV-scS" firstAttribute="top" secondItem="RK3-hJ-B51" secondAttribute="bottom" constant="8" id="Yxy-Br-SOc"/>
+                                    <constraint firstAttribute="bottom" secondItem="Za1-Af-vue" secondAttribute="bottom" constant="8" id="ec3-Tn-bxI"/>
                                     <constraint firstItem="6bC-Sk-ATH" firstAttribute="top" secondItem="lNQ-Mp-FPp" secondAttribute="bottom" constant="8" id="fWM-J2-tYs"/>
                                     <constraint firstItem="HqU-EV-scS" firstAttribute="leading" secondItem="Yye-OS-a4R" secondAttribute="trailing" constant="8" id="fhk-I8-uRV"/>
                                     <constraint firstItem="IME-MB-F4N" firstAttribute="top" secondItem="1nG-eL-pXg" secondAttribute="bottom" constant="3" id="gQ7-Jb-F89"/>
@@ -937,6 +972,7 @@
                                     <constraint firstItem="1nG-eL-pXg" firstAttribute="leading" secondItem="ff6-r0-HEd" secondAttribute="trailing" constant="8" id="kVt-E9-2fA"/>
                                     <constraint firstItem="TIW-f5-caG" firstAttribute="top" secondItem="fmA-Xq-EE0" secondAttribute="bottom" constant="8" id="kmj-8c-hQk"/>
                                     <constraint firstAttribute="trailing" secondItem="RK3-hJ-B51" secondAttribute="trailing" constant="14" id="lEX-Wf-TtS"/>
+                                    <constraint firstItem="pBX-YU-ed2" firstAttribute="top" secondItem="lNQ-Mp-FPp" secondAttribute="bottom" constant="8" id="n7R-Jz-0fc"/>
                                     <constraint firstItem="lNQ-Mp-FPp" firstAttribute="top" secondItem="BbL-hx-aVK" secondAttribute="bottom" constant="8" id="nLi-lC-9np"/>
                                     <constraint firstAttribute="trailing" secondItem="Dey-8f-wyW" secondAttribute="trailing" constant="8" id="qI8-V7-hno"/>
                                     <constraint firstItem="rrM-6j-BEc" firstAttribute="top" secondItem="3FR-zW-MoH" secondAttribute="bottom" constant="13" id="sEh-xO-v9L"/>
@@ -973,6 +1009,8 @@
                         <outlet property="coverChargeImage" destination="TIW-f5-caG" id="GxX-vk-gG3"/>
                         <outlet property="crowded" destination="HqU-EV-scS" id="J6o-7y-chu"/>
                         <outlet property="crowdedImage" destination="RK3-hJ-B51" id="fjz-RL-q41"/>
+                        <outlet property="deleteScoreButton" destination="pBX-YU-ed2" id="l7P-yS-2aY"/>
+                        <outlet property="editScoreButton" destination="Za1-Af-vue" id="HFb-h0-ppy"/>
                         <outlet property="helpful" destination="Dey-8f-wyW" id="wkD-Pt-1gE"/>
                         <outlet property="helpfulButton" destination="HGu-An-es7" id="w8w-IM-3Qz"/>
                         <outlet property="parking" destination="Yye-OS-a4R" id="wnI-6N-Qzb"/>
@@ -983,9 +1021,11 @@
                         <outlet property="userScoreTime" destination="IME-MB-F4N" id="EYu-sR-Sr7"/>
                         <outlet property="wait" destination="k81-VF-cas" id="6vw-n4-XrZ"/>
                         <outlet property="waitImage" destination="fmA-Xq-EE0" id="9Yd-15-XDg"/>
+                        <segue destination="x9x-2O-Xbu" kind="unwind" identifier="deleteUnwindSegue" unwindAction="unwindForSegue:towardsViewController:" id="NAu-G1-CEL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gt1-HR-N0I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="x9x-2O-Xbu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2549" y="870"/>
         </scene>
@@ -1388,9 +1428,12 @@
         <image name="people-green" width="172" height="144"/>
         <image name="question-question_mark_blue" width="4429" height="7723"/>
         <image name="white-cog" width="25" height="25"/>
+        <image name="white-delete" width="17" height="17"/>
+        <image name="white-edit" width="17" height="17"/>
         <image name="white-outline-star" width="17" height="17"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LrK-xC-Q66"/>
+        <segue reference="ix1-Xw-UZX"/>
     </inferredMetricsTieBreakers>
 </document>
