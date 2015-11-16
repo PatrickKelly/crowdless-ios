@@ -33,12 +33,12 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
     
     var place: PFObject!
     
-    var userScore: PFObject!
+    var userScore: PFObject?
     
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
         if unwindSegue.identifier == "postAndUnwindSegue" {
-            savePost();
+            saveScore();
         }
     }
     
@@ -46,6 +46,80 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         super.viewDidLoad()
         
         initView()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        if let _ = userScore {
+            updateViewForUserScore()
+        }
+        
+        super.viewWillAppear(animated);
+    }
+    
+    private func updateViewForUserScore() {
+        
+        if let crowd = userScore!["crowded"] as? Int {
+            switch crowd {
+            case 0:
+                crowdedCheckbox.on = false
+            case 5:
+                crowdedCheckbox.on = true
+            default:
+                crowdedCheckbox.on = false
+            }
+        }
+        
+        if let drove = userScore!["drove"] as? Bool where drove {
+            driveCheckbox.on = true
+            parkingDifficultLabel.enabled = true
+            parkingDifficultCheckbox.hidden = false
+            
+            if let userParkingDifficult = userScore!["parkingDifficult"] as? Int {
+                switch userParkingDifficult {
+                case 0:
+                    parkingDifficultCheckbox.on = false
+                case 5:
+                    parkingDifficultCheckbox.on = true
+                default:
+                    parkingDifficultCheckbox.on = false
+                }
+            }
+        }
+        
+        if let userCoverCharge = userScore!["coverCharge"] as? Int {
+            switch userCoverCharge {
+            case 0:
+                coverChargeSegment.selectedSegmentIndex = 0
+            case 1:
+                coverChargeSegment.selectedSegmentIndex = 1
+            case 3:
+                coverChargeSegment.selectedSegmentIndex = 2
+            case 5:
+                coverChargeSegment.selectedSegmentIndex = 3
+            default:
+                coverChargeSegment.selectedSegmentIndex = 0
+            }
+        }
+        
+        if let waitTime = userScore!["waitTime"] as? Int {
+            switch waitTime {
+            case 0:
+                waitTimeSegment.selectedSegmentIndex = 0
+            case 1:
+                waitTimeSegment.selectedSegmentIndex = 1
+            case 3:
+                waitTimeSegment.selectedSegmentIndex = 2
+            case 5:
+                waitTimeSegment.selectedSegmentIndex = 3
+            default:
+                waitTimeSegment.selectedSegmentIndex = 0
+            }
+        }
+        
+        if let comment = userScore!["comment"] as? String {
+            commentTextView.text = comment
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,8 +184,15 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         
     }
     
-    private func savePost() {
-        let score = PFObject(className:"UserScore")
+    private func saveScore() {
+        
+        var score: PFObject
+        if let userScore = userScore {
+            score = userScore
+        } else {
+            score = PFObject(className:"UserScore")
+        }
+        
         let currentUser = PFUser.currentUser()!
         score["user"] = currentUser
         score["drove"] = driveCheckbox.on

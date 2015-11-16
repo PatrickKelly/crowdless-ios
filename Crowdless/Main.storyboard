@@ -907,7 +907,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="fnc-X7-APY" kind="show" identifier="" id="ix1-Xw-UZX"/>
+                                            <segue destination="fnc-X7-APY" kind="show" identifier="editScoreSegue" id="ix1-Xw-UZX"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBX-YU-ed2">
@@ -1274,7 +1274,7 @@
                                 <segue destination="U29-Zk-skc" kind="unwind" identifier="cancelAndUnwindSegue" unwindAction="unwindForSegue:towardsViewController:" id="ZkP-Kb-hwt"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Post" id="yIb-nf-32K">
+                        <barButtonItem key="rightBarButtonItem" title="Score" id="yIb-nf-32K">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="U29-Zk-skc" kind="unwind" identifier="postAndUnwindSegue" unwindAction="unwindForSegue:towardsViewController:" id="xY5-18-wAa"/>

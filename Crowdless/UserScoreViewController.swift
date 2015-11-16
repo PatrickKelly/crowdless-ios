@@ -200,11 +200,11 @@ class UserScoreViewController: UIViewController {
             switch userEntranceCharge {
             case 1:
                 coverChargeImage.image = UIImage(named: "money-green")
-                coverCharge.text = "$1-4 cover"
+                coverCharge.text = "$1-5 cover"
                 coverCharge.textColor = greenColor
             case 3:
                 coverChargeImage.image = UIImage(named: "money-yellow")
-                coverCharge.text = "$5-10 cover"
+                coverCharge.text = "$6-10 cover"
                 coverCharge.textColor = yellowColor
             case 5:
                 coverChargeImage.image = UIImage(named: "money-red")
@@ -287,6 +287,13 @@ class UserScoreViewController: UIViewController {
             }
             
             self.presentViewController(reportActionSheet, animated: true, completion: nil)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "editScoreSegue", let destination = segue.destinationViewController as? ScorecardViewController {
+            destination.place = userScore["place"] as! PFObject
+            destination.userScore = userScore
         }
     }
     

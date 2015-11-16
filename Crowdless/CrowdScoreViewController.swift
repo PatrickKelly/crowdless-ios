@@ -522,12 +522,12 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 let coverChargeLabel = crowdScoreLabels[index]
                 if(coverCharge > 0 && coverCharge < 2) {
                     coverChargeImage.image = UIImage(named: "money-green")
-                    coverChargeLabel.text = "$1-4 cover"
+                    coverChargeLabel.text = "$1-5 cover"
                     coverChargeLabel.textColor = greenColor
                     index++
                 } else if (coverCharge >= 2 && coverCharge < 4) {
                     coverChargeImage.image = UIImage(named: "money-yellow")
-                    coverChargeLabel.text = "$5-10 cover"
+                    coverChargeLabel.text = "$6-10 cover"
                     coverChargeLabel.textColor = yellowColor
                     index++
                 } else if (coverCharge >= 4) {
