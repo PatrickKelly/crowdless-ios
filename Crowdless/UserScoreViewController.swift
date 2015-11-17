@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import ParseUI
 import ReachabilitySwift
 import CocoaLumberjack
 
@@ -16,6 +17,9 @@ class UserScoreViewController: UIViewController {
     var userScore: PFObject!
     var userScorePeerComment: PFObject!
     
+    @IBOutlet var userImage: PFImageView!
+    
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var userComment: UILabel!
     @IBOutlet var userScoreTime: UILabel!
     @IBOutlet var userName: UILabel!
@@ -33,7 +37,6 @@ class UserScoreViewController: UIViewController {
     @IBOutlet var deleteScoreButton: UIButton!
     @IBOutlet var editScoreButton: UIButton!
     
-    let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     private var reportActionSheet: UIAlertController!
     private var deleteActionSheet: UIAlertController!
@@ -43,8 +46,7 @@ class UserScoreViewController: UIViewController {
     private let yellowColor = UIColor(red: 254/255, green: 215/255, blue: 0/255, alpha: 1.0)
     private let redColor = UIColor(red: 224/255, green: 64/255, blue: 51/255, alpha: 1.0)
     private let malibuBlueColor = UIColor(red: 116/255, green: 169/255, blue: 255/255, alpha: 1.0)
-    
-    private var refreshControl:UIRefreshControl!
+
     private var reachability: Reachability?
     
     override func viewDidLoad() {
@@ -73,21 +75,22 @@ class UserScoreViewController: UIViewController {
         userScorePeerCommentQuery.whereKey("user", equalTo: PFUser.currentUser()!)
         userScorePeerCommentQuery.whereKey("userScore", equalTo: userScore)
         userScorePeerCommentQuery.orderByDescending("updatedAt")
-        userScorePeerCommentQuery.findObjectsInBackgroundWithBlock( { (results, error) -> Void in
+        userScorePeerCommentQuery.findObjectsInBackgroundWithBlock( {
+            [weak self] (results, error) -> Void in
             if let results = results {
                 if(results.count > 0) {
-                    self.userScorePeerComment = results[0]
+                    self?.userScorePeerComment = results[0]
                     DDLogDebug("User score peer comment successfully retrieved for user: " +
-                        PFUser.currentUser()!.objectId! + "and user score: " + self.userScore.objectId!)
-                    self.updateUserScorePeerComments()
+                        PFUser.currentUser()!.objectId! + "and user score: " + (self?.userScore.objectId)!)
+                    self?.updateUserScorePeerComments()
                 } else {
-                    self.userScorePeerComment = PFObject(className: "UserScorePeerComment")
+                    self?.userScorePeerComment = PFObject(className: "UserScorePeerComment")
                     DDLogDebug("No user score peer comment for user: " +
-                        PFUser.currentUser()!.objectId! + "and user score: " + self.userScore.objectId!)
+                        PFUser.currentUser()!.objectId! + "and user score: " + (self?.userScore.objectId!)!)
                 }
             } else {
                 DDLogError("Error retrieving  user score peer comment from Parse: \(error)")
-                self.userScorePeerComment = PFObject(className: "UserScorePeerComment")
+                self?.userScorePeerComment = PFObject(className: "UserScorePeerComment")
             }
         })
     }
@@ -109,6 +112,10 @@ class UserScoreViewController: UIViewController {
         }
         
         let user = userScore["user"] as! PFUser
+        let userImageFile = user["image"] as? PFFile
+        userImage.file = userImageFile
+        userImage.loadInBackground()
+        
         userName.text = user["name"] as? String
         
         if let scoreTime = userScore.updatedAt {
@@ -134,18 +141,7 @@ class UserScoreViewController: UIViewController {
             userComment.font = UIFont(name:"HelveticaNeue-Italic", size: 14.0)
         }
         
-        currentHelpfulCount = 0;
-        if let helpfulCount = userScore["helpfulCount"] {
-            if helpfulCount as! Int > 0 {
-                helpful.text = String(helpfulCount as! Int) + " found this helpful"
-                currentHelpfulCount = helpfulCount as! Int;
-            } else {
-             helpful.text = "Be the first to find this score helpful"
-            }
-        } else {
-            helpful.text = "Be the first to find this score helpful"
-        }
-        
+        updateHelpfulLabelAndCount()
         updateUserCrowdScoreImagesAndLabels();
         
     }
@@ -153,6 +149,20 @@ class UserScoreViewController: UIViewController {
     private func updateUserScorePeerComments() {
         helpfulButton.selected = userScorePeerComment["helpful"] as! Bool
         reportButton.selected = userScorePeerComment["reported"] as! Bool
+    }
+    
+    private func updateHelpfulLabelAndCount() {
+        currentHelpfulCount = 0;
+        if let helpfulCount = userScore["helpfulCount"] {
+            if helpfulCount as! Int > 0 {
+                helpful.text = String(helpfulCount as! Int) + " found this helpful"
+                currentHelpfulCount = helpfulCount as! Int;
+            } else {
+                helpful.text = "Be the first to find this score helpful"
+            }
+        } else {
+            helpful.text = "Be the first to find this score helpful"
+        }
     }
     
     private func updateUserCrowdScoreImagesAndLabels() {
@@ -326,6 +336,24 @@ class UserScoreViewController: UIViewController {
         self.performSegueWithIdentifier("deleteUnwindSegue", sender: self)
     }
     
+//    private func refreshUserScore() {
+//        if let reachability = reachability {
+//            if(reachability.isReachable()) {
+//                userScore.fetchInBackgroundWithBlock({
+//                    [weak self] (refreshedUserScore, error) -> Void in
+//                    if error == nil {
+//                        self?.userScore = refreshedUserScore
+//                        self?.updateView()
+//                    } else {
+//                        DDLogError("Error fetching/refreshing user score: \(error)")
+//                    }
+//                })
+//            } else {
+//                DDLogError("Not reachable.  Can't refresh user score.")
+//            }
+//        }
+//    }
+    
     private func initView() {
         
         reportActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -382,11 +410,5 @@ class UserScoreViewController: UIViewController {
         reportButton.setImage(UIImage(named: "flag-white"), forState: .Normal)
         reportButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         reportButton.setTitle("Report", forState: .Normal)
-        
-        var frame: CGRect = loadingSpinner.frame
-        frame.origin.x = (self.view.frame.size.width / 2 - frame.size.width / 2)
-        frame.origin.y = (self.view.frame.size.height / 2 - frame.size.height / 2)
-        loadingSpinner.frame = frame
-        view.addSubview(loadingSpinner)
     }
 }

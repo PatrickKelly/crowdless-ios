@@ -385,7 +385,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         let query = PFQuery(className: "UserScore")
         query.orderByDescending("createdAt")
         query.whereKey("place", equalTo: self.place!)
-        //query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*12))
+        query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         query.includeKey("user")
         query.findObjectsInBackgroundWithBlock({ (
             scores, error: NSError?) -> Void in
@@ -416,7 +416,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         let query = PFQuery(className: "UserScore")
         query.orderByDescending("createdAt")
         query.whereKey("place", equalTo: self.place!)
-        //query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*12))
+        query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         // Limit what could be a lot of points.
         query.limit = self.resultsLimit
         query.skip = currentPage * resultsLimit;
@@ -470,7 +470,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         crowdScore?.fetchInBackgroundWithBlock({ (refreshedCrowdScore, error) -> Void in
             if error == nil {
                 self.crowdScore = refreshedCrowdScore
-                self.updateViewForCrowdScore()
+                self.loadPlace()
             } else {
                 DDLogError("Error fetching/refreshing crowd score: \(error)")
             }
@@ -478,6 +478,13 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func updateViewForCrowdScore() {
+        
+        self.crowdScoreFirstImage.image = nil
+        self.crowdScoreSecondImage.image = nil
+        self.crowdScoreThirdImage.image = nil
+        self.crowdScoreFirstLabel.text = ""
+        self.crowdScoreSecondLabel.text = ""
+        self.crowdScoreThirdLabel.text = ""
         
         let crowdScoreImages = [crowdScoreFirstImage, crowdScoreSecondImage, crowdScoreThirdImage]
         let crowdScoreLabels = [crowdScoreFirstLabel, crowdScoreSecondLabel, crowdScoreThirdLabel]

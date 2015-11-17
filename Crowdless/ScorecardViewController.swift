@@ -214,7 +214,7 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         score.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
-                DDLogDebug("Score succesfully saved.")
+                DDLogDebug("Score successfully saved.")
             } else {
                 DDLogError("Error saving Score to Parse: \(error)")
             }

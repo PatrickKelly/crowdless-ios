@@ -8,12 +8,12 @@
 
 import UIKit
 import Parse
+import ParseUI
 import CocoaLumberjack
 
 class SettingsViewController: UIViewController {
     
-    @IBOutlet var profileImageView: UIImageView!
-    
+    @IBOutlet var profileImageView: PFImageView!
     @IBOutlet var userNameLabel: UILabel!
     
     override func viewDidLoad() {
@@ -43,13 +43,9 @@ class SettingsViewController: UIViewController {
     private func initViewForUser(user: PFUser) {
         
         //set user image
-        let userImageFile = user["image"] as! PFFile
-        do {
-            let imageData = try NSData(data: userImageFile.getData())
-            self.profileImageView.image = UIImage(data: imageData);
-        } catch {
-            DDLogError("Could not load user image.");
-        }
+        let userImageFile = user["image"] as? PFFile
+        profileImageView.file = userImageFile
+        profileImageView.loadInBackground()
         
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
