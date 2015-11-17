@@ -190,12 +190,9 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             
             setUserCrowdScoreImagesForCell(userCrowdScore, cell: cell)
             
-            let userImageFile = user["image"] as! PFFile
-            do {
-                let imageData = try NSData(data: userImageFile.getData())
-                cell.userImage.image = UIImage(data: imageData);
-            } catch {
-                DDLogError("Could not load user image.");
+            if let imageFile = user["image"] as? PFFile {
+                cell.userImageView.file = imageFile
+                cell.userImageView.loadInBackground()
             }
             
             // See if we need to load more user crowdscores

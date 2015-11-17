@@ -538,7 +538,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jKQ-Yi-2hy">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowdless-trending" translatesAutoresizingMaskIntoConstraints="NO" id="jKQ-Yi-2hy" customClass="PFImageView">
                                                     <rect key="frame" x="8" y="8" width="40" height="40"/>
                                                     <animations/>
                                                     <constraints>
@@ -632,7 +632,7 @@
                                         <connections>
                                             <outlet property="time" destination="rnt-na-Hm1" id="0lZ-vX-Anf"/>
                                             <outlet property="userComment" destination="zEg-v6-iNM" id="mhh-bo-KgS"/>
-                                            <outlet property="userImage" destination="jKQ-Yi-2hy" id="Y1V-Ga-Rxi"/>
+                                            <outlet property="userImageView" destination="jKQ-Yi-2hy" id="hhS-2s-kyS"/>
                                             <outlet property="userName" destination="wzH-Cr-GUo" id="P65-bG-X7r"/>
                                             <outlet property="userScoreFirstImage" destination="wmA-sb-y4E" id="w5D-ku-XpB"/>
                                             <outlet property="userScoreFourthImage" destination="ILs-FF-7a6" id="J46-tj-SBQ"/>
@@ -643,8 +643,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="zHE-LI-zfJ" id="NFK-4G-jxe"/>
-                                    <outlet property="delegate" destination="zHE-LI-zfJ" id="TqA-Sv-Gi6"/>
+                                    <outlet property="dataSource" destination="zHE-LI-zfJ" id="nIW-wS-gCh"/>
+                                    <outlet property="delegate" destination="zHE-LI-zfJ" id="l1L-G2-AgR"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -1453,6 +1453,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LrK-xC-Q66"/>
-        <segue reference="ix1-Xw-UZX"/>
+        <segue reference="FAo-Qd-471"/>
     </inferredMetricsTieBreakers>
 </document>

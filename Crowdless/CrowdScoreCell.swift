@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ParseUI
 
-class CrowdScoreCell: UITableViewCell {
+class CrowdScoreCell: PFTableViewCell {
     
     @IBOutlet var userComment: UILabel!
 
@@ -22,7 +23,7 @@ class CrowdScoreCell: UITableViewCell {
     
     @IBOutlet var userName: UILabel!
     
-    @IBOutlet var userImage: UIImageView!
+    @IBOutlet var userImageView: PFImageView!
     
     @IBOutlet var time: UILabel!
     
