@@ -104,7 +104,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.searchDisplayController!.searchResultsTableView {
-            return filteredPlaces.count
+            return filteredPlaces.count + 1
         } else {
             return 1
         }
@@ -156,40 +156,44 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             cell.textLabel?.textAlignment = .Center;
             return cell
         }
-
+        
         var cell: UITableViewCell
         if tableView == self.searchDisplayController!.searchResultsTableView {
-            cell = self.crowdsTableView.dequeueReusableCellWithIdentifier("searchCrowdCell")!
+            if indexPath.row == filteredPlaces.count {
+                cell = self.crowdsTableView.dequeueReusableCellWithIdentifier("googleCell")!
+            } else {
+                cell = self.crowdsTableView.dequeueReusableCellWithIdentifier("searchCrowdCell")!
+                cell.textLabel?.textColor = UIColor.whiteColor()
+                cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                let place = filteredPlaces[indexPath.row]
+                cell.textLabel!.text = place.name
+                cell.detailTextLabel?.text = place.detail
+            }
         } else {
             cell = self.crowdsTableView.dequeueReusableCellWithIdentifier("trendingCrowdCell", forIndexPath: indexPath)
-        }
-        
-        if tableView == self.searchDisplayController!.searchResultsTableView {
-            let place = filteredPlaces[indexPath.row]
-            cell.textLabel!.text = place.name
-            cell.detailTextLabel?.text = place.detail
-        } else if trendingScores.count >= indexPath.section {
-            
-            let trendingCrowdCell = cell as! TrendingCrowdCell
-            cell.contentView.backgroundColor = UIColor.clearColor()
-            cell.backgroundColor = UIColor(white: 1.0, alpha: 0.15)
-            
-            let trendingScore = trendingScores[indexPath.section]
-            let place = trendingScore["place"]
-            trendingCrowdCell.name.text = place["name"] as? String
-            trendingCrowdCell.detail.text = place["detail"] as? String
-            setTrendingCrowdScoreImagesForCell(trendingScore, cell: trendingCrowdCell)
-            cell = trendingCrowdCell
-            
-            // See if we need to load more places
-            if (currentPage < pageLimit) {
-                let rowsToLoadFromBottom = resultsPageLimit;
-                let rowsLoaded = trendingScores.count
-                if (!self.isLoadingPlaces && (indexPath.section >= (rowsLoaded - rowsToLoadFromBottom)))
-                {
-                    if let reachability = reachability {
-                        if(reachability.isReachable()) {
-                            loadAdditionalPlaces();
+            if trendingScores.count >= indexPath.section {
+                
+                let trendingCrowdCell = cell as! TrendingCrowdCell
+                cell.contentView.backgroundColor = UIColor.clearColor()
+                cell.backgroundColor = UIColor(white: 1.0, alpha: 0.15)
+                
+                let trendingScore = trendingScores[indexPath.section]
+                let place = trendingScore["place"]
+                trendingCrowdCell.name.text = place["name"] as? String
+                trendingCrowdCell.detail.text = place["detail"] as? String
+                setTrendingCrowdScoreImagesForCell(trendingScore, cell: trendingCrowdCell)
+                cell = trendingCrowdCell
+                
+                // See if we need to load more places
+                if (currentPage < pageLimit) {
+                    let rowsToLoadFromBottom = resultsPageLimit;
+                    let rowsLoaded = trendingScores.count
+                    if (!self.isLoadingPlaces && (indexPath.section >= (rowsLoaded - rowsToLoadFromBottom)))
+                    {
+                        if let reachability = reachability {
+                            if(reachability.isReachable()) {
+                                loadAdditionalPlaces();
+                            }
                         }
                     }
                 }
@@ -204,6 +208,8 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
+        controller.searchResultsTableView.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
+        controller.searchResultsTableView.bounces = false
         if let reachability = reachability {
             if(reachability.isReachable()) {
                 getPlaces(searchString!)

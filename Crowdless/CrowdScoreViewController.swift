@@ -44,7 +44,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     private var refreshCrowdScoreTimer: NSTimer?
-    //lazy var searchBar:UISearchBar = UISearchBar()
+    lazy var searchBar:UISearchBar = UISearchBar()
     
     private let greenColor = UIColor(red: 123/255, green: 191/255, blue: 106/255, alpha: 1.0)
     private let yellowColor = UIColor(red: 254/255, green: 215/255, blue: 0/255, alpha: 1.0)
@@ -62,9 +62,8 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             return
         }
         
-//        searchBar.placeholder = "Search..."
-//        var rightNavBarButton = UIBarButtonItem(customView:searchBar)
-//        self.navigationItem.titleView = searchBar
+        searchBar.placeholder = "Search..."
+        self.navigationItem.titleView = searchBar
         
         initView()
     }
@@ -171,7 +170,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.userComment.text = comment as? String
                 cell.userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
             } else {
-                cell.userComment.text = user["name"] as! String + " scored this crowd without a comment."
+                cell.userComment.text = ""
                 cell.userComment.font = UIFont(name:"HelveticaNeue-Italic", size: 12.0)
             }
             
@@ -444,6 +443,9 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         crowdScoresTableView.addSubview(refreshControl)
         crowdScoresTableView.backgroundColor = UIColor.clearColor()
+        
+        crowdScoresTableView.estimatedRowHeight = 90
+        crowdScoresTableView.rowHeight = UITableViewAutomaticDimension
         
         var frame: CGRect = loadingSpinner.frame
         frame.origin.x = (self.view.frame.size.width / 2 - frame.size.width / 2)

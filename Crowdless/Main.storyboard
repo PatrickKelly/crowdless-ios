@@ -310,9 +310,35 @@
                                             <animations/>
                                         </tableViewCellContentView>
                                         <animations/>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="zHE-LI-zfJ" kind="show" identifier="showCrowdScoreViewFromSearch" id="0nD-4f-yqF"/>
                                         </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="googleCell" id="zqi-l0-xBs">
+                                        <rect key="frame" x="0.0" y="188" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zqi-l0-xBs" id="Mfg-xP-vbI">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="powered_by_google_on_non_white" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-Hz-E8V">
+                                                    <rect key="frame" x="135" y="31" width="144" height="18"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="144" id="1BF-oo-ZMd"/>
+                                                        <constraint firstAttribute="height" constant="18" id="CA3-6H-MhZ"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="dhg-Hz-E8V" firstAttribute="centerY" secondItem="Mfg-xP-vbI" secondAttribute="centerY" id="TwP-Eh-VIj"/>
+                                                <constraint firstItem="dhg-Hz-E8V" firstAttribute="centerX" secondItem="Mfg-xP-vbI" secondAttribute="centerX" id="vj4-Gb-xTO"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -397,7 +423,7 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Nrh-pu-e8q">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="173"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="212"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading name..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="N1D-gd-Tey">
@@ -498,6 +524,39 @@
                                             <color key="textColor" red="0.4823529412" green="0.74901960779999999" blue="0.41568627450000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="835-mQ-jSh">
+                                            <rect key="frame" x="8" y="173" width="398" height="1"/>
+                                            <animations/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="GnE-5n-XEO"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="UXc-Df-Iw5"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ypj-PJ-Ikt">
+                                            <rect key="frame" x="137" y="182" width="140" height="22"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="TJq-eR-3p1"/>
+                                                <constraint firstAttribute="width" constant="140" id="nCh-a0-XcY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                            <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" title="Score This Crowd!" image="white-plus">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="TJq-eR-3p1"/>
+                                                </mask>
+                                            </variation>
+                                            <connections>
+                                                <segue destination="fnc-X7-APY" kind="show" identifier="showScorecardView" id="Og3-is-ZNY"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -505,6 +564,8 @@
                                         <constraint firstItem="m2g-9K-B71" firstAttribute="leading" secondItem="F5s-aU-74d" secondAttribute="trailing" constant="8" id="5md-qM-Q1U"/>
                                         <constraint firstItem="m2g-9K-B71" firstAttribute="leading" secondItem="ndD-IP-sD7" secondAttribute="trailing" constant="8" id="5nZ-87-u0x"/>
                                         <constraint firstItem="m2g-9K-B71" firstAttribute="top" secondItem="N1D-gd-Tey" secondAttribute="bottom" constant="24" id="6e7-VQ-RjD"/>
+                                        <constraint firstAttribute="trailing" secondItem="835-mQ-jSh" secondAttribute="trailing" constant="8" id="FRo-Jv-t93"/>
+                                        <constraint firstItem="ypj-PJ-Ikt" firstAttribute="centerX" secondItem="Nrh-pu-e8q" secondAttribute="centerX" id="FrD-ED-vpW"/>
                                         <constraint firstItem="m2g-9K-B71" firstAttribute="leading" secondItem="ndD-IP-sD7" secondAttribute="trailing" constant="8" id="Fur-Hq-n0D"/>
                                         <constraint firstAttribute="trailing" secondItem="m2g-9K-B71" secondAttribute="trailing" constant="8" id="GG6-rb-bTS"/>
                                         <constraint firstAttribute="trailing" secondItem="Bmg-1w-nrR" secondAttribute="trailing" constant="120" id="Jx0-Q5-vUP"/>
@@ -515,8 +576,10 @@
                                         <constraint firstItem="czb-nE-ErA" firstAttribute="top" secondItem="Ukj-0W-Iwq" secondAttribute="bottom" constant="6" id="PM9-V3-CK3"/>
                                         <constraint firstItem="7ip-YL-e3s" firstAttribute="top" secondItem="Bmg-1w-nrR" secondAttribute="bottom" constant="12" id="SXT-TM-W7x"/>
                                         <constraint firstItem="Bmg-1w-nrR" firstAttribute="top" secondItem="N1D-gd-Tey" secondAttribute="bottom" constant="3" id="WOF-HZ-38H"/>
+                                        <constraint firstItem="835-mQ-jSh" firstAttribute="leading" secondItem="Nrh-pu-e8q" secondAttribute="leading" constant="8" id="WzA-Ly-A3r"/>
                                         <constraint firstItem="7ip-YL-e3s" firstAttribute="leading" secondItem="U0W-LF-LdM" secondAttribute="trailing" constant="8" id="Zne-f2-l3w"/>
                                         <constraint firstItem="U0W-LF-LdM" firstAttribute="top" secondItem="Bmg-1w-nrR" secondAttribute="bottom" constant="8" id="bT5-yR-5nA"/>
+                                        <constraint firstItem="835-mQ-jSh" firstAttribute="top" secondItem="czb-nE-ErA" secondAttribute="bottom" constant="8" id="e2F-jn-YYo"/>
                                         <constraint firstItem="U0W-LF-LdM" firstAttribute="leading" secondItem="Nrh-pu-e8q" secondAttribute="leading" constant="8" id="iLC-Kr-fEB"/>
                                         <constraint firstItem="m2g-9K-B71" firstAttribute="leading" secondItem="7ip-YL-e3s" secondAttribute="trailing" constant="8" id="jTW-3k-jkq"/>
                                         <constraint firstItem="F5s-aU-74d" firstAttribute="leading" secondItem="czb-nE-ErA" secondAttribute="trailing" constant="8" id="jZK-JI-FGr"/>
@@ -528,11 +591,13 @@
                                         <constraint firstItem="Bmg-1w-nrR" firstAttribute="leading" secondItem="Nrh-pu-e8q" secondAttribute="leading" constant="8" id="tbe-0A-f4y"/>
                                         <constraint firstItem="F5s-aU-74d" firstAttribute="top" secondItem="ndD-IP-sD7" secondAttribute="bottom" constant="13" id="uob-Dv-fsD"/>
                                         <constraint firstItem="Ukj-0W-Iwq" firstAttribute="top" secondItem="U0W-LF-LdM" secondAttribute="bottom" constant="8" id="xCH-yY-BVn"/>
+                                        <constraint firstItem="ypj-PJ-Ikt" firstAttribute="top" secondItem="835-mQ-jSh" secondAttribute="bottom" constant="8" id="yRN-mU-OfU"/>
+                                        <constraint firstAttribute="bottom" secondItem="ypj-PJ-Ikt" secondAttribute="bottom" constant="8" id="zi1-Yl-mNn"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="crowdScoreCell" rowHeight="90" id="1uH-7X-xuo" customClass="CrowdScoreCell" customModule="Crowdless" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="201" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="240" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1uH-7X-xuo" id="3n3-4g-z17">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
@@ -665,12 +730,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="Q13-Rp-Hpg">
                         <barButtonItem key="backBarButtonItem" title=" " id="7F6-Dj-VLT"/>
-                        <barButtonItem key="rightBarButtonItem" title="Score" id="KhS-10-SuR">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            <connections>
-                                <segue destination="fnc-X7-APY" kind="show" identifier="showScorecardView" id="FAo-Qd-471"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
@@ -694,8 +753,6 @@
         <!--User Score-->
         <scene sceneID="k7z-VF-gfR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gt1-HR-N0I" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="x9x-2O-Xbu" userLabel="Exit" sceneMemberID="exit"/>
                 <viewController id="xc3-1n-98r" customClass="UserScoreViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uOw-h1-uki"/>
@@ -1042,6 +1099,8 @@
                         <segue destination="x9x-2O-Xbu" kind="unwind" identifier="deleteUnwindSegue" unwindAction="unwindForSegue:towardsViewController:" id="NAu-G1-CEL"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gt1-HR-N0I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="x9x-2O-Xbu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2549" y="870"/>
         </scene>
@@ -1327,7 +1386,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="question-question_mark_blue" translatesAutoresizingMaskIntoConstraints="NO" id="LkH-tq-Nky" customClass="PFImageView">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowdless-trending-200" translatesAutoresizingMaskIntoConstraints="NO" id="LkH-tq-Nky" customClass="PFImageView">
                                 <rect key="frame" x="107" y="129" width="200" height="200"/>
                                 <animations/>
                                 <constraints>
@@ -1441,18 +1500,20 @@
         <image name="car-green" width="256" height="256"/>
         <image name="clock-green" width="256" height="256"/>
         <image name="crowdless-trending" width="49" height="49"/>
+        <image name="crowdless-trending-200" width="200" height="200"/>
         <image name="facebook-login-blue" width="416" height="101"/>
         <image name="flag-white" width="17" height="17"/>
         <image name="money-green" width="256" height="256"/>
         <image name="people-green" width="172" height="144"/>
-        <image name="question-question_mark_blue" width="4429" height="7723"/>
+        <image name="powered_by_google_on_non_white" width="144" height="18"/>
         <image name="white-cog" width="25" height="25"/>
         <image name="white-delete" width="17" height="17"/>
         <image name="white-edit" width="17" height="17"/>
         <image name="white-outline-star" width="17" height="17"/>
+        <image name="white-plus" width="17" height="17"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Og3-is-ZNY"/>
         <segue reference="LrK-xC-Q66"/>
-        <segue reference="FAo-Qd-471"/>
     </inferredMetricsTieBreakers>
 </document>
