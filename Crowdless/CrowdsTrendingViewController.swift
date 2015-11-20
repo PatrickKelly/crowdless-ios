@@ -12,22 +12,8 @@ import ReachabilitySwift
 import CocoaLumberjack
 
 public let ErrorDomain: String! = "CrowdsTrendingViewControllerErrorDomain"
-extension UIImage {
-    class func imageWithColor(color: UIColor) -> UIImage {
-        let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
-        UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-        
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, rect)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image
-    }
-}
-class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate, UITableViewDataSource {
+
+class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource {
     
     @IBOutlet var crowdsTableView: UITableView!
     
@@ -42,6 +28,8 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     private var reachability: Reachability?
     private let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .White)
     private let googlePlacesHelper = GooglePlacesHelper()
+    private var searchController:UISearchController!
+    private var searchResultsController: UITableViewController!
     
     var locationManager = CLLocationManager()
     
@@ -82,10 +70,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
-        self.searchDisplayController!.searchResultsTableView.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
-        self.searchDisplayController!.searchResultsTableView.rowHeight = 60
-        
-        (UIBarButtonItem.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self])).tintColor = UIColor.whiteColor()
+        initSearchController()
         
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(
@@ -96,13 +81,59 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         crowdsTableView.addSubview(refreshControl)
         crowdsTableView.backgroundColor = UIColor.clearColor()
         
-        self.searchDisplayController?.searchResultsTableView.tableFooterView = UIView(frame: CGRect.zero)
+        searchResultsController.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         var frame: CGRect = loadingSpinner.frame
         frame.origin.x = (self.view.frame.size.width / 2 - frame.size.width / 2)
         frame.origin.y = (self.view.frame.size.height / 2 - frame.size.height / 2)
         loadingSpinner.frame = frame
         view.addSubview(loadingSpinner)
+    }
+    
+    private func initSearchController() {
+        
+        searchResultsController = UITableViewController()
+        searchResultsController.tableView.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
+        searchController = UISearchController(searchResultsController: searchResultsController)
+        searchResultsController.tableView.rowHeight = 50
+        
+        let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.placeholder = "Search for crowds..."
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.searchBarStyle = .Minimal
+        navigationItem.titleView = searchController.searchBar
+        definesPresentationContext = true
+        
+        searchController.searchResultsUpdater = self
+        searchResultsController.tableView.dataSource = self
+        searchResultsController.tableView.delegate = self
+        searchController.searchBar.delegate = self
+        
+    }
+    
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let reachability = reachability {
+            if(reachability.isReachable()) {
+                googlePlacesHelper.getPlacesInBackgroundWithBlock(searchController.searchBar.text!, userGeoPoint: userGeoPoint,
+                    results: { placesPredictions -> () in
+                        self.filteredPlaces = placesPredictions
+                        self.searchResultsController.tableView.reloadData()
+                })
+            }
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -122,7 +153,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == self.searchDisplayController!.searchResultsTableView {
+        if tableView == searchResultsController.tableView {
             return filteredPlaces.count + 1
         } else {
             return 1
@@ -130,7 +161,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if tableView == self.searchDisplayController!.searchResultsTableView {
+        if tableView == searchResultsController.tableView {
             return 1
         } else {
             
@@ -147,7 +178,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if tableView == self.searchDisplayController!.searchResultsTableView {
+        if tableView == searchResultsController.tableView {
             return 0
         } else {
             return 10;
@@ -155,7 +186,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if tableView == self.searchDisplayController!.searchResultsTableView {
+        if tableView == searchResultsController.tableView {
             return nil
         } else {
             let view = UIView()
@@ -177,7 +208,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         }
         
         var cell: UITableViewCell
-        if tableView == self.searchDisplayController!.searchResultsTableView {
+        if tableView == searchResultsController.tableView {
             if indexPath.row == filteredPlaces.count {
                 cell = self.crowdsTableView.dequeueReusableCellWithIdentifier("googleCell")!
             } else {
@@ -225,19 +256,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-        
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
-        if let reachability = reachability {
-            if(reachability.isReachable()) {
-                googlePlacesHelper.getPlacesInBackgroundWithBlock(searchString!, userGeoPoint: userGeoPoint, results: { placesPredictions -> () in
-                    self.filteredPlaces = placesPredictions
-                    self.searchDisplayController!.searchResultsTableView.reloadData()
-                })
-            }
-        }
-        
-        return true
-    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showCrowdScoreView", let destination = segue.destinationViewController as? CrowdScoreViewController {
@@ -250,12 +268,9 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             destination.crowdScore = trendingScore
             
         } else if segue.identifier == "showCrowdScoreViewFromSearch", let destination = segue.destinationViewController as? CrowdScoreViewController  {
-            if self.searchDisplayController!.active {
-                let index = self.searchDisplayController!.searchResultsTableView.indexPathForSelectedRow!.row
-                let filteredPlace = self.filteredPlaces[index]
-                destination.googlePlace = filteredPlace
-                self.searchDisplayController!.active = false
-            }
+            let index = searchResultsController.tableView.indexPathForSelectedRow!.row
+            let filteredPlace = self.filteredPlaces[index]
+            destination.googlePlace = filteredPlace
         }
         
     }

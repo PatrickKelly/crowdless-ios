@@ -81,7 +81,7 @@
             </objects>
             <point key="canvasLocation" x="199" y="355"/>
         </scene>
-        <!--Crowds Around You-->
+        <!--Crowds Trending View Controller-->
         <scene sceneID="IZJ-7p-780">
             <objects>
                 <viewController storyboardIdentifier="crowdsTrendingViewController" id="iOA-BB-qtG" customClass="CrowdsTrendingViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
@@ -97,17 +97,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <animations/>
                             </imageView>
-                            <searchBar contentMode="redraw" placeholder="Search for crowds..." translatesAutoresizingMaskIntoConstraints="NO" id="gPj-HN-ylC">
-                                <rect key="frame" x="0.0" y="64" width="414" height="44"/>
-                                <animations/>
-                                <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="iOA-BB-qtG" id="2Xh-nW-Bhk"/>
-                                </connections>
-                            </searchBar>
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eWW-hA-tvJ">
-                                <rect key="frame" x="0.0" y="108" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -353,16 +344,12 @@
                             <constraint firstItem="Ppq-F4-8qr" firstAttribute="top" secondItem="lOe-8a-cyg" secondAttribute="bottom" id="0Bs-mX-L22"/>
                             <constraint firstItem="Ppq-F4-8qr" firstAttribute="top" secondItem="eWW-hA-tvJ" secondAttribute="bottom" id="22T-s2-Omy"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="leading" secondItem="OHI-h0-G04" secondAttribute="leadingMargin" constant="-20" id="4sm-Zl-X9o"/>
-                            <constraint firstItem="gPj-HN-ylC" firstAttribute="centerX" secondItem="OHI-h0-G04" secondAttribute="centerX" id="AEs-gl-GVh"/>
+                            <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="97n-wf-Q9A"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lOe-8a-cyg" secondAttribute="trailing" constant="-20" id="LEU-ZO-rWV"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="top" secondItem="OHI-h0-G04" secondAttribute="topMargin" id="NCY-83-cyS"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gPj-HN-ylC" secondAttribute="trailing" constant="-20" id="NMs-Bp-3Ep"/>
-                            <constraint firstItem="gPj-HN-ylC" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="Tj4-Da-jxJ"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="WXI-gs-o1m"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eWW-hA-tvJ" secondAttribute="trailing" constant="-20" id="bcy-1M-7qc"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="centerY" secondItem="OHI-h0-G04" secondAttribute="centerY" id="erL-uN-AAv"/>
-                            <constraint firstItem="gPj-HN-ylC" firstAttribute="leading" secondItem="OHI-h0-G04" secondAttribute="leadingMargin" constant="-20" id="fOn-zh-9Lr"/>
-                            <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="gPj-HN-ylC" secondAttribute="bottom" id="fPb-kQ-dVX"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="leading" secondItem="OHI-h0-G04" secondAttribute="leadingMargin" constant="-20" id="qbk-aZ-Ajh"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="z23-5Z-FUQ"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="centerX" secondItem="OHI-h0-G04" secondAttribute="centerX" id="zhs-Nn-W2b"/>
@@ -374,14 +361,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Crowds Around You" id="Gxz-xK-PPU">
+                    <navigationItem key="navigationItem" id="Gxz-xK-PPU">
                         <barButtonItem key="backBarButtonItem" title=" " id="EPO-bE-OaX"/>
-                        <barButtonItem key="leftBarButtonItem" image="white-cog" id="xKH-MN-MKj">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <segue destination="M9G-vm-YR1" kind="show" identifier="showSettingsView" id="YwU-JU-2mt"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
@@ -393,7 +374,6 @@
                 <searchDisplayController id="xva-gl-HVM">
                     <connections>
                         <outlet property="delegate" destination="iOA-BB-qtG" id="6qe-pH-fv4"/>
-                        <outlet property="searchBar" destination="gPj-HN-ylC" id="Cge-5b-vCw"/>
                         <outlet property="searchContentsController" destination="iOA-BB-qtG" id="3yl-yt-HJz"/>
                         <outlet property="searchResultsDataSource" destination="iOA-BB-qtG" id="PCt-P6-ojt"/>
                         <outlet property="searchResultsDelegate" destination="iOA-BB-qtG" id="B3K-gt-dTM"/>
@@ -1568,7 +1548,6 @@
         <image name="people-add" width="53" height="44"/>
         <image name="people-green" width="172" height="144"/>
         <image name="powered_by_google_on_non_white" width="144" height="18"/>
-        <image name="white-cog" width="25" height="25"/>
         <image name="white-delete" width="17" height="17"/>
         <image name="white-edit" width="17" height="17"/>
         <image name="white-outline-star" width="17" height="17"/>

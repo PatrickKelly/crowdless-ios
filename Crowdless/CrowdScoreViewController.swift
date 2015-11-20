@@ -12,7 +12,7 @@ import ReachabilitySwift
 import CocoaLumberjack
 
 class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
-    UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
+    UISearchResultsUpdating, UISearchBarDelegate {
     
     var googlePlace: Place?
     var place: PFObject?
@@ -181,10 +181,10 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if tableView == searchResultsController.tableView {
             if indexPath.row == filteredPlaces.count {
-                var cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("googleCell")!
+                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("googleCell")!
                 return cell
             } else {
-                var cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("searchCrowdCell")!
+                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("searchCrowdCell")!
                 cell.textLabel?.textColor = UIColor.whiteColor()
                 cell.detailTextLabel?.textColor = UIColor.whiteColor()
                 let place = filteredPlaces[indexPath.row]
@@ -213,7 +213,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             
             let userCrowdScore = userCrowdScores[indexPath.row]
             let user = userCrowdScore["user"] as! PFUser
-            cell.userName.text = user["name"] as! String
+            cell.userName.text = user["name"] as? String
             if let comment = userCrowdScore["comment"] {
                 cell.userComment.text = comment as? String
                 cell.userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
@@ -575,8 +575,9 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         searchResultsController = UITableViewController()
         searchResultsController.tableView.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
         searchController = UISearchController(searchResultsController: searchResultsController)
+        searchResultsController.tableView.rowHeight = 50
         
-        var textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+        let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Search for crowds..."
@@ -589,7 +590,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         searchController.searchResultsUpdater = self
         searchResultsController.tableView.dataSource = self
         searchResultsController.tableView.delegate = self
-        searchController.delegate = self
+//        searchController.delegate = self
         searchController.searchBar.delegate = self
         
     }
@@ -614,10 +615,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         self.crowdScoreSecondLabel.text = ""
         self.crowdScoreThirdLabel.text = ""
         
-        let crowdScoreImages = [crowdScoreFirstImage, crowdScoreSecondImage, crowdScoreThirdImage]
-        let crowdScoreLabels = [crowdScoreFirstLabel, crowdScoreSecondLabel, crowdScoreThirdLabel]
-        var index = 0
-        
         if let crowdScore  = crowdScore {
             if let crowded = crowdScore["crowded"] as? Int {
                 if(crowded >= 0 && crowded < 2) {
@@ -632,76 +629,62 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             if let waitTime = crowdScore["waitTime"] as? Int {
-                let waitTimeImage = crowdScoreImages[index]
-                let waitTimeLabel = crowdScoreLabels[index]
                 if(waitTime > 0 && waitTime < 2) {
-                    waitTimeImage.image = UIImage(named: "clock-green")
-                    waitTimeLabel.text = "1-9 min wait"
-                    waitTimeLabel.textColor = greenColor
-                    index++
+                    crowdScoreFirstImage.image = UIImage(named: "clock-green")
+                    crowdScoreFirstLabel.text = "1-9 min wait"
+                    crowdScoreFirstLabel.textColor = greenColor
                 } else if (waitTime >= 2 && waitTime < 4) {
-                    waitTimeImage.image = UIImage(named: "clock-yellow")
-                    waitTimeLabel.text = "10-30 min wait"
-                    waitTimeLabel.textColor = yellowColor
-                    index++
+                    crowdScoreFirstImage.image = UIImage(named: "clock-yellow")
+                    crowdScoreFirstLabel.text = "10-30 min wait"
+                    crowdScoreFirstLabel.textColor = yellowColor
                 } else if (waitTime >= 4) {
-                    waitTimeImage.image = UIImage(named: "clock-red")
-                    waitTimeLabel.text = "Over 30 min wait"
-                    waitTimeLabel.textColor = redColor
-                    index++
+                    crowdScoreFirstImage.image = UIImage(named: "clock-red")
+                    crowdScoreFirstLabel.text = "Over 30 min wait"
+                    crowdScoreFirstLabel.textColor = redColor
                 } else {
-                    waitTimeImage.image = UIImage(named: "clock-white")
-                    waitTimeLabel.text = "No wait"
-                    waitTimeLabel.textColor = UIColor.whiteColor()
-                    index++
+                    crowdScoreFirstImage.image = UIImage(named: "clock-white")
+                    crowdScoreFirstLabel.text = "No wait"
+                    crowdScoreFirstLabel.textColor = UIColor.whiteColor()
                 }
             }
             
             if let coverCharge = crowdScore["coverCharge"] as? Int {
-                let coverChargeImage = crowdScoreImages[index]
-                let coverChargeLabel = crowdScoreLabels[index]
                 if(coverCharge > 0 && coverCharge < 2) {
-                    coverChargeImage.image = UIImage(named: "money-green")
-                    coverChargeLabel.text = "$1-5 cover"
-                    coverChargeLabel.textColor = greenColor
-                    index++
+                    crowdScoreSecondImage.image = UIImage(named: "money-green")
+                    crowdScoreSecondLabel.text = "$1-5 cover"
+                    crowdScoreSecondLabel.textColor = greenColor
                 } else if (coverCharge >= 2 && coverCharge < 4) {
-                    coverChargeImage.image = UIImage(named: "money-yellow")
-                    coverChargeLabel.text = "$6-10 cover"
-                    coverChargeLabel.textColor = yellowColor
-                    index++
+                    crowdScoreSecondImage.image = UIImage(named: "money-yellow")
+                    crowdScoreSecondLabel.text = "$6-10 cover"
+                    crowdScoreSecondLabel.textColor = yellowColor
                 } else if (coverCharge >= 4) {
-                    coverChargeImage.image = UIImage(named: "money-red")
-                    coverChargeLabel.text = "Over $10 cover"
-                    coverChargeLabel.textColor = redColor
-                    index++
+                    crowdScoreSecondImage.image = UIImage(named: "money-red")
+                    crowdScoreSecondLabel.text = "Over $10 cover"
+                    crowdScoreSecondLabel.textColor = redColor
                 } else {
-                    coverChargeImage.image = UIImage(named: "money-white")
-                    coverChargeLabel.text = "No cover"
-                    coverChargeLabel.textColor = UIColor.whiteColor()
-                    index++
+                    crowdScoreSecondImage.image = UIImage(named: "money-white")
+                    crowdScoreSecondLabel.text = "No cover"
+                    crowdScoreSecondLabel.textColor = UIColor.whiteColor()
                 }
             }
             
             if let parking = crowdScore["parkingDifficult"] as? Int {
-                let userParkingImage = crowdScoreImages[index]
-                let userParkingLabel = crowdScoreLabels[index]
                 if(parking >= 0 && parking < 2) {
-                    userParkingImage.image = UIImage(named: "car-green")
-                    userParkingLabel.text = "Easy parking"
-                    userParkingLabel.textColor = greenColor
+                    crowdScoreThirdImage.image = UIImage(named: "car-green")
+                    crowdScoreThirdLabel.text = "Easy parking"
+                    crowdScoreThirdLabel.textColor = greenColor
                 } else if (parking >= 2 && parking < 4) {
-                    userParkingImage.image = UIImage(named: "car-yellow")
-                    userParkingLabel.text = "Moderate parking"
-                    userParkingLabel.textColor = yellowColor
+                    crowdScoreThirdImage.image = UIImage(named: "car-yellow")
+                    crowdScoreThirdLabel.text = "Moderate parking"
+                    crowdScoreThirdLabel.textColor = yellowColor
                 } else if (parking >= 4) {
-                    userParkingImage.image = UIImage(named: "car-red")
-                    userParkingLabel.text = "Difficult parking"
-                    userParkingLabel.textColor = redColor
+                    crowdScoreThirdImage.image = UIImage(named: "car-red")
+                    crowdScoreThirdLabel.text = "Difficult parking"
+                    crowdScoreThirdLabel.textColor = redColor
                 } else {
-                    userParkingImage.image = UIImage(named: "car-green")
-                    userParkingLabel.text = "Easy parking"
-                    userParkingLabel.textColor = greenColor
+                    crowdScoreThirdImage.image = UIImage(named: "car-green")
+                    crowdScoreThirdLabel.text = "Easy parking"
+                    crowdScoreThirdLabel.textColor = greenColor
                 }
             }
         } else {
