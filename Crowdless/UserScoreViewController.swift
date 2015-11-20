@@ -302,7 +302,6 @@ class UserScoreViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editScoreSegue", let destination = segue.destinationViewController as? ScorecardViewController {
-            destination.place = userScore["place"] as! PFObject
             destination.userScore = userScore
         }
     }

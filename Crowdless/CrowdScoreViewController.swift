@@ -11,7 +11,8 @@ import Parse
 import ReachabilitySwift
 import CocoaLumberjack
 
-class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
+    UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
     
     var googlePlace: Place?
     var place: PFObject?
@@ -33,8 +34,12 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet var crowdScoresTableView: UITableView!
     
+    //for Google places search
+    private var filteredPlaces = [Place]()
+    private var searchResultsController: UITableViewController!
+    private var userGeoPoint: PFGeoPoint?
+    
     private var refreshControl:UIRefreshControl!
-    private let apiKey = "AIzaSyC_Ydzgdq62x0XXgy6vMp8p3aNs6PlOh0M"
     private var userCrowdScores = [PFObject]()
     private let resultsLimit = 10
     private var currentPage = 0
@@ -44,12 +49,13 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     private var refreshCrowdScoreTimer: NSTimer?
-    lazy var searchBar:UISearchBar = UISearchBar()
+    private var searchController:UISearchController!
     
     private let greenColor = UIColor(red: 123/255, green: 191/255, blue: 106/255, alpha: 1.0)
     private let yellowColor = UIColor(red: 254/255, green: 215/255, blue: 0/255, alpha: 1.0)
     private let redColor = UIColor(red: 224/255, green: 64/255, blue: 51/255, alpha: 1.0)
     
+    private let googlePlacesHelper = GooglePlacesHelper()
     private var reachability: Reachability?
     
     override func viewDidLoad() {
@@ -62,10 +68,30 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             return
         }
         
-        searchBar.placeholder = "Search..."
-        self.navigationItem.titleView = searchBar
-        
         initView()
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let reachability = reachability {
+            if(reachability.isReachable()) {
+                googlePlacesHelper.getPlacesInBackgroundWithBlock(searchController.searchBar.text!, userGeoPoint: userGeoPoint,
+                    results: { placesPredictions -> () in
+                    self.filteredPlaces = placesPredictions
+                    self.searchResultsController.tableView.reloadData()
+                })
+            }
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        self.navigationItem.setHidesBackButton(true, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+        self.navigationItem.setHidesBackButton(false, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -76,6 +102,8 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         
         clearView()
         
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "refreshCrowdScore", userInfo: nil, repeats: false)
+        
         super.viewWillAppear(animated);
         
         if let reachability = reachability {
@@ -84,7 +112,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 isLoadingPlace = true;
                 crowdScoresTableView.reloadData()
                 if let crowdScore = crowdScore {
-                    crowdScore.fetchIfNeededInBackgroundWithBlock({ (
+                    crowdScore.fetchInBackgroundWithBlock({ (
                         crowdScore, error) -> Void in
                         if (error == nil) {
                             self.crowdScore = crowdScore;
@@ -133,19 +161,39 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if (isLoadingPlace || isLoadingCrowdScores) {
-            return 0;
+        if tableView == searchResultsController.tableView {
+            return filteredPlaces.count + 1
+        } else {
+            if (isLoadingPlace || isLoadingCrowdScores) {
+                return 0;
+            }
+            
+            if(userCrowdScores.count == 0) {
+                return 1;
+            }
+            
+            
+            return userCrowdScores.count
         }
-        
-        if(userCrowdScores.count == 0) {
-            return 1;
-        }
-        
-        return userCrowdScores.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        if tableView == searchResultsController.tableView {
+            if indexPath.row == filteredPlaces.count {
+                var cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("googleCell")!
+                return cell
+            } else {
+                var cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("searchCrowdCell")!
+                cell.textLabel?.textColor = UIColor.whiteColor()
+                cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                let place = filteredPlaces[indexPath.row]
+                cell.textLabel!.text = place.name
+                cell.detailTextLabel?.text = place.detail
+                return cell
+            }
+        }
+        
         
         if (userCrowdScores.count == 0) {
             let cell: UITableViewCell = UITableViewCell()
@@ -223,11 +271,15 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showScorecardView", let destination = segue.destinationViewController as? ScorecardViewController {
-            destination.place = place
+            destination.crowdScore = crowdScore
         } else if segue.identifier == "showUserScoreView", let destination = segue.destinationViewController as? UserScoreViewController {
             let index = crowdScoresTableView.indexPathForSelectedRow!.row
             let userCrowdScore = userCrowdScores[index]
             destination.userScore = userCrowdScore
+        } else if segue.identifier == "showCrowdScoreViewFromSearch", let destination = segue.destinationViewController as? CrowdScoreViewController  {
+                let index = searchResultsController.tableView.indexPathForSelectedRow!.row
+                let filteredPlace = filteredPlaces[index]
+                destination.googlePlace = filteredPlace
         }
     }
     
@@ -319,10 +371,27 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                     }
                     
-                    placeResult(place)
-                    self.isLoadingPlace = false;
-                    if (self.loadingSpinner.isAnimating()) {
-                        self.loadingSpinner.stopAnimating()
+                    let query = PFQuery(className:"CrowdScore")
+                    query.whereKey("place", equalTo: place)
+                    //should only be one
+                    query.orderByDescending("updatedAt")
+                    query.limit = 1
+                    query.findObjectsInBackgroundWithBlock { (
+                        crowdScores, error) -> Void in
+                        if error == nil && crowdScores?.count > 0 {
+                            self.isLoadingPlace = false;
+                            if (self.loadingSpinner.isAnimating()) {
+                                self.loadingSpinner.stopAnimating()
+                            }
+                            self.crowdScore = crowdScores![0]
+                            placeResult(place)
+                        } else {
+                            DDLogError("Error retrieving Crowd Score from Parse by Place Id: \(error)")
+                            self.isLoadingPlace = false;
+                            if (self.loadingSpinner.isAnimating()) {
+                                self.loadingSpinner.stopAnimating()
+                            }
+                        }
                     }
                     
                 } else {
@@ -354,20 +423,45 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                             place.saveInBackgroundWithBlock {
                                 (success: Bool, error: NSError?) -> Void in
                                 if (success) {
-                                    placeResult(place)
+                                    
+                                    let query = PFQuery(className:"CrowdScore")
+                                    query.whereKey("place", equalTo: place)
+                                    //should only be one
+                                    query.orderByDescending("updatedAt")
+                                    query.limit = 1
+                                    query.findObjectsInBackgroundWithBlock { (
+                                        crowdScores, error) -> Void in
+                                        if error == nil && crowdScores?.count > 0 {
+                                            self.isLoadingPlace = false;
+                                            if (self.loadingSpinner.isAnimating()) {
+                                                self.loadingSpinner.stopAnimating()
+                                            }
+                                            self.crowdScore = crowdScores![0]
+                                            placeResult(place)
+                                        } else {
+                                            DDLogError("Error retrieving Crowd Score from Parse by Place Id: \(error)")
+                                            self.isLoadingPlace = false;
+                                            if (self.loadingSpinner.isAnimating()) {
+                                                self.loadingSpinner.stopAnimating()
+                                            }
+                                        }
+                                    }
                                 } else {
                                     DDLogError("Error saving place to Parse: \(error)")
+                                    self.isLoadingPlace = false;
+                                    if (self.loadingSpinner.isAnimating()) {
+                                        self.loadingSpinner.stopAnimating()
+                                    }
                                 }
                             }
                             
                         } else {
                             // Log details of the failure
                             DDLogError("Error retrieving Place from Parse by Google Place Id: \(error)")
-                        }
-                        
-                        self.isLoadingPlace = false;
-                        if (self.loadingSpinner.isAnimating()) {
-                            self.loadingSpinner.stopAnimating()
+                            self.isLoadingPlace = false;
+                            if (self.loadingSpinner.isAnimating()) {
+                                self.loadingSpinner.stopAnimating()
+                            }
                         }
                     }
                 }
@@ -379,7 +473,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         
         isLoadingCrowdScores = true
         let query = PFQuery(className: "UserScore")
-        query.orderByDescending("createdAt")
+        query.orderByDescending("updatedAt")
         query.whereKey("place", equalTo: self.place!)
         query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         query.includeKey("user")
@@ -410,7 +504,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         
         isLoadingCrowdScores = true
         let query = PFQuery(className: "UserScore")
-        query.orderByDescending("createdAt")
+        query.orderByDescending("updatedAt")
         query.whereKey("place", equalTo: self.place!)
         query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         // Limit what could be a lot of points.
@@ -434,6 +528,17 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func initView() {
+        
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (
+            geoPoint, error) -> Void in
+            if let geoPoint = geoPoint {
+                self.userGeoPoint = geoPoint
+            } else {
+                DDLogError("Could not obtain user location \(error!.localizedDescription)")
+            }
+        }
+        
+        initSearchController()
         
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(
@@ -463,6 +568,30 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 refreshControl.endRefreshing()
             }
         }
+    }
+    
+    private func initSearchController() {
+        
+        searchResultsController = UITableViewController()
+        searchResultsController.tableView.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
+        searchController = UISearchController(searchResultsController: searchResultsController)
+        
+        var textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.placeholder = "Search for crowds..."
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.searchBarStyle = .Minimal
+        navigationItem.titleView = searchController.searchBar
+        definesPresentationContext = true
+        
+        searchController.searchResultsUpdater = self
+        searchResultsController.tableView.dataSource = self
+        searchResultsController.tableView.delegate = self
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        
     }
     
     func refreshCrowdScore() {
@@ -520,6 +649,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                     waitTimeLabel.text = "Over 30 min wait"
                     waitTimeLabel.textColor = redColor
                     index++
+                } else {
+                    waitTimeImage.image = UIImage(named: "clock-white")
+                    waitTimeLabel.text = "No wait"
+                    waitTimeLabel.textColor = UIColor.whiteColor()
+                    index++
                 }
             }
             
@@ -540,6 +674,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                     coverChargeImage.image = UIImage(named: "money-red")
                     coverChargeLabel.text = "Over $10 cover"
                     coverChargeLabel.textColor = redColor
+                    index++
+                } else {
+                    coverChargeImage.image = UIImage(named: "money-white")
+                    coverChargeLabel.text = "No cover"
+                    coverChargeLabel.textColor = UIColor.whiteColor()
                     index++
                 }
             }
@@ -588,8 +727,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                     loadInitialUserCrowdScores();
                 }
             }
-            
-//            refreshCrowdScoreTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "refreshCrowdScore", userInfo: nil, repeats: true)
         }
     }
 }

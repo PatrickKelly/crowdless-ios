@@ -31,9 +31,9 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
     
     @IBOutlet var waitTimeSegment: UISegmentedControl!
     
-    var place: PFObject!
-    
     var userScore: PFObject?
+    
+    var crowdScore: PFObject?
     
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
@@ -196,11 +196,19 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         let currentUser = PFUser.currentUser()!
         score["user"] = currentUser
         score["drove"] = driveCheckbox.on
-        score["place"] = place
+        
+        if let userScore = userScore {
+            score["place"] = userScore["place"]
+        } else {
+            score["crowdScore"] = crowdScore
+            score["place"] = crowdScore!["place"]
+        }
         score["crowded"] = crowdedCheckbox.on ? 5 : 0
         
         if driveCheckbox.on {
             score["parkingDifficult"] = parkingDifficultCheckbox.on ? 5 : 0
+        } else {
+            score.removeObjectForKey("parkingDifficult")
         }
         
         score["coverCharge"] = getCoverChargeScoreFromSegmentIndex(coverChargeSegment.selectedSegmentIndex)
@@ -209,6 +217,8 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         let trimmedComment = commentTextView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         if !trimmedComment.isEmpty {
             score["comment"] = commentTextView.text
+        } else {
+            score.removeObjectForKey("comment")
         }
         
         score.saveInBackgroundWithBlock {
