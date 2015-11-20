@@ -22,7 +22,7 @@ class GooglePlacesHelper {
         if let userGeoPoint = userGeoPoint {
             params["location"] = "\(userGeoPoint.latitude),\(userGeoPoint.longitude)"
         }
-        params["radius"] = "25000"
+        params["radius"] = "4000"
         
         if (searchString == ""){
             return
