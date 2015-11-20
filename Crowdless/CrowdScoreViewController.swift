@@ -96,13 +96,18 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewWillAppear(animated: Bool) {
         
+        if !definesPresentationContext {
+            definesPresentationContext = true
+        }
+        
         isLoadingPlace = true
         userCrowdScores.removeAll()
         crowdScoresTableView.reloadData()
         
         clearView()
         
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "refreshCrowdScore", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self,
+            selector: "refreshCrowdScore", userInfo: nil, repeats: false)
         
         super.viewWillAppear(animated);
         
@@ -137,6 +142,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         } else {
             DDLogError("Reachability object is nil.")
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        definesPresentationContext = false
+        super.viewWillDisappear(animated)
     }
     
     private func clearView() {
@@ -181,12 +191,10 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if tableView == searchResultsController.tableView {
             if indexPath.row == filteredPlaces.count {
-                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("googleCell")!
+                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("poweredByGoogleCell")!
                 return cell
             } else {
-                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("searchCrowdCell")!
-                cell.textLabel?.textColor = UIColor.whiteColor()
-                cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("googlePlaceCell")!
                 let place = filteredPlaces[indexPath.row]
                 cell.textLabel!.text = place.name
                 cell.detailTextLabel?.text = place.detail
@@ -262,6 +270,15 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if tableView == searchResultsController.tableView && indexPath.row != filteredPlaces.count {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let destination: CrowdScoreViewController = storyboard.instantiateViewControllerWithIdentifier("CrowdScoreViewController")
+                as! CrowdScoreViewController
+            let index = indexPath.row
+            let filteredPlace = filteredPlaces[index]
+            destination.googlePlace = filteredPlace
+            navigationController!.pushViewController(destination, animated: true)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -276,10 +293,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             let index = crowdScoresTableView.indexPathForSelectedRow!.row
             let userCrowdScore = userCrowdScores[index]
             destination.userScore = userCrowdScore
-        } else if segue.identifier == "showCrowdScoreViewFromSearch", let destination = segue.destinationViewController as? CrowdScoreViewController  {
-                let index = searchResultsController.tableView.indexPathForSelectedRow!.row
-                let filteredPlace = filteredPlaces[index]
-                destination.googlePlace = filteredPlace
         }
     }
     
@@ -529,6 +542,9 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     
     private func initView() {
         
+        crowdScoresTableView.registerNib(UINib(nibName: "PoweredByGoogleTableViewCell", bundle: nil), forCellReuseIdentifier: "poweredByGoogleCell")
+        crowdScoresTableView.registerNib(UINib(nibName: "GooglePlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "googlePlaceCell")
+        
         PFGeoPoint.geoPointForCurrentLocationInBackground { (
             geoPoint, error) -> Void in
             if let geoPoint = geoPoint {
@@ -580,7 +596,15 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.placeholder = "Search for crowds..."
+        
+        if let place = place {
+            searchController.searchBar.placeholder = place["name"] as? String
+        } else if let googlePlaceName = googlePlace?.name {
+            searchController.searchBar.placeholder = googlePlaceName
+        } else {
+            searchController.searchBar.placeholder = "Search for crowds..."
+        }
+        
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true
         searchController.searchBar.searchBarStyle = .Minimal
@@ -590,7 +614,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         searchController.searchResultsUpdater = self
         searchResultsController.tableView.dataSource = self
         searchResultsController.tableView.delegate = self
-//        searchController.delegate = self
         searchController.searchBar.delegate = self
         
     }

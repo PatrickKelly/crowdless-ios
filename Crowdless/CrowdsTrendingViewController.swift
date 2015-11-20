@@ -48,6 +48,10 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     
     override func viewWillAppear(animated: Bool) {
         
+        if !definesPresentationContext {
+            definesPresentationContext = true
+        }
+        
         if let reachability = reachability {
             if(reachability.isReachable()) {
                 loadingSpinner.startAnimating()
@@ -62,7 +66,16 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        definesPresentationContext = false
+        super.viewWillDisappear(animated)
+    }
+    
     private func initView() {
+        
+        crowdsTableView.registerNib(UINib(nibName: "PoweredByGoogleTableViewCell", bundle: nil), forCellReuseIdentifier: "poweredByGoogleCell")
+        crowdsTableView.registerNib(UINib(nibName: "GooglePlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "googlePlaceCell")
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
         self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -198,7 +211,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if (tableView == crowdsTableView && trendingScores.count == 0) {
-            let cell: UITableViewCell = UITableViewCell()
+            let cell = UITableViewCell()
             cell.textLabel!.text = "Search For Crowds Above"
             cell.contentView.backgroundColor = UIColor.clearColor()
             cell.backgroundColor = UIColor.clearColor()
@@ -210,11 +223,9 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         var cell: UITableViewCell
         if tableView == searchResultsController.tableView {
             if indexPath.row == filteredPlaces.count {
-                cell = self.crowdsTableView.dequeueReusableCellWithIdentifier("googleCell")!
+                cell = crowdsTableView.dequeueReusableCellWithIdentifier("poweredByGoogleCell")!
             } else {
-                cell = self.crowdsTableView.dequeueReusableCellWithIdentifier("searchCrowdCell")!
-                cell.textLabel?.textColor = UIColor.whiteColor()
-                cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                cell = crowdsTableView.dequeueReusableCellWithIdentifier("googlePlaceCell")!
                 let place = filteredPlaces[indexPath.row]
                 cell.textLabel!.text = place.name
                 cell.detailTextLabel?.text = place.detail
@@ -255,6 +266,15 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if tableView == searchResultsController.tableView && indexPath.row != filteredPlaces.count {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let destination: CrowdScoreViewController = storyboard.instantiateViewControllerWithIdentifier("CrowdScoreViewController")
+                as! CrowdScoreViewController
+            let index = indexPath.row
+            let filteredPlace = self.filteredPlaces[index]
+            destination.googlePlace = filteredPlace
+            navigationController!.pushViewController(destination, animated: true)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -267,12 +287,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             destination.place = place;
             destination.crowdScore = trendingScore
             
-        } else if segue.identifier == "showCrowdScoreViewFromSearch", let destination = segue.destinationViewController as? CrowdScoreViewController  {
-            let index = searchResultsController.tableView.indexPathForSelectedRow!.row
-            let filteredPlace = self.filteredPlaces[index]
-            destination.googlePlace = filteredPlace
         }
-        
     }
     
     private func setTrendingCrowdScoreImagesForCell(trendingScore: PFObject, cell: TrendingCrowdCell) {

@@ -102,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showCrowdsTrendingViewController() {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let rootViewController = mainStoryboard.instantiateViewControllerWithIdentifier("crowdsTrendingViewController")
+        let rootViewController = mainStoryboard.instantiateViewControllerWithIdentifier("CrowdsTrendingViewController")
         let navigationController = UINavigationController(rootViewController: rootViewController)
         self.window?.rootViewController = navigationController
         

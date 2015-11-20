@@ -19,6 +19,10 @@
 		D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */; };
 		D83BD0401BFA752E00572FC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D83BD03F1BFA752E00572FC5 /* Main.storyboard */; };
 		D8488E401BFD14DA0036165D /* GooglePlacesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8488E3F1BFD14DA0036165D /* GooglePlacesHelper.swift */; };
+		D87A39BD1BFF85A000A91857 /* PoweredByGoogleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A39BB1BFF85A000A91857 /* PoweredByGoogleTableViewCell.swift */; };
+		D87A39BE1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D87A39BC1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib */; };
+		D87A39C11BFF88F700A91857 /* GooglePlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A39BF1BFF88F700A91857 /* GooglePlaceTableViewCell.swift */; };
+		D87A39C21BFF88F700A91857 /* GooglePlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D87A39C01BFF88F700A91857 /* GooglePlaceTableViewCell.xib */; };
 		D8ACEE301BF688AD00820354 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */; };
 		D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */; };
 		D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */; };
@@ -47,6 +51,10 @@
 		D834021A1BD56AFE00866495 /* Crowdless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crowdless-Bridging-Header.h"; sourceTree = "<group>"; };
 		D83BD03F1BFA752E00572FC5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D8488E3F1BFD14DA0036165D /* GooglePlacesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlacesHelper.swift; sourceTree = "<group>"; };
+		D87A39BB1BFF85A000A91857 /* PoweredByGoogleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoweredByGoogleTableViewCell.swift; sourceTree = "<group>"; };
+		D87A39BC1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PoweredByGoogleTableViewCell.xib; sourceTree = "<group>"; };
+		D87A39BF1BFF88F700A91857 /* GooglePlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceTableViewCell.swift; sourceTree = "<group>"; };
+		D87A39C01BFF88F700A91857 /* GooglePlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GooglePlaceTableViewCell.xib; sourceTree = "<group>"; };
 		D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingCrowdCell.swift; sourceTree = "<group>"; };
 		D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdScoreCell.swift; sourceTree = "<group>"; };
@@ -125,6 +133,10 @@
 				D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */,
 				D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */,
 				D8488E3F1BFD14DA0036165D /* GooglePlacesHelper.swift */,
+				D87A39BB1BFF85A000A91857 /* PoweredByGoogleTableViewCell.swift */,
+				D87A39BC1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib */,
+				D87A39BF1BFF88F700A91857 /* GooglePlaceTableViewCell.swift */,
+				D87A39C01BFF88F700A91857 /* GooglePlaceTableViewCell.xib */,
 			);
 			path = Crowdless;
 			sourceTree = "<group>";
@@ -214,8 +226,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D83BD0401BFA752E00572FC5 /* Main.storyboard in Resources */,
+				D87A39BE1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib in Resources */,
 				D8ACEE301BF688AD00820354 /* LaunchScreen.storyboard in Resources */,
 				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
+				D87A39C21BFF88F700A91857 /* GooglePlaceTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +304,7 @@
 			files = (
 				D8488E401BFD14DA0036165D /* GooglePlacesHelper.swift in Sources */,
 				D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */,
+				D87A39C11BFF88F700A91857 /* GooglePlaceTableViewCell.swift in Sources */,
 				D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */,
 				D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */,
 				D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */,
@@ -297,6 +312,7 @@
 				81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				D8F68C351BD6AC9000E03B93 /* SettingsViewController.swift in Sources */,
+				D87A39BD1BFF85A000A91857 /* PoweredByGoogleTableViewCell.swift in Sources */,
 				D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

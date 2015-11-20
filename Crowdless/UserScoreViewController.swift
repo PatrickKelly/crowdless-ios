@@ -335,24 +335,6 @@ class UserScoreViewController: UIViewController {
         self.performSegueWithIdentifier("deleteUnwindSegue", sender: self)
     }
     
-//    private func refreshUserScore() {
-//        if let reachability = reachability {
-//            if(reachability.isReachable()) {
-//                userScore.fetchInBackgroundWithBlock({
-//                    [weak self] (refreshedUserScore, error) -> Void in
-//                    if error == nil {
-//                        self?.userScore = refreshedUserScore
-//                        self?.updateView()
-//                    } else {
-//                        DDLogError("Error fetching/refreshing user score: \(error)")
-//                    }
-//                })
-//            } else {
-//                DDLogError("Not reachable.  Can't refresh user score.")
-//            }
-//        }
-//    }
-    
     private func initView() {
         
         reportActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)

@@ -84,7 +84,7 @@
         <!--Crowds Trending View Controller-->
         <scene sceneID="IZJ-7p-780">
             <objects>
-                <viewController storyboardIdentifier="crowdsTrendingViewController" id="iOA-BB-qtG" customClass="CrowdsTrendingViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CrowdsTrendingViewController" id="iOA-BB-qtG" customClass="CrowdsTrendingViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NkF-L6-MBG"/>
                         <viewControllerLayoutGuide type="bottom" id="Ppq-F4-8qr"/>
@@ -274,63 +274,6 @@
                                             <segue destination="zHE-LI-zfJ" kind="show" identifier="showCrowdScoreView" id="LrK-xC-Q66"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCrowdCell" textLabel="2gq-wy-hHe" detailTextLabel="C6t-4O-rC4" style="IBUITableViewCellStyleSubtitle" id="y6g-bP-qmt">
-                                        <rect key="frame" x="0.0" y="108" width="414" height="80"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y6g-bP-qmt" id="Aph-le-mCW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2gq-wy-hHe">
-                                                    <rect key="frame" x="15" y="23" width="32" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="C6t-4O-rC4">
-                                                    <rect key="frame" x="15" y="43" width="31" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <animations/>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <segue destination="zHE-LI-zfJ" kind="show" identifier="showCrowdScoreViewFromSearch" id="0nD-4f-yqF"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="googleCell" id="zqi-l0-xBs">
-                                        <rect key="frame" x="0.0" y="188" width="414" height="80"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zqi-l0-xBs" id="Mfg-xP-vbI">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="powered_by_google_on_non_white" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-Hz-E8V">
-                                                    <rect key="frame" x="135" y="31" width="144" height="18"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="144" id="1BF-oo-ZMd"/>
-                                                        <constraint firstAttribute="height" constant="18" id="CA3-6H-MhZ"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstItem="dhg-Hz-E8V" firstAttribute="centerY" secondItem="Mfg-xP-vbI" secondAttribute="centerY" id="TwP-Eh-VIj"/>
-                                                <constraint firstItem="dhg-Hz-E8V" firstAttribute="centerX" secondItem="Mfg-xP-vbI" secondAttribute="centerX" id="vj4-Gb-xTO"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="iOA-BB-qtG" id="t6p-D7-MBl"/>
@@ -385,7 +328,7 @@
         <!--Crowd Score View Controller-->
         <scene sceneID="xIb-F0-WeH">
             <objects>
-                <viewController id="zHE-LI-zfJ" customClass="CrowdScoreViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CrowdScoreViewController" id="zHE-LI-zfJ" customClass="CrowdScoreViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="htV-cv-Xen"/>
                         <viewControllerLayoutGuide type="bottom" id="k6n-8y-mmd"/>
@@ -685,63 +628,6 @@
                                             <outlet property="userScoreThirdImage" destination="idD-7h-UiO" id="iAA-bG-FOl"/>
                                             <segue destination="xc3-1n-98r" kind="show" identifier="showUserScoreView" id="gRJ-PJ-Zuo"/>
                                         </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCrowdCell" textLabel="zbr-cw-4Ae" detailTextLabel="Lf6-vC-Rpn" style="IBUITableViewCellStyleSubtitle" id="sOB-ZQ-w64">
-                                        <rect key="frame" x="0.0" y="356" width="414" height="90"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sOB-ZQ-w64" id="Iov-sT-H4X">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zbr-cw-4Ae">
-                                                    <rect key="frame" x="15" y="28" width="32" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lf6-vC-Rpn">
-                                                    <rect key="frame" x="15" y="48" width="31" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <animations/>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <segue destination="zHE-LI-zfJ" kind="show" identifier="showCrowdScoreViewFromSearch" id="G4I-K1-IFY"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="googleCell" id="xvI-nD-fRq">
-                                        <rect key="frame" x="0.0" y="446" width="414" height="90"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xvI-nD-fRq" id="hWt-LI-kry">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="powered_by_google_on_non_white" translatesAutoresizingMaskIntoConstraints="NO" id="oag-l8-tWE">
-                                                    <rect key="frame" x="135" y="31" width="144" height="18"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="144" id="4gK-zI-b2S"/>
-                                                        <constraint firstAttribute="height" constant="18" id="hgi-3S-WbM"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstItem="oag-l8-tWE" firstAttribute="centerY" secondItem="hWt-LI-kry" secondAttribute="centerY" id="Stj-0y-lTY"/>
-                                                <constraint firstItem="oag-l8-tWE" firstAttribute="centerX" secondItem="hWt-LI-kry" secondAttribute="centerX" id="eqd-4g-Xxi"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -1547,13 +1433,11 @@
         <image name="money-green" width="256" height="256"/>
         <image name="people-add" width="53" height="44"/>
         <image name="people-green" width="172" height="144"/>
-        <image name="powered_by_google_on_non_white" width="144" height="18"/>
         <image name="white-delete" width="17" height="17"/>
         <image name="white-edit" width="17" height="17"/>
         <image name="white-outline-star" width="17" height="17"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Og3-is-ZNY"/>
-        <segue reference="0nD-4f-yqF"/>
     </inferredMetricsTieBreakers>
 </document>
