@@ -60,10 +60,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         }
         
         super.viewWillAppear(animated)
-        
-        if let indexPath = crowdsTableView.indexPathForSelectedRow {
-            crowdsTableView.deselectRowAtIndexPath(indexPath, animated: false)
-        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -72,9 +68,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     private func initView() {
-        
-        crowdsTableView.registerNib(UINib(nibName: "PoweredByGoogleTableViewCell", bundle: nil), forCellReuseIdentifier: "poweredByGoogleCell")
-        crowdsTableView.registerNib(UINib(nibName: "GooglePlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "googlePlaceCell")
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
         self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
@@ -109,6 +102,9 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         searchResultsController.tableView.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
         searchController = UISearchController(searchResultsController: searchResultsController)
         searchResultsController.tableView.rowHeight = 50
+        
+        searchResultsController.tableView.registerNib(UINib(nibName: "PoweredByGoogleTableViewCell", bundle: nil), forCellReuseIdentifier: "poweredByGoogleCell")
+        searchResultsController.tableView.registerNib(UINib(nibName: "GooglePlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "googlePlaceCell")
         
         let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
@@ -223,9 +219,9 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         var cell: UITableViewCell
         if tableView == searchResultsController.tableView {
             if indexPath.row == filteredPlaces.count {
-                cell = crowdsTableView.dequeueReusableCellWithIdentifier("poweredByGoogleCell")!
+                cell = searchResultsController.tableView.dequeueReusableCellWithIdentifier("poweredByGoogleCell")!
             } else {
-                cell = crowdsTableView.dequeueReusableCellWithIdentifier("googlePlaceCell")!
+                cell = searchResultsController.tableView.dequeueReusableCellWithIdentifier("googlePlaceCell")!
                 let place = filteredPlaces[indexPath.row]
                 cell.textLabel!.text = place.name
                 cell.detailTextLabel?.text = place.detail

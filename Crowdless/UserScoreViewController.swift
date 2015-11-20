@@ -12,7 +12,8 @@ import ParseUI
 import ReachabilitySwift
 import CocoaLumberjack
 
-class UserScoreViewController: UIViewController {
+class UserScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
+UISearchResultsUpdating, UISearchBarDelegate {
     
     var userScore: PFObject!
     var userScorePeerComment: PFObject!
@@ -36,6 +37,13 @@ class UserScoreViewController: UIViewController {
     @IBOutlet var helpful: UILabel!
     @IBOutlet var deleteScoreButton: UIButton!
     @IBOutlet var editScoreButton: UIButton!
+    
+    //for Google places search
+    private var filteredPlaces = [Place]()
+    private var searchResultsController: UITableViewController!
+    private var userGeoPoint: PFGeoPoint?
+    private let googlePlacesHelper = GooglePlacesHelper()
+    private var searchController:UISearchController!
     
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     private var reportActionSheet: UIAlertController!
@@ -64,9 +72,72 @@ class UserScoreViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
+        if !definesPresentationContext {
+            definesPresentationContext = true
+        }
+        
         updateView();
         
         super.viewWillAppear(animated);
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        definesPresentationContext = false
+        super.viewWillDisappear(animated)
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let reachability = reachability {
+            if(reachability.isReachable()) {
+                googlePlacesHelper.getPlacesInBackgroundWithBlock(searchController.searchBar.text!, userGeoPoint: userGeoPoint,
+                    results: { placesPredictions -> () in
+                        self.filteredPlaces = placesPredictions
+                        self.searchResultsController.tableView.reloadData()
+                })
+            }
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        self.navigationItem.setHidesBackButton(true, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+        self.navigationItem.setHidesBackButton(false, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredPlaces.count + 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        if indexPath.row == filteredPlaces.count {
+            let cell = searchResultsController.tableView.dequeueReusableCellWithIdentifier("poweredByGoogleCell")!
+            return cell
+        } else {
+            let cell = searchResultsController.tableView.dequeueReusableCellWithIdentifier("googlePlaceCell")!
+            let place = filteredPlaces[indexPath.row]
+            cell.textLabel!.text = place.name
+            cell.detailTextLabel?.text = place.detail
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if indexPath.row != filteredPlaces.count {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let destination: CrowdScoreViewController = storyboard.instantiateViewControllerWithIdentifier("CrowdScoreViewController")
+                as! CrowdScoreViewController
+            let index = indexPath.row
+            let filteredPlace = filteredPlaces[index]
+            destination.googlePlace = filteredPlace
+            navigationController!.pushViewController(destination, animated: true)
+        }
     }
     
     private func retrieveUserScorePeerComment() {
@@ -337,6 +408,17 @@ class UserScoreViewController: UIViewController {
     
     private func initView() {
         
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (
+            geoPoint, error) -> Void in
+            if let geoPoint = geoPoint {
+                self.userGeoPoint = geoPoint
+            } else {
+                DDLogError("Could not obtain user location \(error!.localizedDescription)")
+            }
+        }
+        
+        initSearchController()
+        
         reportActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let offensive = UIAlertAction(title: "Offensive", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -391,5 +473,32 @@ class UserScoreViewController: UIViewController {
         reportButton.setImage(UIImage(named: "flag-white"), forState: .Normal)
         reportButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         reportButton.setTitle("Report", forState: .Normal)
+    }
+    
+    private func initSearchController() {
+        
+        searchResultsController = UITableViewController()
+        searchResultsController.tableView.backgroundColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
+        searchController = UISearchController(searchResultsController: searchResultsController)
+        searchResultsController.tableView.rowHeight = 50
+        
+        searchResultsController.tableView.registerNib(UINib(nibName: "PoweredByGoogleTableViewCell", bundle: nil), forCellReuseIdentifier: "poweredByGoogleCell")
+        searchResultsController.tableView.registerNib(UINib(nibName: "GooglePlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "googlePlaceCell")
+        
+        let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.placeholder = "Search for crowds..."
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.searchBarStyle = .Minimal
+        navigationItem.titleView = searchController.searchBar
+        definesPresentationContext = true
+        
+        searchController.searchResultsUpdater = self
+        searchResultsController.tableView.dataSource = self
+        searchResultsController.tableView.delegate = self
+        searchController.searchBar.delegate = self
+        
     }
 }

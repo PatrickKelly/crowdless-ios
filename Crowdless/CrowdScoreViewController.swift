@@ -38,6 +38,8 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     private var filteredPlaces = [Place]()
     private var searchResultsController: UITableViewController!
     private var userGeoPoint: PFGeoPoint?
+    private var searchController:UISearchController!
+    private let googlePlacesHelper = GooglePlacesHelper()
     
     private var refreshControl:UIRefreshControl!
     private var userCrowdScores = [PFObject]()
@@ -49,13 +51,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
     private var refreshCrowdScoreTimer: NSTimer?
-    private var searchController:UISearchController!
     
     private let greenColor = UIColor(red: 123/255, green: 191/255, blue: 106/255, alpha: 1.0)
     private let yellowColor = UIColor(red: 254/255, green: 215/255, blue: 0/255, alpha: 1.0)
     private let redColor = UIColor(red: 224/255, green: 64/255, blue: 51/255, alpha: 1.0)
     
-    private let googlePlacesHelper = GooglePlacesHelper()
     private var reachability: Reachability?
     
     override func viewDidLoad() {
@@ -191,10 +191,10 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if tableView == searchResultsController.tableView {
             if indexPath.row == filteredPlaces.count {
-                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("poweredByGoogleCell")!
+                let cell = searchResultsController.tableView.dequeueReusableCellWithIdentifier("poweredByGoogleCell")!
                 return cell
             } else {
-                let cell = crowdScoresTableView.dequeueReusableCellWithIdentifier("googlePlaceCell")!
+                let cell = searchResultsController.tableView.dequeueReusableCellWithIdentifier("googlePlaceCell")!
                 let place = filteredPlaces[indexPath.row]
                 cell.textLabel!.text = place.name
                 cell.detailTextLabel?.text = place.detail
@@ -542,9 +542,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     
     private func initView() {
         
-        crowdScoresTableView.registerNib(UINib(nibName: "PoweredByGoogleTableViewCell", bundle: nil), forCellReuseIdentifier: "poweredByGoogleCell")
-        crowdScoresTableView.registerNib(UINib(nibName: "GooglePlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "googlePlaceCell")
-        
         PFGeoPoint.geoPointForCurrentLocationInBackground { (
             geoPoint, error) -> Void in
             if let geoPoint = geoPoint {
@@ -593,18 +590,13 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         searchController = UISearchController(searchResultsController: searchResultsController)
         searchResultsController.tableView.rowHeight = 50
         
+        searchResultsController.tableView.registerNib(UINib(nibName: "PoweredByGoogleTableViewCell", bundle: nil), forCellReuseIdentifier: "poweredByGoogleCell")
+        searchResultsController.tableView.registerNib(UINib(nibName: "GooglePlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "googlePlaceCell")
+        
         let textFieldInsideSearchBar = searchController.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
         searchController.searchBar.sizeToFit()
-        
-        if let place = place {
-            searchController.searchBar.placeholder = place["name"] as? String
-        } else if let googlePlaceName = googlePlace?.name {
-            searchController.searchBar.placeholder = googlePlaceName
-        } else {
-            searchController.searchBar.placeholder = "Search for crowds..."
-        }
-        
+        searchController.searchBar.placeholder = "Search for crowds..."
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true
         searchController.searchBar.searchBarStyle = .Minimal
