@@ -60,12 +60,15 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             }
         }
         
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         let coachMarksShown = NSUserDefaults.standardUserDefaults().boolForKey("CrowdsTrendingTutorialShown")
         if coachMarksShown == false {
             displayCoachMarks()
         }
-        
-        super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(animated: Bool) {

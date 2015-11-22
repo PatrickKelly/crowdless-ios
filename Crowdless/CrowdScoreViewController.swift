@@ -74,6 +74,14 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         initView()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let coachMarksShown = NSUserDefaults.standardUserDefaults().boolForKey("CrowdScoreTutorialShown")
+        if coachMarksShown == false {
+            displayCoachMarks()
+        }
+    }
+    
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if let reachability = reachability {
             if(reachability.isReachable()) {
@@ -113,11 +121,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             selector: "refreshCrowdScore", userInfo: nil, repeats: false)
         
         super.viewWillAppear(animated);
-        
-        let coachMarksShown = NSUserDefaults.standardUserDefaults().boolForKey("CrowdScoreTutorialShown")
-        if coachMarksShown == false {
-            displayCoachMarks()
-        }
         
         if let reachability = reachability {
             if(reachability.isReachable()) {
@@ -163,13 +166,13 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         NSUserDefaults.standardUserDefaults().synchronize()
         
         let crowdScoreSummaryViewFrame = navigationController!.view.convertRect(crowdScoreSummaryView.frame, fromView: crowdScoreSummaryView)
-        let crowdScoreSummarySeparatorFrame = navigationController!.view.convertRect(crowdScoreSummarySeparator.frame, fromView: crowdScoreSummaryView)
+        let crowdScoreSummarySeparatorFrame = navigationController!.view.convertRect(crowdScoreSummarySeparator.frame, fromView: crowdScoreSummarySeparator.superview)
         
-        let crowdScoreSummaryMark = CGRect(origin: crowdScoresTableView.frame.origin, size: CGSize(width: crowdScoresTableView.frame.width, height: crowdScoreSummarySeparatorFrame.origin.y - crowdScoresTableView.frame.origin.y))
+        let crowdScoreSummaryMark = CGRect(origin: crowdScoreSummaryViewFrame.origin, size: CGSize(width: crowdScoreSummaryViewFrame.width, height: crowdScoreSummarySeparatorFrame.origin.y - crowdScoreSummaryViewFrame.origin.y))
         
-        let crowdScoreButtonMark = CGRect(origin: CGPoint(x: crowdScoresTableView.frame.origin.x, y: crowdScoreSummarySeparatorFrame.origin.y), size: CGSize(width: crowdScoresTableView.frame.width, height: 65))
+        let crowdScoreButtonMark = CGRect(origin: crowdScoreSummarySeparatorFrame.origin, size: CGSize(width: crowdScoreSummarySeparatorFrame.width, height: (crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y) - crowdScoreSummarySeparatorFrame.origin.y))
         
-        let recentScoresMark = CGRect(origin: CGPoint(x: crowdScoresTableView.frame.origin.x, y: crowdScoreSummarySeparatorFrame.origin.y + 65), size: CGSize(width: crowdScoresTableView.frame.width, height: navigationController!.view.frame.height - crowdScoreSummaryViewFrame.height))
+        let recentScoresMark = CGRect(origin: CGPoint(x: crowdScoresTableView.frame.origin.x, y: crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y), size: CGSize(width: crowdScoresTableView.frame.width, height: navigationController!.view.frame.height - (crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y)))
         
         let coachMarks = [["rect": NSValue(CGRect: crowdScoreSummaryMark), "caption": "View The Crowd Summary For This Place...", "showArrow": true], ["rect": NSValue(CGRect: crowdScoreButtonMark), "caption": "...Score This Crowd...", "showArrow": true], ["rect": NSValue(CGRect: recentScoresMark), "caption": "...And View Other People's Scores!", "showArrow": true, "position": LabelPosition.LABEL_POSITION_TOP.rawValue]]
         let coachMarksView = MPCoachMarks(frame: navigationController!.view.bounds, coachMarks: coachMarks)
