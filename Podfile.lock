@@ -24,6 +24,7 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.7.1):
     - FBSDKCoreKit
+  - MPCoachMarks (0.0.10)
   - Parse (1.9.1):
     - Bolts/Tasks (>= 1.4.0)
   - ParseCrashReporting (1.9.1):
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - CocoaLumberjack/Swift
   - FBSDKCoreKit (~> 4.7)
   - FBSDKLoginKit (~> 4.7)
+  - MPCoachMarks
   - Parse (~> 1.9)
   - ParseCrashReporting (~> 1.9)
   - ParseFacebookUtilsV4 (~> 1.9)
@@ -66,6 +68,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
   FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
+  MPCoachMarks: a398633622eff4ccd2902a1b8747c9053d9670bb
   Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b
   ParseCrashReporting: c5ea641e698d576f081f080dff06877ef831d30a
   ParseFacebookUtilsV4: aadebfaaaf4a45bf0a0992863bf48c8fc49189e3

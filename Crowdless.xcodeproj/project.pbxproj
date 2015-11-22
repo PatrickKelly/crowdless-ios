@@ -23,6 +23,9 @@
 		D87A39BE1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D87A39BC1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib */; };
 		D87A39C11BFF88F700A91857 /* GooglePlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A39BF1BFF88F700A91857 /* GooglePlaceTableViewCell.swift */; };
 		D87A39C21BFF88F700A91857 /* GooglePlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D87A39C01BFF88F700A91857 /* GooglePlaceTableViewCell.xib */; };
+		D87A39C61C0236C500A91857 /* Comfortaa-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D87A39C31C0236C500A91857 /* Comfortaa-Bold.ttf */; };
+		D87A39C71C0236C500A91857 /* Comfortaa-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D87A39C41C0236C500A91857 /* Comfortaa-Light.ttf */; };
+		D87A39C81C0236C500A91857 /* Comfortaa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D87A39C51C0236C500A91857 /* Comfortaa-Regular.ttf */; };
 		D8ACEE301BF688AD00820354 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */; };
 		D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */; };
 		D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */; };
@@ -55,6 +58,9 @@
 		D87A39BC1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PoweredByGoogleTableViewCell.xib; sourceTree = "<group>"; };
 		D87A39BF1BFF88F700A91857 /* GooglePlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePlaceTableViewCell.swift; sourceTree = "<group>"; };
 		D87A39C01BFF88F700A91857 /* GooglePlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GooglePlaceTableViewCell.xib; sourceTree = "<group>"; };
+		D87A39C31C0236C500A91857 /* Comfortaa-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comfortaa-Bold.ttf"; sourceTree = "<group>"; };
+		D87A39C41C0236C500A91857 /* Comfortaa-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comfortaa-Light.ttf"; sourceTree = "<group>"; };
+		D87A39C51C0236C500A91857 /* Comfortaa-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comfortaa-Regular.ttf"; sourceTree = "<group>"; };
 		D8ACEE2F1BF688AD00820354 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingCrowdCell.swift; sourceTree = "<group>"; };
 		D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdScoreCell.swift; sourceTree = "<group>"; };
@@ -92,6 +98,9 @@
 		814C3AC51B69877600E307BB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D87A39C31C0236C500A91857 /* Comfortaa-Bold.ttf */,
+				D87A39C41C0236C500A91857 /* Comfortaa-Light.ttf */,
+				D87A39C51C0236C500A91857 /* Comfortaa-Regular.ttf */,
 				814C3AC81B69877600E307BB /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
 			);
@@ -227,7 +236,10 @@
 			files = (
 				D83BD0401BFA752E00572FC5 /* Main.storyboard in Resources */,
 				D87A39BE1BFF85A000A91857 /* PoweredByGoogleTableViewCell.xib in Resources */,
+				D87A39C61C0236C500A91857 /* Comfortaa-Bold.ttf in Resources */,
 				D8ACEE301BF688AD00820354 /* LaunchScreen.storyboard in Resources */,
+				D87A39C81C0236C500A91857 /* Comfortaa-Regular.ttf in Resources */,
+				D87A39C71C0236C500A91857 /* Comfortaa-Light.ttf in Resources */,
 				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
 				D87A39C21BFF88F700A91857 /* GooglePlaceTableViewCell.xib in Resources */,
 			);

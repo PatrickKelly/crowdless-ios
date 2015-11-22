@@ -13,3 +13,4 @@ pod 'CocoaLumberjack/Swift'
 
 pod 'ReachabilitySwift', git: 'https://github.com/ashleymills/Reachability.swift'
 pod 'BEMCheckBox'
+pod 'MPCoachMarks'

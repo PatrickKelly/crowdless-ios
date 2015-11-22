@@ -661,12 +661,14 @@
                         <outlet property="crowdScoreImage" destination="m2g-9K-B71" id="esg-LH-gLp"/>
                         <outlet property="crowdScoreSecondImage" destination="Ukj-0W-Iwq" id="jTc-8P-Bzu"/>
                         <outlet property="crowdScoreSecondLabel" destination="ndD-IP-sD7" id="ZnB-e3-WxW"/>
+                        <outlet property="crowdScoreSummarySeparator" destination="835-mQ-jSh" id="e3t-73-PBZ"/>
                         <outlet property="crowdScoreSummaryView" destination="Nrh-pu-e8q" id="nhr-8Y-nd7"/>
                         <outlet property="crowdScoreThirdImage" destination="czb-nE-ErA" id="dZJ-Ch-YWp"/>
                         <outlet property="crowdScoreThirdLabel" destination="F5s-aU-74d" id="Rsb-96-sh8"/>
                         <outlet property="crowdScoresTableView" destination="jzj-v3-16W" id="hgI-qG-Gl7"/>
                         <outlet property="detail" destination="Bmg-1w-nrR" id="0gm-ps-iDC"/>
                         <outlet property="name" destination="N1D-gd-Tey" id="uld-dZ-0PY"/>
+                        <outlet property="scoreButton" destination="ypj-PJ-Ikt" id="ONP-7r-72l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dTd-FD-lXA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1311,7 +1313,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crowdless-trending-200" translatesAutoresizingMaskIntoConstraints="NO" id="LkH-tq-Nky" customClass="PFImageView">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="crowdless-trending-200" translatesAutoresizingMaskIntoConstraints="NO" id="LkH-tq-Nky" customClass="PFImageView">
                                 <rect key="frame" x="107" y="129" width="200" height="200"/>
                                 <animations/>
                                 <constraints>
@@ -1343,7 +1345,7 @@
                                     <action selector="logoutButtonPressed:" destination="M9G-vm-YR1" eventType="touchUpInside" id="y73-R7-pfP"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zm8-dv-YRS">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="User Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zm8-dv-YRS">
                                 <rect key="frame" x="20" y="350" width="374" height="35"/>
                                 <animations/>
                                 <constraints>

@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import ReachabilitySwift
 import CocoaLumberjack
+import MPCoachMarks
 
 class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
     UISearchResultsUpdating, UISearchBarDelegate {
@@ -23,6 +24,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet var name: UILabel!
     @IBOutlet var detail: UILabel!
     
+    @IBOutlet var scoreButton: UIButton!
     @IBOutlet var crowdScoreImage: UIImageView!
     @IBOutlet var crowdScoreFirstImage: UIImageView!
     @IBOutlet var crowdScoreSecondImage: UIImageView!
@@ -32,6 +34,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet var crowdScoreSecondLabel: UILabel!
     @IBOutlet var crowdScoreThirdLabel: UILabel!
     
+    @IBOutlet var crowdScoreSummarySeparator: UILabel!
     @IBOutlet var crowdScoresTableView: UITableView!
     
     //for Google places search
@@ -111,6 +114,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         
         super.viewWillAppear(animated);
         
+        let coachMarksShown = NSUserDefaults.standardUserDefaults().boolForKey("CrowdScoreTutorialShown")
+        if coachMarksShown == false {
+            displayCoachMarks()
+        }
+        
         if let reachability = reachability {
             if(reachability.isReachable()) {
                 loadingSpinner.startAnimating()
@@ -147,6 +155,28 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillDisappear(animated: Bool) {
         definesPresentationContext = false
         super.viewWillDisappear(animated)
+    }
+    
+    private func displayCoachMarks() {
+        
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "CrowdScoreTutorialShown")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        let crowdScoreSummaryViewFrame = navigationController!.view.convertRect(crowdScoreSummaryView.frame, fromView: crowdScoreSummaryView)
+        let crowdScoreSummarySeparatorFrame = navigationController!.view.convertRect(crowdScoreSummarySeparator.frame, fromView: crowdScoreSummaryView)
+        
+        let crowdScoreSummaryMark = CGRect(origin: crowdScoresTableView.frame.origin, size: CGSize(width: crowdScoresTableView.frame.width, height: crowdScoreSummarySeparatorFrame.origin.y - crowdScoresTableView.frame.origin.y))
+        
+        let crowdScoreButtonMark = CGRect(origin: CGPoint(x: crowdScoresTableView.frame.origin.x, y: crowdScoreSummarySeparatorFrame.origin.y), size: CGSize(width: crowdScoresTableView.frame.width, height: 65))
+        
+        let recentScoresMark = CGRect(origin: CGPoint(x: crowdScoresTableView.frame.origin.x, y: crowdScoreSummarySeparatorFrame.origin.y + 65), size: CGSize(width: crowdScoresTableView.frame.width, height: navigationController!.view.frame.height - crowdScoreSummaryViewFrame.height))
+        
+        let coachMarks = [["rect": NSValue(CGRect: crowdScoreSummaryMark), "caption": "View The Crowd Summary For This Place...", "showArrow": true], ["rect": NSValue(CGRect: crowdScoreButtonMark), "caption": "...Score This Crowd...", "showArrow": true], ["rect": NSValue(CGRect: recentScoresMark), "caption": "...And View Other People's Scores!", "showArrow": true, "position": LabelPosition.LABEL_POSITION_TOP.rawValue]]
+        let coachMarksView = MPCoachMarks(frame: navigationController!.view.bounds, coachMarks: coachMarks)
+        coachMarksView.maskColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.9)
+        coachMarksView.lblCaption.font = UIFont(name:"Comfortaa", size: 24)
+        navigationController!.view.addSubview(coachMarksView)
+        coachMarksView.start()
     }
     
     private func clearView() {

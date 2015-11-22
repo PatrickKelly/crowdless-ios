@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import ReachabilitySwift
 import CocoaLumberjack
+import MPCoachMarks
 
 public let ErrorDomain: String! = "CrowdsTrendingViewControllerErrorDomain"
 
@@ -59,6 +60,11 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             }
         }
         
+        let coachMarksShown = NSUserDefaults.standardUserDefaults().boolForKey("CrowdsTrendingTutorialShown")
+        if coachMarksShown == false {
+            displayCoachMarks()
+        }
+        
         super.viewWillAppear(animated)
     }
     
@@ -67,10 +73,24 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         super.viewWillDisappear(animated)
     }
     
+    private func displayCoachMarks() {
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "CrowdsTrendingTutorialShown")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        let searchCoachMark = navigationController!.navigationBar.frame
+        let crowdsTableFrame = crowdsTableView.frame
+        let crowdsTableMark = CGRect(origin: crowdsTableView.frame.origin, size: CGSize(width: crowdsTableFrame.width, height: 180))
+        let coachMarks = [["rect": NSValue(CGRect: crowdsTableMark), "caption": "Browse Trending Crowds Around You...", "showArrow": true], ["rect": NSValue(CGRect: searchCoachMark), "caption": "... Or Search For Nearby Crowds!", "showArrow": true]]
+        let coachMarksView = MPCoachMarks(frame: navigationController!.view.bounds, coachMarks: coachMarks)
+        coachMarksView.maskColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.9)
+        coachMarksView.lblCaption.font = UIFont(name:"Comfortaa", size: 24)
+        navigationController!.view.addSubview(coachMarksView)
+        coachMarksView.start()
+    }
+    
     private func initView() {
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
-        self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         
@@ -359,11 +379,11 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                 // Create a query for places
                 let innerQuery = PFQuery(className:"Place")
                 // Interested in locations near user.
-                innerQuery.whereKey("coordinates", nearGeoPoint: geoPoint, withinMiles: 15)
+                innerQuery.whereKey("coordinates", nearGeoPoint: geoPoint, withinMiles: 5)
                 let query = PFQuery(className: "CrowdScore")
                 query.whereKey("place", matchesQuery: innerQuery)
                 query.includeKey("place")
-                query.orderByDescending("recentUserScoreCount,updatedAt")
+                query.orderByDescending("recentUserScoreCount")
                 query.limit = self.resultsPageLimit
                 // Final list of objects
                 query.findObjectsInBackgroundWithBlock({ (
@@ -412,11 +432,11 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             self.isLoadingPlaces = true
             let innerQuery = PFQuery(className:"Place")
             // Interested in locations near user.
-            innerQuery.whereKey("coordinates", nearGeoPoint: self.userGeoPoint!, withinMiles: 15)
+            innerQuery.whereKey("coordinates", nearGeoPoint: self.userGeoPoint!, withinMiles: 5)
             let query = PFQuery(className: "CrowdScore")
             query.whereKey("place", matchesQuery: innerQuery)
             query.includeKey("place")
-            query.orderByDescending("recentUserScoreCount,updatedAt")
+            query.orderByDescending("recentUserScoreCount")
             query.limit = self.resultsPageLimit
             query.skip = currentPage * resultsPageLimit;
             // Final list of objects
