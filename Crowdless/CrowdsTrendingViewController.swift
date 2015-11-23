@@ -98,6 +98,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UITextField.appearance().keyboardAppearance = .Dark
         
         initSearchController()
         
@@ -143,6 +144,8 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         searchResultsController.tableView.dataSource = self
         searchResultsController.tableView.delegate = self
         searchController.searchBar.delegate = self
+        
+        searchController.loadViewIfNeeded() // iOS 9 bug with search controller
         
     }
     

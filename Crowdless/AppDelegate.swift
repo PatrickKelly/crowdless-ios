@@ -20,7 +20,7 @@ import CocoaLumberjack
 // import ParseCrashReporting
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
     
     var window: UIWindow?
     
@@ -102,13 +102,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showCrowdsTrendingViewController() {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let rootViewController = mainStoryboard.instantiateViewControllerWithIdentifier("CrowdsTrendingViewController")
-        let navigationController = UINavigationController(rootViewController: rootViewController)
-        self.window?.rootViewController = navigationController
+        let rootViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainTabBarController") as! UITabBarController
+        rootViewController.delegate = self
+        self.window?.rootViewController = rootViewController
         
         UIView.transitionWithView(self.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in
-            self.window?.rootViewController = navigationController
+            self.window?.rootViewController = rootViewController
             }, completion: nil)
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if let navigationController = viewController as? UINavigationController {
+            navigationController.popToRootViewControllerAnimated(true)
+        }
     }
     
     func showLoginScreen() {

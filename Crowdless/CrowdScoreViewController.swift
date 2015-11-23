@@ -641,6 +641,8 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         searchResultsController.tableView.delegate = self
         searchController.searchBar.delegate = self
         
+        searchController.loadViewIfNeeded() // iOS 9 bug with search controller
+        
     }
     
     func refreshCrowdScore() {
