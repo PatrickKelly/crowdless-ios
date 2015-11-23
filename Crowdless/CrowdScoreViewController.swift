@@ -105,6 +105,12 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         self.navigationItem.setHidesBackButton(false, animated: true)
     }
     
+    @IBAction func scoreButtonClicked(sender: AnyObject) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let scorecardViewController = storyboard.instantiateViewControllerWithIdentifier("ScorecardViewController") as! ScorecardViewController
+        scorecardViewController.crowdScore = crowdScore
+        self.presentViewController(scorecardViewController, animated: true, completion: nil)
+    }
     override func viewWillAppear(animated: Bool) {
         
         if !definesPresentationContext {
@@ -320,9 +326,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showScorecardView", let destination = segue.destinationViewController as? ScorecardViewController {
-            destination.crowdScore = crowdScore
-        } else if segue.identifier == "showUserScoreView", let destination = segue.destinationViewController as? UserScoreViewController {
+        if segue.identifier == "showUserScoreView", let destination = segue.destinationViewController as? UserScoreViewController {
             let index = crowdScoresTableView.indexPathForSelectedRow!.row
             let userCrowdScore = userCrowdScores[index]
             destination.userScore = userCrowdScore

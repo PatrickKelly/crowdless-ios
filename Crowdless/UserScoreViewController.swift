@@ -334,6 +334,14 @@ UISearchResultsUpdating, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func editButtonPressed(sender: AnyObject) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let scorecardViewController = storyboard.instantiateViewControllerWithIdentifier("ScorecardViewController") as! ScorecardViewController
+        scorecardViewController.userScore = userScore
+        self.presentViewController(scorecardViewController, animated: true, completion: nil)
+    }
+    
     @IBAction func deleteButtonPressed(sender: AnyObject) {
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             let popPresenter: UIPopoverPresentationController = deleteActionSheet.popoverPresentationController!
@@ -368,12 +376,6 @@ UISearchResultsUpdating, UISearchBarDelegate {
             }
             
             self.presentViewController(reportActionSheet, animated: true, completion: nil)
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "editScoreSegue", let destination = segue.destinationViewController as? ScorecardViewController {
-            destination.userScore = userScore
         }
     }
     

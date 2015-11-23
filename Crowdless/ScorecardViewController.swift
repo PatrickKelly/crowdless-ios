@@ -11,7 +11,7 @@ import Parse
 import BEMCheckBox
 import CocoaLumberjack
 
-class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBoxDelegate {
+class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBoxDelegate, UINavigationBarDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
     
@@ -31,6 +31,8 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
     
     @IBOutlet var waitTimeSegment: UISegmentedControl!
     
+    @IBOutlet var navigationBar: UINavigationBar!
+    
     var userScore: PFObject?
     
     var crowdScore: PFObject?
@@ -42,6 +44,15 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         }
     }
     
+    
+    @IBAction func scoreButtonPressed(sender: AnyObject) {
+        saveScore()
+                dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func cancelButtonPressed(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -166,7 +177,17 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
         commentTextView.endEditing(true)
     }
     
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     private func initView() {
+        
+        navigationBar.delegate = self
         
         commentTextView.layer.cornerRadius = 5
         commentTextView.layer.borderColor = UIColor(red: 85/255, green: 85/255, blue: 85/255, alpha: 1.0).CGColor

@@ -97,8 +97,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <animations/>
                             </imageView>
-                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eWW-hA-tvJ">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eWW-hA-tvJ">
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -292,7 +292,6 @@
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="top" secondItem="OHI-h0-G04" secondAttribute="topMargin" id="NCY-83-cyS"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="WXI-gs-o1m"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eWW-hA-tvJ" secondAttribute="trailing" constant="-20" id="bcy-1M-7qc"/>
-                            <constraint firstItem="lOe-8a-cyg" firstAttribute="centerY" secondItem="OHI-h0-G04" secondAttribute="centerY" id="erL-uN-AAv"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="leading" secondItem="OHI-h0-G04" secondAttribute="leadingMargin" constant="-20" id="qbk-aZ-Ajh"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="z23-5Z-FUQ"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="centerX" secondItem="OHI-h0-G04" secondAttribute="centerX" id="zhs-Nn-W2b"/>
@@ -341,8 +340,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <animations/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jzj-v3-16W">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jzj-v3-16W">
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Nrh-pu-e8q">
@@ -478,7 +477,7 @@
                                                 </mask>
                                             </variation>
                                             <connections>
-                                                <segue destination="fnc-X7-APY" kind="show" identifier="showScorecardView" id="Og3-is-ZNY"/>
+                                                <action selector="scoreButtonClicked:" destination="zHE-LI-zfJ" eventType="touchUpInside" id="NRi-Ba-Crv"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -645,7 +644,6 @@
                             <constraint firstItem="jzj-v3-16W" firstAttribute="leading" secondItem="pke-cz-Xqr" secondAttribute="leadingMargin" constant="-20" id="d2H-rT-lop"/>
                             <constraint firstItem="2fx-4J-A8k" firstAttribute="centerX" secondItem="pke-cz-Xqr" secondAttribute="centerX" id="day-65-r8P"/>
                             <constraint firstItem="k6n-8y-mmd" firstAttribute="top" secondItem="jzj-v3-16W" secondAttribute="bottom" id="hZ8-5V-AIh"/>
-                            <constraint firstItem="2fx-4J-A8k" firstAttribute="centerY" secondItem="pke-cz-Xqr" secondAttribute="centerY" id="qpB-Xd-FdZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2fx-4J-A8k" secondAttribute="trailing" constant="-20" id="r9V-1v-pEP"/>
                             <constraint firstItem="k6n-8y-mmd" firstAttribute="top" secondItem="2fx-4J-A8k" secondAttribute="bottom" id="sfA-Nb-ge4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jzj-v3-16W" secondAttribute="trailing" constant="-20" id="y9G-db-xUe"/>
@@ -691,8 +689,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <animations/>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xe5-aL-CcR">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xe5-aL-CcR">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="687"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwN-qk-9ej">
                                         <rect key="frame" x="0.0" y="72" width="414" height="348"/>
@@ -884,7 +882,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="fnc-X7-APY" kind="show" identifier="editScoreSegue" id="ix1-Xw-UZX"/>
+                                                    <action selector="editButtonPressed:" destination="xc3-1n-98r" eventType="touchUpInside" id="y1W-Ku-ol4"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBX-YU-ed2">
@@ -989,7 +987,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mUy-hn-xx2" firstAttribute="leading" secondItem="n6I-Ip-z4k" secondAttribute="leadingMargin" constant="-20" id="0sY-qr-m9B"/>
-                            <constraint firstItem="mUy-hn-xx2" firstAttribute="centerY" secondItem="n6I-Ip-z4k" secondAttribute="centerY" id="2oD-Wr-9aO"/>
                             <constraint firstItem="xe5-aL-CcR" firstAttribute="top" secondItem="n6I-Ip-z4k" secondAttribute="topMargin" id="6Ch-U1-t8h"/>
                             <constraint firstItem="Z71-of-R6X" firstAttribute="top" secondItem="xe5-aL-CcR" secondAttribute="bottom" id="80h-Hc-UEw"/>
                             <constraint firstItem="mUy-hn-xx2" firstAttribute="centerX" secondItem="n6I-Ip-z4k" secondAttribute="centerX" id="EZC-gD-5S1"/>
@@ -1031,10 +1028,10 @@
             </objects>
             <point key="canvasLocation" x="3361" y="870"/>
         </scene>
-        <!--Score This Crowd-->
+        <!--Scorecard View Controller-->
         <scene sceneID="0VQ-N1-Hlg">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="fnc-X7-APY" customClass="ScorecardViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScorecardViewController" automaticallyAdjustsScrollViewInsets="NO" id="fnc-X7-APY" customClass="ScorecardViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="elp-gG-0kg"/>
                         <viewControllerLayoutGuide type="bottom" id="J5j-mH-xHk"/>
@@ -1043,7 +1040,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="RzU-v2-PJ9">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="RzU-v2-PJ9">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KdF-n8-OUs" userLabel="Content View">
@@ -1258,31 +1255,57 @@
                                     <constraint firstAttribute="bottom" secondItem="KdF-n8-OUs" secondAttribute="bottom" id="ed2-eq-aLH"/>
                                 </constraints>
                             </scrollView>
+                            <navigationBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="xTQ-YX-HtE">
+                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                                <animations/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Score This Crowd" id="0VW-Oa-qJy">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="6M5-2I-sFw">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="fnc-X7-APY" id="Uov-lX-nVt"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Score" id="EOY-iQ-P2m">
+                                            <connections>
+                                                <action selector="scoreButtonPressed:" destination="fnc-X7-APY" id="0NG-Pq-s8k"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="RzU-v2-PJ9" firstAttribute="top" secondItem="8ks-wx-bCg" secondAttribute="top" id="7pf-Wg-ahD"/>
+                            <constraint firstItem="xTQ-YX-HtE" firstAttribute="leading" secondItem="8ks-wx-bCg" secondAttribute="leadingMargin" constant="-20" id="AUw-Qp-mTG"/>
+                            <constraint firstItem="xTQ-YX-HtE" firstAttribute="top" secondItem="elp-gG-0kg" secondAttribute="bottom" id="FD2-Fd-qBO"/>
+                            <constraint firstItem="xTQ-YX-HtE" firstAttribute="top" secondItem="elp-gG-0kg" secondAttribute="bottom" id="IRU-il-ppM"/>
                             <constraint firstItem="KdF-n8-OUs" firstAttribute="width" secondItem="8ks-wx-bCg" secondAttribute="width" id="XvZ-r0-3wr"/>
+                            <constraint firstItem="xTQ-YX-HtE" firstAttribute="leading" secondItem="8ks-wx-bCg" secondAttribute="leadingMargin" constant="-20" id="e6o-Ub-UMr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xTQ-YX-HtE" secondAttribute="trailing" constant="-20" id="eTt-BN-dKF"/>
                             <constraint firstAttribute="trailing" secondItem="RzU-v2-PJ9" secondAttribute="trailing" id="hhq-dS-4Dn"/>
                             <constraint firstItem="J5j-mH-xHk" firstAttribute="top" secondItem="RzU-v2-PJ9" secondAttribute="bottom" id="jpU-lh-YII"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xTQ-YX-HtE" secondAttribute="trailing" constant="-20" id="nP9-Dt-af8"/>
                             <constraint firstItem="RzU-v2-PJ9" firstAttribute="leading" secondItem="8ks-wx-bCg" secondAttribute="leading" id="oy8-bz-ZTz"/>
+                            <constraint firstItem="xTQ-YX-HtE" firstAttribute="leading" secondItem="8ks-wx-bCg" secondAttribute="leadingMargin" constant="-20" id="t1P-mn-4qx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xTQ-YX-HtE" secondAttribute="trailing" constant="-20" id="tde-P3-oSg"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FD2-Fd-qBO"/>
+                                <exclude reference="e6o-Ub-UMr"/>
+                                <exclude reference="nP9-Dt-af8"/>
+                                <exclude reference="t1P-mn-4qx"/>
+                                <exclude reference="tde-P3-oSg"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Score This Crowd" id="JJ8-EO-51Z">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Ln2-tl-OHv">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            <connections>
-                                <segue destination="U29-Zk-skc" kind="unwind" identifier="cancelAndUnwindSegue" unwindAction="unwindForSegue:towardsViewController:" id="ZkP-Kb-hwt"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Score" id="yIb-nf-32K">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            <connections>
-                                <segue destination="U29-Zk-skc" kind="unwind" identifier="postAndUnwindSegue" unwindAction="unwindForSegue:towardsViewController:" id="xY5-18-wAa"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="commentTextView" destination="5YB-bt-LzA" id="88B-9L-gof"/>
@@ -1290,6 +1313,7 @@
                         <outlet property="coverChargeSegment" destination="pdc-Zd-eUT" id="Dvx-H1-BTx"/>
                         <outlet property="crowdedCheckbox" destination="GE8-zE-oc8" id="yAl-7f-zsD"/>
                         <outlet property="driveCheckbox" destination="4rm-6N-p4T" id="kcO-Ba-wEa"/>
+                        <outlet property="navigationBar" destination="xTQ-YX-HtE" id="E3b-uZ-EWW"/>
                         <outlet property="parkingDifficultCheckbox" destination="Thn-yo-JjJ" id="Jav-Dt-rcX"/>
                         <outlet property="parkingDifficultLabel" destination="LgT-Gn-832" id="9ev-B7-JaQ"/>
                         <outlet property="scrollView" destination="RzU-v2-PJ9" id="0bE-Zu-Ci5"/>
@@ -1297,7 +1321,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="03X-KO-Hjh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="U29-Zk-skc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3361" y="-153"/>
         </scene>
@@ -1461,7 +1484,4 @@
         <image name="white-edit" width="17" height="17"/>
         <image name="white-outline-star" width="17" height="17"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Og3-is-ZNY"/>
-    </inferredMetricsTieBreakers>
 </document>
