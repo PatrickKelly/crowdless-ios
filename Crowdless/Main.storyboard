@@ -1412,7 +1412,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="YbH-nW-ejP"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="white-cog" id="YbH-nW-ejP"/>
                     <navigationItem key="navigationItem" title="Settings" id="6Wh-yN-K4T">
                         <barButtonItem key="backBarButtonItem" title=" " id="IiZ-Q1-71m"/>
                     </navigationItem>
@@ -1426,11 +1426,11 @@
             </objects>
             <point key="canvasLocation" x="1505" y="1226"/>
         </scene>
-        <!--Item-->
+        <!--Browse-->
         <scene sceneID="zev-qf-xtD">
             <objects>
                 <navigationController storyboardIdentifier="crowdsTrendingNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="yKu-lk-qi7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Cmh-Rp-2pf"/>
+                    <tabBarItem key="tabBarItem" title="Browse" image="crowdless-score-tab" id="Cmh-Rp-2pf"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RpJ-82-qau">
@@ -1473,6 +1473,7 @@
         <image name="bar_crowd" width="463" height="719"/>
         <image name="car-green" width="256" height="256"/>
         <image name="clock-green" width="256" height="256"/>
+        <image name="crowdless-score-tab" width="25" height="25"/>
         <image name="crowdless-trending" width="49" height="49"/>
         <image name="crowdless-trending-200" width="200" height="200"/>
         <image name="facebook-login-blue" width="416" height="101"/>
@@ -1480,6 +1481,7 @@
         <image name="money-green" width="256" height="256"/>
         <image name="people-add" width="53" height="44"/>
         <image name="people-green" width="172" height="144"/>
+        <image name="white-cog" width="25" height="25"/>
         <image name="white-delete" width="17" height="17"/>
         <image name="white-edit" width="17" height="17"/>
         <image name="white-outline-star" width="17" height="17"/>
