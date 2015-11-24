@@ -103,11 +103,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     func showCrowdsTrendingViewController() {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let rootViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainTabBarController") as! UITabBarController
-        rootViewController.delegate = self
-        self.window?.rootViewController = rootViewController
-        
         UITabBar.appearance().tintColor = UIColor(red: 116/255, green: 169/255, blue: 255/255, alpha: 1.0)
         UITabBar.appearance().barTintColor = UIColor.blackColor()
+        rootViewController.delegate = self
+        self.window?.rootViewController = rootViewController
         
         UIView.transitionWithView(self.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in
             self.window?.rootViewController = rootViewController

@@ -17,6 +17,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
     
     var userScore: PFObject!
     var userScorePeerComment: PFObject!
+    var place: PFObject!
     
     @IBOutlet var userImage: PFImageView!
     
@@ -187,7 +188,51 @@ UISearchResultsUpdating, UISearchBarDelegate {
         userImage.file = userImageFile
         userImage.loadInBackground()
         
-        userName.text = user["name"] as? String
+        let name = user["name"] as! String
+        let attributedName = NSMutableAttributedString(string: name)
+        attributedName.addAttribute(NSFontAttributeName,
+            value: UIFont(
+                name: "HelveticaNeue-Bold",
+                size: 14.0)!,
+            range: NSRange(
+                location:0,
+                length:name.characters.count))
+        
+        let scoredText = NSMutableAttributedString(string: " scored ")
+        scoredText.addAttribute(NSFontAttributeName,
+            value: UIFont(
+                name: "HelveticaNeue",
+                size: 14.0)!,
+            range: NSRange(
+                location:0,
+                length:" scored ".characters.count))
+        
+        let placeName = place["name"] as! String
+        let attributedPlaceName = NSMutableAttributedString(string: placeName)
+        attributedPlaceName.addAttribute(NSFontAttributeName,
+            value: UIFont(
+                name: "HelveticaNeue-Bold",
+                size: 14.0)!,
+            range: NSRange(
+                location:0,
+                length:placeName.characters.count))
+        
+        let exclamationText = NSMutableAttributedString(string: "!")
+        exclamationText.addAttribute(NSFontAttributeName,
+            value: UIFont(
+                name: "HelveticaNeue",
+                size: 14.0)!,
+            range: NSRange(
+                location:0,
+                length:"!".characters.count))
+        
+        let userNameText = NSMutableAttributedString()
+        userNameText.appendAttributedString(attributedName)
+        userNameText.appendAttributedString(scoredText)
+        userNameText.appendAttributedString(attributedPlaceName)
+        userNameText.appendAttributedString(exclamationText)
+        
+        userName.attributedText = userNameText
         
         if let scoreTime = userScore.updatedAt {
             let formatter = NSDateFormatter()
@@ -208,12 +253,16 @@ UISearchResultsUpdating, UISearchBarDelegate {
             userComment.text = comment as? String
             userComment.font = UIFont(name:"HelveticaNeue", size: 14.0)
         } else {
-            userComment.text = user["name"] as! String + " scored this crowd without a comment."
-            userComment.font = UIFont(name:"HelveticaNeue-Italic", size: 14.0)
+            userComment.text = ""
         }
         
         updateHelpfulLabelAndCount()
         updateUserCrowdScoreImagesAndLabels();
+        
+        var contentRect: CGRect = CGRectZero
+        for view: UIView in scrollView.subviews {
+            contentRect = CGRectUnion(contentRect, view.frame)
+        }
         
     }
     

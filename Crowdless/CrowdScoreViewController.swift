@@ -105,12 +105,14 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         self.navigationItem.setHidesBackButton(false, animated: true)
     }
     
-    @IBAction func scoreButtonClicked(sender: AnyObject) {
+    @IBAction func scoreButtonPressed(sender: AnyObject) {
+        
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let scorecardViewController = storyboard.instantiateViewControllerWithIdentifier("ScorecardViewController") as! ScorecardViewController
         scorecardViewController.crowdScore = crowdScore
         self.presentViewController(scorecardViewController, animated: true, completion: nil)
     }
+    
     override func viewWillAppear(animated: Bool) {
         
         if !definesPresentationContext {
@@ -266,7 +268,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
             } else {
                 cell.userComment.text = ""
-                cell.userComment.font = UIFont(name:"HelveticaNeue-Italic", size: 12.0)
             }
             
             if let scoreTime = userCrowdScore.updatedAt {
@@ -330,6 +331,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             let index = crowdScoresTableView.indexPathForSelectedRow!.row
             let userCrowdScore = userCrowdScores[index]
             destination.userScore = userCrowdScore
+            destination.place = place
         }
     }
     
@@ -542,6 +544,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 if (self.refreshControl.refreshing) {
                     self.refreshControl.endRefreshing()
                 }
+                DDLogError("Could not load first crowd score results \(error!.localizedDescription)")
                 self.isLoadingCrowdScores = false
                 let alert = UIAlertController(title: "Error", message: "Could not load first crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
@@ -568,9 +571,24 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                 self.currentPage++;
                 self.isLoadingCrowdScores = false
                 self.crowdScoresTableView.reloadData()
+                if(self.refreshControl.refreshing) {
+                    self.refreshControl.endRefreshing()
+                }
+                
+                if(self.loadingSpinner.isAnimating()) {
+                    self.loadingSpinner.stopAnimating()
+                }
             } else {
+                DDLogError("Could not load additional crowd score results \(error!.localizedDescription)")
+                if(self.refreshControl.refreshing) {
+                    self.refreshControl.endRefreshing()
+                }
+                
+                if(self.loadingSpinner.isAnimating()) {
+                    self.loadingSpinner.stopAnimating()
+                }
                 self.isLoadingCrowdScores = false
-                let alert = UIAlertController(title: "Error", message: "Could not load crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error", message: "Could not load additional crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
             }
             
