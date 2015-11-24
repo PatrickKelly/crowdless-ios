@@ -14,7 +14,7 @@ import MPCoachMarks
 
 public let ErrorDomain: String! = "CrowdsTrendingViewControllerErrorDomain"
 
-class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource {
+class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource, ScrollableToTop {
     
     @IBOutlet var crowdsTableView: UITableView!
     
@@ -74,6 +74,10 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     override func viewWillDisappear(animated: Bool) {
         definesPresentationContext = false
         super.viewWillDisappear(animated)
+    }
+    
+    func scrollToTop() {
+        crowdsTableView.setContentOffset(CGPointZero, animated:true)
     }
     
     private func displayCoachMarks() {

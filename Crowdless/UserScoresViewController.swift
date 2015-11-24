@@ -12,7 +12,7 @@ import ReachabilitySwift
 import CocoaLumberjack
 
 class UserScoresViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
-UISearchResultsUpdating, UISearchBarDelegate {
+UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
     
     @IBOutlet var userScoresTableView: UITableView!
     
@@ -83,6 +83,10 @@ UISearchResultsUpdating, UISearchBarDelegate {
                 })
             }
         }
+    }
+    
+    func scrollToTop() {
+        userScoresTableView.setContentOffset(CGPointZero, animated:true)
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {

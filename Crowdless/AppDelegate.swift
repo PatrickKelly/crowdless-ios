@@ -23,6 +23,7 @@ import CocoaLumberjack
 class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
     
     var window: UIWindow?
+    var previousController: UIViewController? = nil
     
     //--------------------------------------
     // MARK: - UIApplicationDelegate
@@ -117,6 +118,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
         if let navigationController = viewController as? UINavigationController {
             navigationController.popToRootViewControllerAnimated(true)
         }
+        
+        if previousController == viewController {
+            if let navigationController = viewController as? UINavigationController {
+                if navigationController.viewControllers.count == 1 {
+                    let rootViewController = navigationController.viewControllers.first
+                    if let scrollableToTopViewController = rootViewController as? ScrollableToTop {
+                        scrollableToTopViewController.scrollToTop()
+                    }
+                }
+            } else if let scrollableToTopViewController = viewController as? ScrollableToTop {
+                scrollableToTopViewController.scrollToTop()
+            }
+        }
+        
+        previousController = viewController
     }
     
     func showLoginScreen() {
