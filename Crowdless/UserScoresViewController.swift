@@ -148,7 +148,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
             return cell
         }
         
-        let cell = userScoresTableView.dequeueReusableCellWithIdentifier("crowdScoreCell", forIndexPath: indexPath) as! CrowdScoreCell
+        let cell = userScoresTableView.dequeueReusableCellWithIdentifier("userScoreTableCell", forIndexPath: indexPath) as! UserScoreTableViewCell
         if userScores.count >= indexPath.row {
             
             cell.contentView.backgroundColor = UIColor.clearColor()
@@ -156,7 +156,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
             
             let userScore = userScores[indexPath.row]
             let place = userScore["place"] as! PFObject
-            cell.userName.text = place["name"] as? String
+            cell.placeName.text = place["name"] as? String
             if let comment = userScore["comment"] {
                 cell.userComment.text = comment as? String
                 cell.userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
@@ -178,6 +178,21 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
             }
             
             setUserCrowdScoreImagesForCell(userScore, cell: cell)
+            if let helpfulCount = userScore["helpfulCount"] as? Int {
+                if helpfulCount > 0 {
+                    cell.helpfulCount.text = String(helpfulCount) + " others found your score helpful!"
+                    cell.helpfulCount.hidden = false
+                    
+                } else {
+                    cell.helpfulCount.text = ""
+                    cell.helpfulCount.hidden = true
+                }
+            } else {
+                cell.helpfulCount.text = ""
+                cell.helpfulCount.hidden = true
+            }
+            
+            
             
             // See if we need to load more user crowdscores
             if (currentPage < pageLimit) {
@@ -219,7 +234,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         }
     }
     
-    private func setUserCrowdScoreImagesForCell(userCrowdScore: PFObject, cell: CrowdScoreCell) {
+    private func setUserCrowdScoreImagesForCell(userCrowdScore: PFObject, cell: UserScoreTableViewCell) {
         
         let userScoreImages = [cell.userScoreFirstImage, cell.userScoreSecondImage,
             cell.userScoreThirdImage, cell.userScoreFourthImage]
@@ -401,7 +416,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         userScoresTableView.addSubview(refreshControl)
         userScoresTableView.backgroundColor = UIColor.clearColor()
         
-        userScoresTableView.estimatedRowHeight = 90
+        userScoresTableView.estimatedRowHeight = 109
         userScoresTableView.rowHeight = UITableViewAutomaticDimension
         
         var frame: CGRect = loadingSpinner.frame

@@ -433,7 +433,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         if (currentHelpfulCount) > 0 {
             helpful.text = String(currentHelpfulCount) + " found this helpful"
         } else {
-            helpful.text = "Be the first person to find this score helpful"
+            helpful.text = "Be the first to find this score helpful"
         }
     }
     
@@ -513,9 +513,9 @@ UISearchResultsUpdating, UISearchBarDelegate {
         deleteActionSheet.addAction(delete)
         deleteActionSheet.addAction(cancelDelete)
         
-        helpfulButton.setImage(UIImage(named: "helpful-star"), forState: .Selected)
+        helpfulButton.setImage(UIImage(named: "crowdless-trending-44"), forState: .Selected)
         helpfulButton.setTitleColor(malibuBlueColor, forState: .Selected)
-        helpfulButton.setImage(UIImage(named: "white-outline-star"), forState: .Normal)
+        helpfulButton.setImage(UIImage(named: "crowdless-trending-white"), forState: .Normal)
         helpfulButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
         reportButton.setImage(UIImage(named: "flag-red"), forState: .Selected)
