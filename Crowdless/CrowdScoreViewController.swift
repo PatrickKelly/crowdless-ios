@@ -13,7 +13,7 @@ import CocoaLumberjack
 import MPCoachMarks
 
 class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
-    UISearchResultsUpdating, UISearchBarDelegate {
+UISearchResultsUpdating, UISearchBarDelegate {
     
     var googlePlace: Place?
     var place: PFObject?
@@ -60,6 +60,10 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     private let redColor = UIColor(red: 224/255, green: 64/255, blue: 51/255, alpha: 1.0)
     
     private var reachability: Reachability?
+    private var viewControllerPushed = false
+    private var initialScoresLoaded = false
+    
+    var seguedToUserScoreViewController = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,8 +91,8 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             if(reachability.isReachable()) {
                 googlePlacesHelper.getPlacesInBackgroundWithBlock(searchController.searchBar.text!, userGeoPoint: userGeoPoint,
                     results: { placesPredictions -> () in
-                    self.filteredPlaces = placesPredictions
-                    self.searchResultsController.tableView.reloadData()
+                        self.filteredPlaces = placesPredictions
+                        self.searchResultsController.tableView.reloadData()
                 })
             }
         }
@@ -119,6 +123,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             definesPresentationContext = true
         }
         
+        if !seguedToUserScoreViewController {
         isLoadingPlace = true
         userCrowdScores.removeAll()
         crowdScoresTableView.reloadData()
@@ -143,6 +148,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                             self.getPlaceInBackground { (placeResult: PFObject) -> () in
                                 self.place = placeResult;
                                 self.loadPlace();
+                                if let reachability = self.reachability {
+                                    if(reachability.isReachable()) {
+                                        self.loadInitialUserCrowdScores();
+                                    }
+                                }
                             }
                         }
                     })
@@ -150,6 +160,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
                     getPlaceInBackground { (placeResult: PFObject) -> () in
                         self.place = placeResult;
                         self.loadPlace();
+                        if let reachability = self.reachability {
+                            if(reachability.isReachable()) {
+                                self.loadInitialUserCrowdScores();
+                            }
+                        }
                     }
                 }
             } else {
@@ -160,6 +175,17 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         } else {
             DDLogError("Reachability object is nil.")
+        }
+        } else {
+            crowdScoresTableView.reloadData()
+            crowdScore?.fetchInBackgroundWithBlock({ (refreshedCrowdScore, error) -> Void in
+                if error == nil {
+                    self.crowdScore = refreshedCrowdScore
+                    self.loadPlace()
+                } else {
+                    DDLogError("Error fetching/refreshing crowd score: \(error)")
+                }
+            })
         }
     }
     
@@ -332,6 +358,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             let userCrowdScore = userCrowdScores[index]
             destination.userScore = userCrowdScore
             destination.place = place
+            seguedToUserScoreViewController = true
         }
     }
     
@@ -560,6 +587,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         query.orderByDescending("updatedAt")
         query.whereKey("place", equalTo: self.place!)
         query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
+        query.whereKey("objectId", notContainedIn: getObjectIds(self.userCrowdScores))
         // Limit what could be a lot of points.
         query.limit = self.resultsLimit
         query.skip = currentPage * resultsLimit;
@@ -597,7 +625,7 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
     
     private func initView() {
         
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (
+        LocationHelper.sharedInstance.getRecentUserLocationInBackground { (
             geoPoint, error) -> Void in
             if let geoPoint = geoPoint {
                 self.userGeoPoint = geoPoint
@@ -631,7 +659,6 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
         if let reachability = reachability {
             if(reachability.isReachable()) {
                 refreshCrowdScore();
-                loadInitialUserCrowdScores();
             } else {
                 refreshControl.endRefreshing()
             }
@@ -672,6 +699,11 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             if error == nil {
                 self.crowdScore = refreshedCrowdScore
                 self.loadPlace()
+                if let reachability = self.reachability {
+                    if(reachability.isReachable()) {
+                        self.loadInitialUserCrowdScores();
+                    }
+                }
             } else {
                 DDLogError("Error fetching/refreshing crowd score: \(error)")
             }
@@ -776,12 +808,12 @@ class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableVi
             detail.text = place["detail"] as? String
             
             updateViewForCrowdScore()
-            
-            if let reachability = reachability {
-                if(reachability.isReachable()) {
-                    loadInitialUserCrowdScores();
-                }
-            }
+        }
+    }
+    
+    private func getObjectIds(objects: [PFObject]) -> [String] {
+        return objects.map { (object) -> String in
+            return object.objectId!
         }
     }
 }

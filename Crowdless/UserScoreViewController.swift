@@ -383,6 +383,11 @@ UISearchResultsUpdating, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "deleteUnwindSegue", let destination = segue.destinationViewController as? CrowdScoreViewController {
+            destination.seguedToUserScoreViewController = false
+        }
+    }
     
     @IBAction func editButtonPressed(sender: AnyObject) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -459,7 +464,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
     
     private func initView() {
         
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (
+        LocationHelper.sharedInstance.getRecentUserLocationInBackground { (
             geoPoint, error) -> Void in
             if let geoPoint = geoPoint {
                 self.userGeoPoint = geoPoint

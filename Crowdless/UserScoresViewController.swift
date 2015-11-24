@@ -397,6 +397,15 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
     
     private func initView() {
         
+        LocationHelper.sharedInstance.getRecentUserLocationInBackground { (
+            geoPoint, error) -> Void in
+            if let geoPoint = geoPoint {
+                self.userGeoPoint = geoPoint
+            } else {
+                DDLogError("Could not obtain user location \(error!.localizedDescription)")
+            }
+        }
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]

@@ -37,17 +37,10 @@ class ScorecardViewController: UIViewController, UITextViewDelegate, BEMCheckBox
     
     var crowdScore: PFObject?
     
-    @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-        
-        if unwindSegue.identifier == "postAndUnwindSegue" {
-            saveScore();
-        }
-    }
-    
     
     @IBAction func scoreButtonPressed(sender: AnyObject) {
         saveScore()
-                dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func cancelButtonPressed(sender: AnyObject) {

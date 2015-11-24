@@ -18,6 +18,7 @@
 		D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */; };
 		D82A9CC81C0453EF00EF5A5D /* ScrollableToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A9CC71C0453EF00EF5A5D /* ScrollableToTop.swift */; };
 		D82A9CCC1C04CEC300EF5A5D /* UserScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A9CCB1C04CEC300EF5A5D /* UserScoreTableViewCell.swift */; };
+		D82A9CCE1C05047F00EF5A5D /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A9CCD1C05047F00EF5A5D /* LocationHelper.swift */; };
 		D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */; };
 		D83BD0401BFA752E00572FC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D83BD03F1BFA752E00572FC5 /* Main.storyboard */; };
 		D8488E401BFD14DA0036165D /* GooglePlacesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8488E3F1BFD14DA0036165D /* GooglePlacesHelper.swift */; };
@@ -55,6 +56,7 @@
 		D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScorecardViewController.swift; sourceTree = "<group>"; };
 		D82A9CC71C0453EF00EF5A5D /* ScrollableToTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableToTop.swift; sourceTree = "<group>"; };
 		D82A9CCB1C04CEC300EF5A5D /* UserScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserScoreTableViewCell.swift; sourceTree = "<group>"; };
+		D82A9CCD1C05047F00EF5A5D /* LocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
 		D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserScoreViewController.swift; sourceTree = "<group>"; };
 		D834021A1BD56AFE00866495 /* Crowdless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crowdless-Bridging-Header.h"; sourceTree = "<group>"; };
 		D83BD03F1BFA752E00572FC5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				D8A489711C03C3AB00AEEB35 /* UserScoresViewController.swift */,
 				D82A9CC71C0453EF00EF5A5D /* ScrollableToTop.swift */,
 				D82A9CCB1C04CEC300EF5A5D /* UserScoreTableViewCell.swift */,
+				D82A9CCD1C05047F00EF5A5D /* LocationHelper.swift */,
 			);
 			path = Crowdless;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */,
 				D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */,
 				D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */,
+				D82A9CCE1C05047F00EF5A5D /* LocationHelper.swift in Sources */,
 				D8F68C331BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */,
 				D82A9CC81C0453EF00EF5A5D /* ScrollableToTop.swift in Sources */,

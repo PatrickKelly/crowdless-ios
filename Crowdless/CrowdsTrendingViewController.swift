@@ -20,7 +20,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     
     private var refreshControl:UIRefreshControl!
     private var isLoadingPlaces = false
-    private var userGeoPoint: PFGeoPoint?
     private var trendingScores = [PFObject]()
     private var filteredPlaces = [Place]()
     private let resultsPageLimit = 10
@@ -31,8 +30,9 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     private let googlePlacesHelper = GooglePlacesHelper()
     private var searchController:UISearchController!
     private var searchResultsController: UITableViewController!
+    private var userGeoPoint: PFGeoPoint?
     
-    var locationManager = CLLocationManager()
+    private var initialScoresLoaded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,11 +53,15 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             definesPresentationContext = true
         }
         
-        if let reachability = reachability {
-            if(reachability.isReachable()) {
-                loadingSpinner.startAnimating()
-                loadInitialPlaces();
+        if !initialScoresLoaded {
+            if let reachability = reachability {
+                if(reachability.isReachable()) {
+                    loadingSpinner.startAnimating()
+                    loadInitialPlaces();
+                }
             }
+        } else {
+            crowdsTableView.reloadData()
         }
         
         super.viewWillAppear(animated)
@@ -312,7 +316,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             destination.googlePlace = googlePlace
             destination.place = place;
             destination.crowdScore = trendingScore
-            
         }
     }
     
@@ -382,7 +385,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     
     private func loadInitialPlaces() {
         isLoadingPlaces = true
-        PFGeoPoint.geoPointForCurrentLocationInBackground {
+        LocationHelper.sharedInstance.getRecentUserLocationInBackground {
             (geoPoint: PFGeoPoint?, error: NSError?) -> Void in
             if let geoPoint = geoPoint {
                 self.userGeoPoint = geoPoint
@@ -402,6 +405,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                         self.trendingScores = trendingScores;
                         self.currentPage++;
                         self.isLoadingPlaces = false
+                        self.initialScoresLoaded = true
                         self.crowdsTableView.reloadData()
                         
                         if(self.refreshControl.refreshing) {
@@ -445,10 +449,9 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             innerQuery.whereKey("coordinates", nearGeoPoint: self.userGeoPoint!, withinMiles: 5)
             let query = PFQuery(className: "CrowdScore")
             query.whereKey("place", matchesQuery: innerQuery)
+            query.whereKey("objectId", notContainedIn: getObjectIds(self.trendingScores))
             query.includeKey("place")
             query.orderByDescending("recentUserScoreCount")
-            query.limit = self.resultsPageLimit
-            query.skip = currentPage * resultsPageLimit;
             // Final list of objects
             query.findObjectsInBackgroundWithBlock({ (
                 trendingScores, error: NSError?) -> Void in
@@ -484,5 +487,11 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             })
         }
         
+    }
+    
+    private func getObjectIds(objects: [PFObject]) -> [String] {
+        return objects.map { (object) -> String in
+            return object.objectId!
+        }
     }
 }
