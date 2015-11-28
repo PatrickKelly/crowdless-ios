@@ -311,9 +311,13 @@ UISearchResultsUpdating, UISearchBarDelegate {
             
             setUserCrowdScoreImagesForCell(userCrowdScore, cell: cell)
             
-            if let imageFile = user["image"] as? PFFile {
-                cell.userImageView.file = imageFile
-                cell.userImageView.loadInBackground()
+            if let displayProfilePicture = user["displayProfilePicture"] as? Bool where displayProfilePicture {
+                if let imageFile = user["image"] as? PFFile {
+                    cell.userImageView.file = imageFile
+                    cell.userImageView.loadInBackground()
+                }
+            } else {
+                cell.userImageView.image = UIImage(named: "crowdless-trending")
             }
             
             // See if we need to load more user crowdscores

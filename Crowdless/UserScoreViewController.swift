@@ -184,9 +184,15 @@ UISearchResultsUpdating, UISearchBarDelegate {
         }
         
         let user = userScore["user"] as! PFUser
-        let userImageFile = user["image"] as? PFFile
-        userImage.file = userImageFile
-        userImage.loadInBackground()
+        
+        if let displayProfilePicture = user["displayProfilePicture"] as? Bool where displayProfilePicture {
+            if let imageFile = user["image"] as? PFFile {
+                userImage.file = imageFile
+                userImage.loadInBackground()
+            }
+        } else {
+            userImage.image = UIImage(named: "crowdless-trending")
+        }
         
         let name = user["name"] as! String
         let attributedName = NSMutableAttributedString(string: name)
@@ -278,10 +284,20 @@ UISearchResultsUpdating, UISearchBarDelegate {
                 helpful.text = String(helpfulCount as! Int) + " found this helpful"
                 currentHelpfulCount = helpfulCount as! Int;
             } else {
-                helpful.text = "Be the first to find this score helpful"
+                let currentUser = PFUser.currentUser()!
+                if currentUser.objectId == userScore["user"].objectId {
+                    helpful.text = "You earned 50 points for this score!"
+                } else {
+                    helpful.text = "Be the first to find this score helpful"
+                }
             }
         } else {
-            helpful.text = "Be the first to find this score helpful"
+            let currentUser = PFUser.currentUser()!
+            if currentUser.objectId == userScore["user"].objectId {
+                helpful.text = "You earned 50 points for this score!"
+            } else {
+                helpful.text = "Be the first to find this score helpful"
+            }
         }
     }
     

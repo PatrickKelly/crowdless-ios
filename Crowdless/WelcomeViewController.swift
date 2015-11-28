@@ -6,6 +6,7 @@
 import UIKit
 import Parse
 import ParseFacebookUtilsV4
+import CocoaLumberjack
 
 class WelcomeViewController: UIViewController {
     
@@ -30,10 +31,10 @@ class WelcomeViewController: UIViewController {
                     //self.dismissViewControllerAnimated(true, completion: nil)
                 }
             } else if let error = error {
-                print(error)
+                DDLogError("\(error)")
                 self.displayErrorAlert("Login failed. Please try again.")
             } else {
-                print("User cancelled or did not log in.")
+                DDLogError("User cancelled or did not log in.")
             }
         }
         
@@ -59,15 +60,16 @@ class WelcomeViewController: UIViewController {
             connection, result, error) -> Void in
             
             if let error = error {
-                print(error)
+                DDLogError("\(error)")
                 withcompletionHandler(success: false)
             } else if let result = result {
                 
                 user["gender"] = result["gender"]
                 user["name"] = result["name"]
+                user["facebookId"] = result["id"] as! String
                 
-                let userId = result["id"] as! String
-                let fbPictureUrl = "https://graph.facebook.com/" + userId + "/picture?type=large";
+                let facebookId = result["id"] as! String
+                let fbPictureUrl = "https://graph.facebook.com/" + facebookId + "/picture?type=large";
                 if let nsFbPictureUrl = NSURL(string: fbPictureUrl) {
                     if let data = NSData(contentsOfURL: nsFbPictureUrl) {
                         if let imageFile:PFFile = PFFile(data: data) {
@@ -79,7 +81,7 @@ class WelcomeViewController: UIViewController {
                 do {
                     try user.save();
                 } catch {
-                    print("An error occurred while saving the user image to Parse.")
+                    DDLogError("An error occurred while saving the user image.")
                     withcompletionHandler(success: false);
                 }
                 

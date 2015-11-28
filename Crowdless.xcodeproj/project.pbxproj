@@ -34,8 +34,8 @@
 		D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */; };
 		D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */; };
 		D8F68C331BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */; };
-		D8F68C351BD6AC9000E03B93 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */; };
 		D8F68C3B1BD80B9500E03B93 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F68C3A1BD80B9500E03B93 /* CoreLocation.framework */; };
+		D8FA10B31C09609D00846412 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FA10B21C09609D00846412 /* SettingsTableViewController.swift */; };
 		FF85F17C9A19CDD25A77086A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56624D778A9A32F9CB7EA585 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,8 +73,8 @@
 		D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingCrowdCell.swift; sourceTree = "<group>"; };
 		D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdScoreCell.swift; sourceTree = "<group>"; };
 		D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdsTrendingViewController.swift; sourceTree = "<group>"; };
-		D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D8F68C3A1BD80B9500E03B93 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D8FA10B21C09609D00846412 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,12 +139,12 @@
 			isa = PBXGroup;
 			children = (
 				D83BD03F1BFA752E00572FC5 /* Main.storyboard */,
+				D8FA10B21C09609D00846412 /* SettingsTableViewController.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				D8F57DE41BE29B050058D239 /* CrowdScoreCell.swift */,
 				D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */,
 				D8F68C321BD6A0BC00E03B93 /* CrowdsTrendingViewController.swift */,
 				D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */,
-				D8F68C341BD6AC9000E03B93 /* SettingsViewController.swift */,
 				D8F57DE21BE182500058D239 /* TrendingCrowdCell.swift */,
 				81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */,
 				D82DDA151BF2974500A4F391 /* UserScoreViewController.swift */,
@@ -332,6 +332,7 @@
 				D87A39C11BFF88F700A91857 /* GooglePlaceTableViewCell.swift in Sources */,
 				D82A9CCC1C04CEC300EF5A5D /* UserScoreTableViewCell.swift in Sources */,
 				D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */,
+				D8FA10B31C09609D00846412 /* SettingsTableViewController.swift in Sources */,
 				D8F57DE51BE29B050058D239 /* CrowdScoreCell.swift in Sources */,
 				D82DDA161BF2974500A4F391 /* UserScoreViewController.swift in Sources */,
 				D82A9CCE1C05047F00EF5A5D /* LocationHelper.swift in Sources */,
@@ -339,7 +340,6 @@
 				81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */,
 				D82A9CC81C0453EF00EF5A5D /* ScrollableToTop.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
-				D8F68C351BD6AC9000E03B93 /* SettingsViewController.swift in Sources */,
 				D87A39BD1BFF85A000A91857 /* PoweredByGoogleTableViewCell.swift in Sources */,
 				D8F57DE31BE182500058D239 /* TrendingCrowdCell.swift in Sources */,
 			);
