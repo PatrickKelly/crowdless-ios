@@ -1328,7 +1328,6 @@
         <!--Settings-->
         <scene sceneID="CfN-qM-vuy">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WYB-Un-fx5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="5vr-dh-usL" customClass="SettingsTableViewController" customModule="Crowdless" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WX0-hs-0ME">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="687"/>
@@ -1375,7 +1374,7 @@
                                 </label>
                             </subviews>
                             <animations/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="RL0-YO-Xd3" secondAttribute="bottom" constant="20" id="KFB-CZ-Do6"/>
                                 <constraint firstItem="J80-y3-8Zu" firstAttribute="centerX" secondItem="NFN-J0-cJe" secondAttribute="centerX" id="iRM-Vj-mLm"/>
@@ -1608,6 +1607,7 @@
                         <outlet property="userNameTextField" destination="nsa-pd-KYr" id="C6X-QI-gee"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WYB-Un-fx5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1083" y="1278"/>
         </scene>
