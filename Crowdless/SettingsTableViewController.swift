@@ -163,19 +163,21 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func dismissKeyboard() {
-        userNameTextField.resignFirstResponder()
-        if userNameTextField.text?.characters.count > 0 {
-            let name = userNameTextField.text
-            userNameLabel.text = name
-            
-            if let user = PFUser.currentUser() {
-                user["name"] = name
-                user.saveEventually()
-            }
-        } else {
-            if let user = PFUser.currentUser() {
-                userNameTextField.text = user["name"] as? String
-                userNameLabel.text = user["name"] as? String
+        if userNameTextField.editing {
+            userNameTextField.resignFirstResponder()
+            if userNameTextField.text?.characters.count > 0 {
+                let name = userNameTextField.text
+                userNameLabel.text = name
+                
+                if let user = PFUser.currentUser() {
+                    user["name"] = name
+                    user.saveEventually()
+                }
+            } else {
+                if let user = PFUser.currentUser() {
+                    userNameTextField.text = user["name"] as? String
+                    userNameLabel.text = user["name"] as? String
+                }
             }
         }
     }
