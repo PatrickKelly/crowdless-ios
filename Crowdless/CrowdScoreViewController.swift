@@ -144,7 +144,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
                 if let crowdScore = crowdScore {
                     crowdScore.fetchInBackgroundWithBlock({ (
                         crowdScore, error) -> Void in
-                        if (error == nil) {
+                        if error == nil {
                             self.crowdScore = crowdScore;
                             self.getPlaceInBackground { (placeResult: PFObject) -> () in
                                 self.place = placeResult;

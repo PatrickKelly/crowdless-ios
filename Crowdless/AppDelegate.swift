@@ -95,6 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
             showLoginScreen()
         } else {
             showCrowdsTrendingViewController()
+            //refresh current user
+            PFUser.currentUser()!.fetchInBackground()
         }
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions);

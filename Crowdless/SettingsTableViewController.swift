@@ -135,6 +135,9 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.clipsToBounds = true
         
+        let tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        self.view.addGestureRecognizer(tap)
+        
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
         profilePictureReloadIndicator.hidden = true
@@ -142,6 +145,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
         
         userNameTextField.delegate = self
         userNameTextField.addTarget(self, action: "textFieldDidChange", forControlEvents: .EditingChanged)
+        userNameTextField.autocorrectionType = .No
         
         deactivateActionSheet = UIAlertController(title: "Are you sure you want to deactivate your Crowdless account?", message: nil, preferredStyle: .ActionSheet)
         let deactivate = UIAlertAction(title: "Deactivate", style: .Destructive, handler: {
@@ -156,6 +160,24 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldDidChange() {
         userNameLabel.text = userNameTextField.text
+    }
+    
+    func dismissKeyboard() {
+        userNameTextField.resignFirstResponder()
+        if userNameTextField.text?.characters.count > 0 {
+            let name = userNameTextField.text
+            userNameLabel.text = name
+            
+            if let user = PFUser.currentUser() {
+                user["name"] = name
+                user.saveEventually()
+            }
+        } else {
+            if let user = PFUser.currentUser() {
+                userNameTextField.text = user["name"] as? String
+                userNameLabel.text = user["name"] as? String
+            }
+        }
     }
     
     private func updateViewForUser(user: PFUser) {

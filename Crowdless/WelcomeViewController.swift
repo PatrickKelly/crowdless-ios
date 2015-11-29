@@ -55,7 +55,7 @@ class WelcomeViewController: UIViewController {
     }
     
     private func saveNewUser(user: PFUser, withcompletionHandler: (success:Bool) ->()) {
-        let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, gender"])
+        let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, gender, age"])
         graphRequest.startWithCompletionHandler { (
             connection, result, error) -> Void in
             
