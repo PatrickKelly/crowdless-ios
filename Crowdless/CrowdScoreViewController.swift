@@ -24,6 +24,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
     @IBOutlet var name: UILabel!
     @IBOutlet var detail: UILabel!
     
+    @IBOutlet var crowdedCaption: UILabel!
     @IBOutlet var scoreButton: UIButton!
     @IBOutlet var crowdScoreImage: UIImageView!
     @IBOutlet var crowdScoreFirstImage: UIImageView!
@@ -272,7 +273,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         
         if (userCrowdScores.count == 0) {
             let cell: UITableViewCell = UITableViewCell()
-            cell.textLabel!.text = "No recent scores...yet."
+            cell.textLabel!.text = "Be the first to score this crowd!"
             cell.contentView.backgroundColor = UIColor.clearColor()
             cell.backgroundColor = UIColor.clearColor()
             cell.textLabel?.textColor = UIColor.whiteColor()
@@ -640,6 +641,8 @@ UISearchResultsUpdating, UISearchBarDelegate {
         
         initSearchController()
         
+        crowdScoresTableView.tableFooterView = UIView(frame: CGRectZero)
+        
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(
             string: "Pull to Refresh",
@@ -722,17 +725,26 @@ UISearchResultsUpdating, UISearchBarDelegate {
         self.crowdScoreFirstLabel.text = ""
         self.crowdScoreSecondLabel.text = ""
         self.crowdScoreThirdLabel.text = ""
+        self.crowdedCaption.text = ""
         
         if let crowdScore  = crowdScore {
             if let crowded = crowdScore["crowded"] as? Int {
                 if(crowded >= 0 && crowded < 2) {
                     crowdScoreImage.image = UIImage(named: "people-green")
+                    crowdedCaption.text = "Not Crowded"
+                    crowdedCaption.textColor = greenColor
                 } else if (crowded >= 2 && crowded < 4) {
                     crowdScoreImage.image = UIImage(named: "people-yellow")
+                    crowdedCaption.text = "Slightly Crowded"
+                    crowdedCaption.textColor = yellowColor
                 } else if (crowded >= 4) {
                     crowdScoreImage.image = UIImage(named: "people-red")
+                    crowdedCaption.text = "Crowded"
+                    crowdedCaption.textColor = redColor
                 } else {
                     crowdScoreImage.image = UIImage(named: "people-green")
+                    crowdedCaption.text = "Not Crowded"
+                    crowdedCaption.textColor = greenColor
                 }
             }
             
