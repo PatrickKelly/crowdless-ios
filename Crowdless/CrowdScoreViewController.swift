@@ -284,7 +284,6 @@ UISearchResultsUpdating, UISearchBarDelegate {
         let cell = self.crowdScoresTableView.dequeueReusableCellWithIdentifier("crowdScoreCell", forIndexPath: indexPath) as! CrowdScoreCell
         if userCrowdScores.count >= indexPath.row {
             
-            cell.contentView.backgroundColor = UIColor.clearColor()
             cell.backgroundColor = UIColor(white: 1.0, alpha: 0.15)
             
             let userCrowdScore = userCrowdScores[indexPath.row]
@@ -297,7 +296,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
                 cell.userComment.text = ""
             }
             
-            if let scoreTime = userCrowdScore.updatedAt {
+            if let scoreTime = userCrowdScore.createdAt {
                 let formatter = NSDateFormatter()
                 formatter.timeStyle = .ShortStyle
                 if currentCalendar.isDateInToday(scoreTime) {
@@ -311,6 +310,23 @@ UISearchResultsUpdating, UISearchBarDelegate {
             }
             
             setUserCrowdScoreImagesForCell(userCrowdScore, cell: cell)
+            
+            if let helpfulCount = userCrowdScore["helpfulCount"] as? Int {
+                if helpfulCount == 1 {
+                    cell.scoreHelpful.text = String(helpfulCount) + " person found this score helpful!"
+                    cell.scoreHelpful.hidden = false
+                    
+                } else if helpfulCount > 1 {
+                    cell.scoreHelpful.text = String(helpfulCount) + " people found this score helpful!"
+                    cell.scoreHelpful.hidden = false
+                } else {
+                    cell.scoreHelpful.text = ""
+                    cell.scoreHelpful.hidden = true
+                }
+            } else {
+                cell.scoreHelpful.text = ""
+                cell.scoreHelpful.hidden = true
+            }
             
             if let displayProfilePicture = user["displayProfilePicture"] as? Bool where displayProfilePicture {
                 if let imageFile = user["image"] as? PFFile {
@@ -557,9 +573,9 @@ UISearchResultsUpdating, UISearchBarDelegate {
         
         isLoadingCrowdScores = true
         let query = PFQuery(className: "UserScore")
-        query.orderByDescending("updatedAt")
+        query.orderByDescending("createdAt")
         query.whereKey("place", equalTo: self.place!)
-        query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
+        query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         query.includeKey("user")
         query.findObjectsInBackgroundWithBlock({ (
             scores, error: NSError?) -> Void in
@@ -589,9 +605,9 @@ UISearchResultsUpdating, UISearchBarDelegate {
         
         isLoadingCrowdScores = true
         let query = PFQuery(className: "UserScore")
-        query.orderByDescending("updatedAt")
+        query.orderByDescending("createdAt")
         query.whereKey("place", equalTo: self.place!)
-        query.whereKey("updatedAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
+        query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         query.whereKey("objectId", notContainedIn: getObjectIds(self.userCrowdScores))
         // Limit what could be a lot of points.
         query.limit = self.resultsLimit
@@ -652,7 +668,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         crowdScoresTableView.addSubview(refreshControl)
         crowdScoresTableView.backgroundColor = UIColor.clearColor()
         
-        crowdScoresTableView.estimatedRowHeight = 90
+        crowdScoresTableView.estimatedRowHeight = 119
         crowdScoresTableView.rowHeight = UITableViewAutomaticDimension
         
         var frame: CGRect = loadingSpinner.frame

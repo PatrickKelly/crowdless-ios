@@ -164,7 +164,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
                 cell.userComment.text = ""
             }
             
-            if let scoreTime = userScore.updatedAt {
+            if let scoreTime = userScore.createdAt {
                 let formatter = NSDateFormatter()
                 formatter.timeStyle = .ShortStyle
                 if currentCalendar.isDateInToday(scoreTime) {
@@ -179,10 +179,13 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
             
             setUserCrowdScoreImagesForCell(userScore, cell: cell)
             if let helpfulCount = userScore["helpfulCount"] as? Int {
-                if helpfulCount > 0 {
-                    cell.helpfulCount.text = String(helpfulCount) + " others found your score helpful!"
+                if helpfulCount == 1 {
+                    cell.helpfulCount.text = String(helpfulCount) + " person found your score helpful!"
                     cell.helpfulCount.hidden = false
                     
+                } else if helpfulCount > 1 {
+                    cell.helpfulCount.text = String(helpfulCount) + " people found your score helpful!"
+                    cell.helpfulCount.hidden = false
                 } else {
                     cell.helpfulCount.text = ""
                     cell.helpfulCount.hidden = true
@@ -308,7 +311,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         
         isLoadingUserScores = true
         let query = PFQuery(className: "UserScore")
-        query.orderByDescending("updatedAt")
+        query.orderByDescending("createdAt")
         query.whereKey("user", equalTo: currentUser)
         query.includeKey("place")
         query.findObjectsInBackgroundWithBlock({ (
@@ -348,7 +351,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         
         isLoadingUserScores = true
         let query = PFQuery(className: "UserScore")
-        query.orderByDescending("updatedAt")
+        query.orderByDescending("createdAt")
         query.whereKey("user", equalTo: currentUser)
         // Limit what could be a lot of points.
         query.limit = self.resultsLimit
@@ -425,7 +428,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         userScoresTableView.addSubview(refreshControl)
         userScoresTableView.backgroundColor = UIColor.clearColor()
         
-        userScoresTableView.estimatedRowHeight = 109
+        userScoresTableView.estimatedRowHeight = 158
         userScoresTableView.rowHeight = UITableViewAutomaticDimension
         
         var frame: CGRect = loadingSpinner.frame

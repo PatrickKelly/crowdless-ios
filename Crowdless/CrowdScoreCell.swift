@@ -27,6 +27,8 @@ class CrowdScoreCell: PFTableViewCell {
     
     @IBOutlet var time: UILabel!
     
+    @IBOutlet var scoreHelpful: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

@@ -280,13 +280,16 @@ UISearchResultsUpdating, UISearchBarDelegate {
     private func updateHelpfulLabelAndCount() {
         currentHelpfulCount = 0;
         if let helpfulCount = userScore["helpfulCount"] {
-            if helpfulCount as! Int > 0 {
-                helpful.text = String(helpfulCount as! Int) + " found this helpful"
+            if helpfulCount as! Int == 1 {
+                helpful.text = String(helpfulCount as! Int) + " person found this helpful!"
+                currentHelpfulCount = helpfulCount as! Int;
+            } else if helpfulCount as! Int > 1 {
+                helpful.text = String(helpfulCount as! Int) + " people found this helpful!"
                 currentHelpfulCount = helpfulCount as! Int;
             } else {
                 let currentUser = PFUser.currentUser()!
                 if currentUser.objectId == userScore["user"].objectId {
-                    helpful.text = "You earned 50 points for this score!"
+                    helpful.text = "Great score!"
                 } else {
                     helpful.text = "Be the first to find this score helpful"
                 }
@@ -294,7 +297,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         } else {
             let currentUser = PFUser.currentUser()!
             if currentUser.objectId == userScore["user"].objectId {
-                helpful.text = "You earned 50 points for this score!"
+                helpful.text = "Great score!"
             } else {
                 helpful.text = "Be the first to find this score helpful"
             }
