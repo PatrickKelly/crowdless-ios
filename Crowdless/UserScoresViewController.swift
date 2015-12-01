@@ -159,7 +159,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
             cell.placeName.text = place["name"] as? String
             if let comment = userScore["comment"] {
                 cell.userComment.text = comment as? String
-                cell.userComment.font = UIFont(name:"HelveticaNeue", size: 12.0)
+                cell.userComment.font = UIFont(name:"HelveticaNeue", size: 13.0)
             } else {
                 cell.userComment.text = ""
             }

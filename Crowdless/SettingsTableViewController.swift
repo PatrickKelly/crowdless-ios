@@ -135,7 +135,8 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.clipsToBounds = true
         
-        let tap = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap = UITapGestureRecognizer(target: self, action: "endEditing")
+        tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         
         tableView.tableFooterView = UIView(frame: CGRectZero)
@@ -162,9 +163,9 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
         userNameLabel.text = userNameTextField.text
     }
     
-    func dismissKeyboard() {
+    func endEditing() {
         if userNameTextField.editing {
-            userNameTextField.resignFirstResponder()
+            view.endEditing(true)
             if userNameTextField.text?.characters.count > 0 {
                 let name = userNameTextField.text
                 userNameLabel.text = name
