@@ -96,6 +96,10 @@ UISearchResultsUpdating, UISearchBarDelegate {
                         self.searchResultsController.tableView.reloadData()
                 })
             }
+        } else {
+            let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     
@@ -112,10 +116,18 @@ UISearchResultsUpdating, UISearchBarDelegate {
     
     @IBAction func scoreButtonPressed(sender: AnyObject) {
         
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let scorecardViewController = storyboard.instantiateViewControllerWithIdentifier("ScorecardViewController") as! ScorecardViewController
-        scorecardViewController.crowdScore = crowdScore
-        self.presentViewController(scorecardViewController, animated: true, completion: nil)
+        isUserAbleToScore { (canScore) -> () in
+            if canScore {
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let scorecardViewController = storyboard.instantiateViewControllerWithIdentifier("ScorecardViewController") as! ScorecardViewController
+                scorecardViewController.crowdScore = self.crowdScore
+                self.presentViewController(scorecardViewController, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Hang on!", message: "You must wait 15 minutes before you can score this crowd again. You can always edit your previous score.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -171,8 +183,9 @@ UISearchResultsUpdating, UISearchBarDelegate {
             } else {
                 crowdScoreImage.hidden = false
                 isLoadingPlace = false;
-                let alert = UIAlertController(title: "Error", message: "An Internet connection is required to get this crowd score.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
         } else {
             DDLogError("Reachability object is nil.")
@@ -847,6 +860,35 @@ UISearchResultsUpdating, UISearchBarDelegate {
     private func getObjectIds(objects: [PFObject]) -> [String] {
         return objects.map { (object) -> String in
             return object.objectId!
+        }
+    }
+    
+    private func isUserAbleToScore(completionBlock: Bool -> ()) {
+        
+        if reachability!.isReachable() {
+            if let user = PFUser.currentUser() {
+                let query = PFQuery(className:"UserScore")
+                query.whereKey("place", equalTo: self.place!)
+                query.whereKey("user", equalTo: user)
+                query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*15))
+                query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                    if error == nil {
+                        if objects?.count > 0 {
+                            completionBlock(false)
+                        } else {
+                            completionBlock(true)
+                        }
+                    } else {
+                        DDLogError("An error occurred while checking if user was able to score: \(error)")
+                        // let them score anyway
+                        completionBlock(true)
+                    }
+                })
+            }
+        } else {
+            let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }

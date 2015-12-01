@@ -58,6 +58,11 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                 if(reachability.isReachable()) {
                     loadingSpinner.startAnimating()
                     loadInitialPlaces();
+                } else {
+                    loadingSpinner.stopAnimating()
+                    let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
             }
         } else {
@@ -166,6 +171,10 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                         self.filteredPlaces = placesPredictions
                         self.searchResultsController.tableView.reloadData()
                 })
+            } else {
+                let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
         }
     }
