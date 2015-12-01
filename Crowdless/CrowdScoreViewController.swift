@@ -172,7 +172,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
                 crowdScoreImage.hidden = false
                 isLoadingPlace = false;
                 let alert = UIAlertController(title: "Error", message: "An Internet connection is required to get this crowd score.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
             }
         } else {
             DDLogError("Reachability object is nil.")
@@ -577,6 +577,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         query.whereKey("place", equalTo: self.place!)
         query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         query.includeKey("user")
+        query.limit = self.resultsLimit
         query.findObjectsInBackgroundWithBlock({ (
             scores, error: NSError?) -> Void in
             if let scores = scores {
@@ -594,8 +595,9 @@ UISearchResultsUpdating, UISearchBarDelegate {
                 }
                 DDLogError("Could not load first crowd score results \(error!.localizedDescription)")
                 self.isLoadingCrowdScores = false
-                let alert = UIAlertController(title: "Error", message: "Could not load first crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                let alert = UIAlertController(title: "Error", message: "An error occurred loading first crowd score results.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
             
         })
@@ -609,9 +611,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         query.whereKey("place", equalTo: self.place!)
         query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
         query.whereKey("objectId", notContainedIn: getObjectIds(self.userCrowdScores))
-        // Limit what could be a lot of points.
         query.limit = self.resultsLimit
-        query.skip = currentPage * resultsLimit;
         query.includeKey("user")
         query.findObjectsInBackgroundWithBlock({ (
             scores, error: NSError?) -> Void in
@@ -637,8 +637,9 @@ UISearchResultsUpdating, UISearchBarDelegate {
                     self.loadingSpinner.stopAnimating()
                 }
                 self.isLoadingCrowdScores = false
-                let alert = UIAlertController(title: "Error", message: "Could not load additional crowd score results \(error!.localizedDescription)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                let alert = UIAlertController(title: "Error", message: "An error occurred loading additional crowd score results.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
             
         })

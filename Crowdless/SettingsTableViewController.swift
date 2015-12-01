@@ -26,6 +26,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     
     private var userNameCharactersToBlock: NSCharacterSet?
     private var deactivateActionSheet: UIAlertController!
+    let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +124,23 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     
     private func deactivateAccount() {
         
+        if let user = PFUser.currentUser() {
+            loadingSpinner.startAnimating()
+            user["active"] = false
+            user.saveInBackgroundWithBlock({ (saved, error) -> Void in
+                if error == nil {
+                    self.loadingSpinner.stopAnimating()
+                    let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    delegate.logout()
+                } else {
+                    self.loadingSpinner.stopAnimating()
+                    DDLogError("An error occurred while trying to deactivate user account: \(error)")
+                    let alert = UIAlertController(title: "Error", message: "An error occurred while attempting to deactivate your account. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            })
+        }
     }
     
     private func initView() {
@@ -157,6 +175,12 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
         
         deactivateActionSheet.addAction(deactivate)
         deactivateActionSheet.addAction(cancelDeactivate)
+        
+        var frame: CGRect = loadingSpinner.frame
+        frame.origin.x = (self.view.frame.size.width / 2 - frame.size.width / 2)
+        frame.origin.y = (self.view.frame.size.height / 2 - frame.size.height / 2)
+        loadingSpinner.frame = frame
+        view.addSubview(loadingSpinner)
     }
     
     func textFieldDidChange() {

@@ -67,6 +67,8 @@ class WelcomeViewController: UIViewController {
                 user["gender"] = result["gender"]
                 user["name"] = result["name"]
                 user["facebookId"] = result["id"] as! String
+                user["displayProfilePicture"] = true
+                user["active"] = true
                 
                 let facebookId = result["id"] as! String
                 let fbPictureUrl = "https://graph.facebook.com/" + facebookId + "/picture?type=large";
