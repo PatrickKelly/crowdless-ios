@@ -444,7 +444,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                 let innerQuery = PFQuery(className:"Place")
                 // Interested in locations near user.
                 innerQuery.limit = 1000
-                innerQuery.whereKey("coordinates", nearGeoPoint: geoPoint, withinMiles: 5)
+                innerQuery.whereKey("coordinates", nearGeoPoint: geoPoint, withinMiles: 10)
                 let query = PFQuery(className: "CrowdScore")
                 query.whereKey("place", matchesQuery: innerQuery)
                 query.includeKey("place")
@@ -498,7 +498,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             self.isLoadingPlaces = true
             let innerQuery = PFQuery(className:"Place")
             // Interested in locations near user.
-            innerQuery.whereKey("coordinates", nearGeoPoint: self.userGeoPoint!, withinMiles: 5)
+            innerQuery.whereKey("coordinates", nearGeoPoint: self.userGeoPoint!, withinMiles: 10)
             innerQuery.limit = 1000
             let query = PFQuery(className: "CrowdScore")
             query.whereKey("place", matchesQuery: innerQuery)
