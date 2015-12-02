@@ -28,7 +28,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     private let resultsPageLimit = 10
     private var currentPage = 0
     private let pageLimit = 3
-    private var sortBy: String = "createdAt"
     private var reachability: Reachability?
     private let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .White)
     private let googlePlacesHelper = GooglePlacesHelper()
@@ -103,7 +102,17 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
-        // reload the data
+        if let reachability = reachability {
+            if(reachability.isReachable()) {
+                loadingSpinner.startAnimating()
+                loadInitialPlaces();
+            } else {
+                loadingSpinner.stopAnimating()
+                let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     private func displayCoachMarks() {
@@ -434,11 +443,12 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                 // Create a query for places
                 let innerQuery = PFQuery(className:"Place")
                 // Interested in locations near user.
-                innerQuery.whereKey("coordinates", nearGeoPoint: geoPoint, withinMiles: 10)
+                innerQuery.limit = 1000
+                innerQuery.whereKey("coordinates", nearGeoPoint: geoPoint, withinMiles: 5)
                 let query = PFQuery(className: "CrowdScore")
                 query.whereKey("place", matchesQuery: innerQuery)
                 query.includeKey("place")
-                query.orderByDescending("recentUserScoreCount")
+                self.addSortOptionToQuery(query)
                 query.limit = self.resultsPageLimit
                 // Final list of objects
                 query.findObjectsInBackgroundWithBlock({ (
@@ -488,13 +498,14 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
             self.isLoadingPlaces = true
             let innerQuery = PFQuery(className:"Place")
             // Interested in locations near user.
-            innerQuery.whereKey("coordinates", nearGeoPoint: self.userGeoPoint!, withinMiles: 10)
+            innerQuery.whereKey("coordinates", nearGeoPoint: self.userGeoPoint!, withinMiles: 5)
+            innerQuery.limit = 1000
             let query = PFQuery(className: "CrowdScore")
             query.whereKey("place", matchesQuery: innerQuery)
             query.whereKey("objectId", notContainedIn: getObjectIds(self.trendingScores))
             query.includeKey("place")
             query.limit = self.resultsPageLimit
-            query.orderByDescending("recentUserScoreCount")
+            self.addSortOptionToQuery(query)
             // Final list of objects
             query.findObjectsInBackgroundWithBlock({ (
                 trendingScores, error: NSError?) -> Void in
@@ -537,6 +548,26 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     private func getObjectIds(objects: [PFObject]) -> [String] {
         return objects.map { (object) -> String in
             return object.objectId!
+        }
+    }
+    
+    private func addSortOptionToQuery(query: PFQuery) {
+        let selectedRow = picker.selectedRows()[0] as! Int
+        switch selectedRow {
+        case 0:
+            query.orderByDescending("recentUserScoreCount,-lastUserUpdateTime")
+        case 1:
+            query.orderByDescending("crowded,-lastUserUpdateTime")
+        case 2:
+            query.orderByAscending("crowded,-lastUserUpdateTime")
+        case 3:
+            query.orderByAscending("parkingDifficult,-lastUserUpdateTime")
+        case 4:
+            query.orderByAscending("waitTime,-lastUserUpdateTime")
+        case 5:
+            query.orderByAscending("coverCharge,-lastUserUpdateTime")
+        default:
+            query.orderByDescending("recentUserScoreCount,-lastUserUpdateTime")
         }
     }
     
