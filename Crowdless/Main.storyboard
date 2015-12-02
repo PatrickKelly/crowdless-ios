@@ -535,7 +535,7 @@
                                         </imageView>
                                     </subviews>
                                     <animations/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="ypj-PJ-Ikt" firstAttribute="top" secondItem="835-mQ-jSh" secondAttribute="bottom" constant="8" id="2oY-TK-eh5"/>
                                         <constraint firstAttribute="trailing" secondItem="835-mQ-jSh" secondAttribute="trailing" constant="8" id="FRo-Jv-t93"/>

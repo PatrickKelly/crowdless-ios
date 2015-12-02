@@ -28,6 +28,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     private let resultsPageLimit = 10
     private var currentPage = 0
     private let pageLimit = 3
+    private var sortBy: String = "createdAt"
     private var reachability: Reachability?
     private let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .White)
     private let googlePlacesHelper = GooglePlacesHelper()
