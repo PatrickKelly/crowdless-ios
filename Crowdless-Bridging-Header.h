@@ -11,5 +11,6 @@
 
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "CZPickerView.h"
 
 #endif /* Crowdless_Bridging_Header_h */

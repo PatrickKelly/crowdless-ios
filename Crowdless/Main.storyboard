@@ -98,7 +98,7 @@
                                 <animations/>
                             </imageView>
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eWW-hA-tvJ">
-                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
+                                <rect key="frame" x="0.0" y="102" width="414" height="585"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -280,6 +280,38 @@
                                     <outlet property="delegate" destination="iOA-BB-qtG" id="qjN-DE-9Dt"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kCm-QF-5Hq">
+                                <rect key="frame" x="0.0" y="64" width="414" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Most Popular" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSk-x0-uno">
+                                        <rect key="frame" x="150" y="11" width="115" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="sort-arrow-white" translatesAutoresizingMaskIntoConstraints="NO" id="7qO-Qq-U6M">
+                                        <rect key="frame" x="273" y="18" width="13" height="8"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="FLf-St-Y5R"/>
+                                            <constraint firstAttribute="width" constant="13" id="np7-Ue-kGa"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="7qO-Qq-U6M" firstAttribute="top" secondItem="kCm-QF-5Hq" secondAttribute="top" constant="18" id="28H-NW-r1l"/>
+                                    <constraint firstAttribute="height" constant="30" id="3Ly-Dw-3yu"/>
+                                    <constraint firstAttribute="bottom" secondItem="MSk-x0-uno" secondAttribute="bottom" constant="-2" id="Tif-Kr-PBJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="7qO-Qq-U6M" secondAttribute="bottom" constant="4" id="b6d-l2-MP9"/>
+                                    <constraint firstItem="7qO-Qq-U6M" firstAttribute="leading" secondItem="MSk-x0-uno" secondAttribute="trailing" constant="8" id="si0-74-Yf8"/>
+                                    <constraint firstItem="MSk-x0-uno" firstAttribute="centerX" secondItem="kCm-QF-5Hq" secondAttribute="centerX" id="xRx-Ld-smJ"/>
+                                    <constraint firstItem="MSk-x0-uno" firstAttribute="top" secondItem="kCm-QF-5Hq" secondAttribute="top" constant="11" id="yyl-KL-vhk"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -287,12 +319,16 @@
                             <constraint firstItem="Ppq-F4-8qr" firstAttribute="top" secondItem="lOe-8a-cyg" secondAttribute="bottom" id="0Bs-mX-L22"/>
                             <constraint firstItem="Ppq-F4-8qr" firstAttribute="top" secondItem="eWW-hA-tvJ" secondAttribute="bottom" id="22T-s2-Omy"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="leading" secondItem="OHI-h0-G04" secondAttribute="leadingMargin" constant="-20" id="4sm-Zl-X9o"/>
-                            <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="97n-wf-Q9A"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kCm-QF-5Hq" secondAttribute="trailing" constant="-20" id="7z1-p7-Kgg"/>
+                            <constraint firstItem="kCm-QF-5Hq" firstAttribute="centerX" secondItem="OHI-h0-G04" secondAttribute="centerX" id="EaS-gd-GnZ"/>
+                            <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="kCm-QF-5Hq" secondAttribute="bottom" constant="8" id="Hnq-ds-Ra3"/>
+                            <constraint firstItem="kCm-QF-5Hq" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="ITo-p4-GgB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lOe-8a-cyg" secondAttribute="trailing" constant="-20" id="LEU-ZO-rWV"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="top" secondItem="OHI-h0-G04" secondAttribute="topMargin" id="NCY-83-cyS"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="WXI-gs-o1m"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eWW-hA-tvJ" secondAttribute="trailing" constant="-20" id="bcy-1M-7qc"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="leading" secondItem="OHI-h0-G04" secondAttribute="leadingMargin" constant="-20" id="qbk-aZ-Ajh"/>
+                            <constraint firstItem="kCm-QF-5Hq" firstAttribute="leading" secondItem="OHI-h0-G04" secondAttribute="leadingMargin" constant="-20" id="t4A-2f-9z8"/>
                             <constraint firstItem="eWW-hA-tvJ" firstAttribute="top" secondItem="NkF-L6-MBG" secondAttribute="bottom" id="z23-5Z-FUQ"/>
                             <constraint firstItem="lOe-8a-cyg" firstAttribute="centerX" secondItem="OHI-h0-G04" secondAttribute="centerX" id="zhs-Nn-W2b"/>
                         </constraints>
@@ -309,7 +345,10 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="crowdsTableView" destination="eWW-hA-tvJ" id="gAA-QU-nZf"/>
+                        <outlet property="currentSortSelection" destination="MSk-x0-uno" id="o8n-eS-DkY"/>
                         <outlet property="searchDisplayController" destination="xva-gl-HVM" id="G8P-l8-d9n"/>
+                        <outlet property="sortImage" destination="7qO-Qq-U6M" id="nDB-7g-3At"/>
+                        <outlet property="sortView" destination="kCm-QF-5Hq" id="Ldz-Ut-GQL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rgV-25-96O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -496,7 +535,7 @@
                                         </imageView>
                                     </subviews>
                                     <animations/>
-                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="ypj-PJ-Ikt" firstAttribute="top" secondItem="835-mQ-jSh" secondAttribute="bottom" constant="8" id="2oY-TK-eh5"/>
                                         <constraint firstAttribute="trailing" secondItem="835-mQ-jSh" secondAttribute="trailing" constant="8" id="FRo-Jv-t93"/>
@@ -1886,11 +1925,12 @@
         <image name="people-add" width="53" height="44"/>
         <image name="people-green" width="172" height="144"/>
         <image name="people-scores-tab" width="25" height="25"/>
+        <image name="sort-arrow-white" width="16" height="10"/>
         <image name="white-cog" width="25" height="25"/>
         <image name="white-delete" width="17" height="17"/>
         <image name="white-edit" width="17" height="17"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kXb-Iw-EhJ"/>
+        <segue reference="gRJ-PJ-Zuo"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -16,6 +16,7 @@
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */; };
 		D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */; };
+		D8212B6E1C0EB03400A8883C /* CZPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8212B6D1C0EB03400A8883C /* CZPickerView.m */; };
 		D82A9CC81C0453EF00EF5A5D /* ScrollableToTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A9CC71C0453EF00EF5A5D /* ScrollableToTop.swift */; };
 		D82A9CCC1C04CEC300EF5A5D /* UserScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A9CCB1C04CEC300EF5A5D /* UserScoreTableViewCell.swift */; };
 		D82A9CCE1C05047F00EF5A5D /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A9CCD1C05047F00EF5A5D /* LocationHelper.swift */; };
@@ -54,6 +55,8 @@
 		BDFEEE92808E228E30F9A413 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D803A1D01BD9644200DA1B02 /* CrowdScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdScoreViewController.swift; sourceTree = "<group>"; };
 		D80C72E11BD97D7400A5D6FA /* ScorecardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScorecardViewController.swift; sourceTree = "<group>"; };
+		D8212B6C1C0EAFFB00A8883C /* CZPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZPickerView.h; sourceTree = "<group>"; };
+		D8212B6D1C0EB03400A8883C /* CZPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZPickerView.m; sourceTree = "<group>"; };
 		D82A9CC71C0453EF00EF5A5D /* ScrollableToTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableToTop.swift; sourceTree = "<group>"; };
 		D82A9CCB1C04CEC300EF5A5D /* UserScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserScoreTableViewCell.swift; sourceTree = "<group>"; };
 		D82A9CCD1C05047F00EF5A5D /* LocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 				D82A9CC71C0453EF00EF5A5D /* ScrollableToTop.swift */,
 				D82A9CCB1C04CEC300EF5A5D /* UserScoreTableViewCell.swift */,
 				D82A9CCD1C05047F00EF5A5D /* LocationHelper.swift */,
+				D8212B6C1C0EAFFB00A8883C /* CZPickerView.h */,
+				D8212B6D1C0EB03400A8883C /* CZPickerView.m */,
 			);
 			path = Crowdless;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8212B6E1C0EB03400A8883C /* CZPickerView.m in Sources */,
 				D8488E401BFD14DA0036165D /* GooglePlacesHelper.swift in Sources */,
 				D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */,
 				D8A489721C03C3AB00AEEB35 /* UserScoresViewController.swift in Sources */,

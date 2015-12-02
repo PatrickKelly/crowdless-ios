@@ -14,10 +14,13 @@ import MPCoachMarks
 
 public let ErrorDomain: String! = "CrowdsTrendingViewControllerErrorDomain"
 
-class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource, ScrollableToTop {
+class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource, ScrollableToTop, CZPickerViewDelegate, CZPickerViewDataSource {
     
     @IBOutlet var crowdsTableView: UITableView!
+    @IBOutlet var sortImage: UIImageView!
+    @IBOutlet var currentSortSelection: UILabel!
     
+    @IBOutlet var sortView: UIView!
     private var refreshControl:UIRefreshControl!
     private var isLoadingPlaces = false
     private var trendingScores = [PFObject]()
@@ -31,6 +34,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     private var searchController:UISearchController!
     private var searchResultsController: UITableViewController!
     private var userGeoPoint: PFGeoPoint?
+    private var picker: CZPickerView!
     
     private var initialScoresLoaded = false
     
@@ -89,6 +93,18 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         crowdsTableView.setContentOffset(CGPointZero, animated:true)
     }
     
+    func numberOfRowsInPickerView(pickerView: CZPickerView!) -> Int {
+        return SortOption.allValues.count
+    }
+    
+    func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
+        return SortOption.allValues[row].rawValue
+    }
+    
+    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
+        // reload the data
+    }
+    
     private func displayCoachMarks() {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "CrowdsTrendingTutorialShown")
         NSUserDefaults.standardUserDefaults().synchronize()
@@ -103,6 +119,10 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         coachMarksView.start()
     }
     
+    func displaySortPicker() {
+        picker.show()
+    }
+    
     private func initView() {
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 51/255, green: 51/255, blue: 51/255, alpha: 1.0)
@@ -112,6 +132,16 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UITextField.appearance().keyboardAppearance = .Dark
+        
+        let tap = UITapGestureRecognizer(target: self, action: "displaySortPicker")
+        sortView.addGestureRecognizer(tap)
+        
+        picker = CZPickerView(headerTitle: "Sort By", cancelButtonTitle: "", confirmButtonTitle: "")
+        picker.delegate = self
+        picker.dataSource = self
+        picker.needFooterView = false;
+        picker.headerBackgroundColor = UIColor.blackColor()
+        picker.setSelectedRows([0])
         
         initSearchController()
         
@@ -131,6 +161,8 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         frame.origin.y = (self.view.frame.size.height / 2 - frame.size.height / 2)
         loadingSpinner.frame = frame
         view.addSubview(loadingSpinner)
+        
+        currentSortSelection.text = SortOption.MostPopular.rawValue
     }
     
     private func initSearchController() {
@@ -230,7 +262,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if tableView == searchResultsController.tableView {
+        if tableView == searchResultsController.tableView  || section == 0 {
             return 0
         } else {
             return 10;
@@ -505,5 +537,17 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         return objects.map { (object) -> String in
             return object.objectId!
         }
+    }
+    
+    enum SortOption : String {
+        case MostPopular = "Most Popular"
+        case MostCrowded = "Most Crowded"
+        case LeastCrowded = "Least Crowded"
+        case EasiestParking = "Easiest Parking"
+        case ShortestWait = "Shortest Wait"
+        case LowestCover = "Lowest Cover"
+        
+        static var count: Int { return 6}
+        static let allValues = [MostPopular, MostCrowded, LeastCrowded, EasiestParking, ShortestWait, LowestCover]
     }
 }
