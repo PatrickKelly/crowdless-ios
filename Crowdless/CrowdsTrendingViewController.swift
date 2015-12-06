@@ -81,7 +81,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         let coachMarksShown = NSUserDefaults.standardUserDefaults().boolForKey("CrowdsTrendingTutorialShown")
         if coachMarksShown == false {
             displayCoachMarks()
-        }        
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -102,8 +102,15 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     }
     
     func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int) {
+        
+        if picker.selectedRows().count == 0 {
+            picker.setSelectedRows([row])
+        }
+        
         if let reachability = reachability {
             if(reachability.isReachable()) {
+                currentPage = 0
+                scrollToTop()
                 loadingSpinner.startAnimating()
                 currentSortSelection.text = SortOption.allValues[row].rawValue
                 loadInitialPlaces();
@@ -539,7 +546,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
                     let alert = UIAlertController(title: "Error", message: "Could not additional first crowd results.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
-
+                    
                 }
             })
         }
