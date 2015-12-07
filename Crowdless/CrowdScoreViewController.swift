@@ -11,6 +11,7 @@ import Parse
 import ReachabilitySwift
 import CocoaLumberjack
 import MPCoachMarks
+import pop
 
 class CrowdScoreViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
 UISearchResultsUpdating, UISearchBarDelegate {
@@ -249,6 +250,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         crowdScoreFirstLabel.text = ""
         crowdScoreSecondLabel.text = ""
         crowdScoreThirdLabel.text = ""
+        crowdedCaption.text = ""
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

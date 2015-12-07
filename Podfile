@@ -15,3 +15,4 @@ pod 'ReachabilitySwift', git: 'https://github.com/ashleymills/Reachability.swift
 pod 'BEMCheckBox'
 pod 'MPCoachMarks'
 pod 'SpringIndicator'
+pod 'pop', '~> 1.0'

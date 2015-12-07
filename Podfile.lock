@@ -38,6 +38,7 @@ PODS:
   - ParseUI (1.1.6):
     - Bolts/Tasks (~> 1.2)
     - Parse (~> 1.8)
+  - pop (1.0.8)
   - ReachabilitySwift (2.1)
   - SpringIndicator (1.2.1)
 
@@ -52,6 +53,7 @@ DEPENDENCIES:
   - ParseCrashReporting (~> 1.9)
   - ParseFacebookUtilsV4 (~> 1.9)
   - ParseUI (~> 1.1)
+  - pop (~> 1.0)
   - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
   - SpringIndicator
 
@@ -75,6 +77,7 @@ SPEC CHECKSUMS:
   ParseCrashReporting: c5ea641e698d576f081f080dff06877ef831d30a
   ParseFacebookUtilsV4: aadebfaaaf4a45bf0a0992863bf48c8fc49189e3
   ParseUI: 8a22e448c03f825203d8c379c80523517f68baa3
+  pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   ReachabilitySwift: 99bb7acceebb90b2048b4a8fd6539be96454dcb2
   SpringIndicator: 2e66169e2595c00cc3ab34329d6bdbeab90680f0
 
