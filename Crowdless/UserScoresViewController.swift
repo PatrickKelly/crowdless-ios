@@ -430,6 +430,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         
         userScoresTableView.estimatedRowHeight = 158
         userScoresTableView.rowHeight = UITableViewAutomaticDimension
+        userScoresTableView.tableFooterView = UIView(frame: CGRect.zero)
         
         var frame: CGRect = loadingSpinner.frame
         frame.origin.x = (self.view.frame.size.width / 2 - frame.size.width / 2)
@@ -462,6 +463,8 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         searchResultsController.tableView.dataSource = self
         searchResultsController.tableView.delegate = self
         searchController.searchBar.delegate = self
+        
+        searchResultsController.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         searchController.loadViewIfNeeded() // iOS 9 bug with search controller
         

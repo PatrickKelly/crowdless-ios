@@ -172,8 +172,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         crowdsTableView.addSubview(refreshControl)
         crowdsTableView.backgroundColor = UIColor.clearColor()
         
-        searchResultsController.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
         var frame: CGRect = loadingSpinner.frame
         frame.origin.x = (self.view.frame.size.width / 2 - frame.size.width / 2)
         frame.origin.y = (self.view.frame.size.height / 2 - frame.size.height / 2)
@@ -207,6 +205,8 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         searchResultsController.tableView.dataSource = self
         searchResultsController.tableView.delegate = self
         searchController.searchBar.delegate = self
+        
+        searchResultsController.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         searchController.loadViewIfNeeded() // iOS 9 bug with search controller
         

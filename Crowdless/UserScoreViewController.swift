@@ -570,6 +570,8 @@ UISearchResultsUpdating, UISearchBarDelegate {
         navigationItem.titleView = searchController.searchBar
         definesPresentationContext = true
         
+        searchResultsController.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
         searchController.searchResultsUpdater = self
         searchResultsController.tableView.dataSource = self
         searchResultsController.tableView.delegate = self

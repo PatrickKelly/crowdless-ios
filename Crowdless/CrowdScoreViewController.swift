@@ -729,6 +729,8 @@ UISearchResultsUpdating, UISearchBarDelegate {
         searchResultsController.tableView.delegate = self
         searchController.searchBar.delegate = self
         
+        searchResultsController.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
         searchController.loadViewIfNeeded() // iOS 9 bug with search controller
         
     }
