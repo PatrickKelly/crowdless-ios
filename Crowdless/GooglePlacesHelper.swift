@@ -10,7 +10,7 @@ import CocoaLumberjack
 
 class GooglePlacesHelper {
     
-    private let apiKey = "AIzaSyC_Ydzgdq62x0XXgy6vMp8p3aNs6PlOh0M";
+    private let apiKey = "AIzaSyB1jJfkYz4TCe44phcFEswoaTQsMwj95eQ";
     
     func getPlacesInBackgroundWithBlock(searchString: String, userGeoPoint: PFGeoPoint?, results: [Place] -> ()) {
         var params = [

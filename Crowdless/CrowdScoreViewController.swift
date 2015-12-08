@@ -165,6 +165,12 @@ UISearchResultsUpdating, UISearchBarDelegate {
                                     if let reachability = self.reachability {
                                         if(reachability.isReachable()) {
                                             self.loadInitialUserCrowdScores();
+                                        } else {
+                                            self.isLoadingPlace = false;
+                                            self.crowdScoresTableView.reloadData()
+                                            if (self.refreshControl.refreshing) {
+                                                self.refreshControl.endRefreshing()
+                                            }
                                         }
                                     }
                                 }
@@ -177,6 +183,12 @@ UISearchResultsUpdating, UISearchBarDelegate {
                             if let reachability = self.reachability {
                                 if(reachability.isReachable()) {
                                     self.loadInitialUserCrowdScores();
+                                } else {
+                                    self.isLoadingPlace = false;
+                                    self.crowdScoresTableView.reloadData()
+                                    if (self.refreshControl.refreshing) {
+                                        self.refreshControl.endRefreshing()
+                                    }
                                 }
                             }
                         }
@@ -586,79 +598,82 @@ UISearchResultsUpdating, UISearchBarDelegate {
     
     private func loadInitialUserCrowdScores() {
         
-        isLoadingCrowdScores = true
-        currentPage = 0
-        let query = PFQuery(className: "UserScore")
-        query.orderByDescending("createdAt")
-        query.whereKey("place", equalTo: self.place!)
-        query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
-        query.includeKey("user")
-        query.limit = self.resultsLimit
-        query.findObjectsInBackgroundWithBlock({ (
-            scores, error: NSError?) -> Void in
-            if let scores = scores {
-                self.userCrowdScores = scores;
-                self.currentPage++;
-                self.isLoadingCrowdScores = false
-                self.crowdScoresTableView.reloadData()
-                if (self.refreshControl.refreshing) {
-                    self.refreshControl.endRefreshing()
-                    
+        if !isLoadingCrowdScores {
+            isLoadingCrowdScores = true
+            currentPage = 0
+            let query = PFQuery(className: "UserScore")
+            query.orderByDescending("createdAt")
+            query.whereKey("place", equalTo: self.place!)
+            query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
+            query.includeKey("user")
+            query.limit = self.resultsLimit
+            query.findObjectsInBackgroundWithBlock({ (
+                scores, error: NSError?) -> Void in
+                if let scores = scores {
+                    self.userCrowdScores = scores;
+                    self.currentPage++;
+                    self.isLoadingCrowdScores = false
+                    self.crowdScoresTableView.reloadData()
+                    if (self.refreshControl.refreshing) {
+                        self.refreshControl.endRefreshing()
+                    }
+                } else {
+                    if (self.refreshControl.refreshing) {
+                        self.refreshControl.endRefreshing()
+                    }
+                    DDLogError("Could not load first crowd score results \(error!.localizedDescription)")
+                    self.isLoadingCrowdScores = false
+                    let alert = UIAlertController(title: "Error", message: "An error occurred loading first crowd score results.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
-            } else {
-                if (self.refreshControl.refreshing) {
-                    self.refreshControl.endRefreshing()
-                }
-                DDLogError("Could not load first crowd score results \(error!.localizedDescription)")
-                self.isLoadingCrowdScores = false
-                let alert = UIAlertController(title: "Error", message: "An error occurred loading first crowd score results.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-            
-        })
+                
+            })
+        }
     }
     
     private func loadAdditionalUserCrowdScores() {
         
-        isLoadingCrowdScores = true
-        let query = PFQuery(className: "UserScore")
-        query.orderByDescending("createdAt")
-        query.whereKey("place", equalTo: self.place!)
-        query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
-        query.whereKey("objectId", notContainedIn: getObjectIds(self.userCrowdScores))
-        query.limit = self.resultsLimit
-        query.includeKey("user")
-        query.findObjectsInBackgroundWithBlock({ (
-            scores, error: NSError?) -> Void in
-            if let scores = scores {
-                self.userCrowdScores = self.userCrowdScores + scores;
-                self.currentPage++;
-                self.isLoadingCrowdScores = false
-                self.crowdScoresTableView.reloadData()
-                if(self.refreshControl.refreshing) {
-                    self.refreshControl.endRefreshing()
+        if (!isLoadingCrowdScores) {
+            isLoadingCrowdScores = true
+            let query = PFQuery(className: "UserScore")
+            query.orderByDescending("createdAt")
+            query.whereKey("place", equalTo: self.place!)
+            query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*60*6))
+            query.whereKey("objectId", notContainedIn: getObjectIds(self.userCrowdScores))
+            query.limit = self.resultsLimit
+            query.includeKey("user")
+            query.findObjectsInBackgroundWithBlock({ (
+                scores, error: NSError?) -> Void in
+                if let scores = scores {
+                    self.userCrowdScores = self.userCrowdScores + scores;
+                    self.currentPage++;
+                    self.isLoadingCrowdScores = false
+                    self.crowdScoresTableView.reloadData()
+                    if(self.refreshControl.refreshing) {
+                        self.refreshControl.endRefreshing()
+                    }
+                    
+                    if(self.loadingSpinner.isAnimating()) {
+                        self.loadingSpinner.stopAnimating()
+                    }
+                } else {
+                    DDLogError("Could not load additional crowd score results \(error!.localizedDescription)")
+                    if(self.refreshControl.refreshing) {
+                        self.refreshControl.endRefreshing()
+                    }
+                    
+                    if(self.loadingSpinner.isAnimating()) {
+                        self.loadingSpinner.stopAnimating()
+                    }
+                    self.isLoadingCrowdScores = false
+                    let alert = UIAlertController(title: "Error", message: "An error occurred loading additional crowd score results.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
                 
-                if(self.loadingSpinner.isAnimating()) {
-                    self.loadingSpinner.stopAnimating()
-                }
-            } else {
-                DDLogError("Could not load additional crowd score results \(error!.localizedDescription)")
-                if(self.refreshControl.refreshing) {
-                    self.refreshControl.endRefreshing()
-                }
-                
-                if(self.loadingSpinner.isAnimating()) {
-                    self.loadingSpinner.stopAnimating()
-                }
-                self.isLoadingCrowdScores = false
-                let alert = UIAlertController(title: "Error", message: "An error occurred loading additional crowd score results.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-            
-        })
+            })
+        }
     }
     
     private func initView() {
