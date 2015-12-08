@@ -1671,8 +1671,10 @@
                         <outlet property="deactivateCell" destination="W62-Ns-ySp" id="S8u-lt-VnV"/>
                         <outlet property="displayProfilePictureSwitch" destination="262-Nh-fNi" id="WE1-fj-4n6"/>
                         <outlet property="logoutCell" destination="WFR-IJ-QKO" id="D5P-Ev-Cac"/>
+                        <outlet property="privacyPolicyCell" destination="0ze-6C-2ji" id="GHI-ri-HYj"/>
                         <outlet property="profileImageView" destination="J80-y3-8Zu" id="NBb-za-v6O"/>
                         <outlet property="profilePictureReloadIndicator" destination="g4E-10-2hz" id="caX-KT-Qnl"/>
+                        <outlet property="termsOfServiceCell" destination="QWc-Gg-7w9" id="PeK-vp-j83"/>
                         <outlet property="userNameLabel" destination="RL0-YO-Xd3" id="1Mx-P1-0Gt"/>
                         <outlet property="userNameTextField" destination="nsa-pd-KYr" id="C6X-QI-gee"/>
                     </connections>

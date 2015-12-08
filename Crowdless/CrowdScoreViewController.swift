@@ -117,14 +117,14 @@ UISearchResultsUpdating, UISearchBarDelegate {
     
     @IBAction func scoreButtonPressed(sender: AnyObject) {
         
-        isUserAbleToScore { (canScore) -> () in
+        isUserAbleToScore { (canScore, error) -> () in
             if canScore {
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let scorecardViewController = storyboard.instantiateViewControllerWithIdentifier("ScorecardViewController") as! ScorecardViewController
                 scorecardViewController.crowdScore = self.crowdScore
                 self.presentViewController(scorecardViewController, animated: true, completion: nil)
             } else {
-                let alert = UIAlertController(title: "Hang on!", message: "You must wait 15 minutes before you can score this crowd again. You can always edit your previous score.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Hang on!", message: error, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
@@ -138,59 +138,59 @@ UISearchResultsUpdating, UISearchBarDelegate {
         }
         
         if !seguedToUserScoreViewController {
-        isLoadingPlace = true
-        userCrowdScores.removeAll()
-        crowdScoresTableView.reloadData()
-        
-        clearView()
-        
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self,
-            selector: "refreshCrowdScore", userInfo: nil, repeats: false)
-        
-        super.viewWillAppear(animated);
-        
-        if let reachability = reachability {
-            if(reachability.isReachable()) {
-                loadingSpinner.startAnimating()
-                isLoadingPlace = true;
-                crowdScoresTableView.reloadData()
-                if let crowdScore = crowdScore {
-                    crowdScore.fetchInBackgroundWithBlock({ (
-                        crowdScore, error) -> Void in
-                        if error == nil {
-                            self.crowdScore = crowdScore;
-                            self.getPlaceInBackground { (placeResult: PFObject) -> () in
-                                self.place = placeResult;
-                                self.loadPlace();
-                                if let reachability = self.reachability {
-                                    if(reachability.isReachable()) {
-                                        self.loadInitialUserCrowdScores();
+            isLoadingPlace = true
+            userCrowdScores.removeAll()
+            crowdScoresTableView.reloadData()
+            
+            clearView()
+            
+            NSTimer.scheduledTimerWithTimeInterval(1, target: self,
+                selector: "refreshCrowdScore", userInfo: nil, repeats: false)
+            
+            super.viewWillAppear(animated);
+            
+            if let reachability = reachability {
+                if(reachability.isReachable()) {
+                    loadingSpinner.startAnimating()
+                    isLoadingPlace = true;
+                    crowdScoresTableView.reloadData()
+                    if let crowdScore = crowdScore {
+                        crowdScore.fetchInBackgroundWithBlock({ (
+                            crowdScore, error) -> Void in
+                            if error == nil {
+                                self.crowdScore = crowdScore;
+                                self.getPlaceInBackground { (placeResult: PFObject) -> () in
+                                    self.place = placeResult;
+                                    self.loadPlace();
+                                    if let reachability = self.reachability {
+                                        if(reachability.isReachable()) {
+                                            self.loadInitialUserCrowdScores();
+                                        }
                                     }
                                 }
                             }
-                        }
-                    })
-                } else {
-                    getPlaceInBackground { (placeResult: PFObject) -> () in
-                        self.place = placeResult;
-                        self.loadPlace();
-                        if let reachability = self.reachability {
-                            if(reachability.isReachable()) {
-                                self.loadInitialUserCrowdScores();
+                        })
+                    } else {
+                        getPlaceInBackground { (placeResult: PFObject) -> () in
+                            self.place = placeResult;
+                            self.loadPlace();
+                            if let reachability = self.reachability {
+                                if(reachability.isReachable()) {
+                                    self.loadInitialUserCrowdScores();
+                                }
                             }
                         }
                     }
+                } else {
+                    crowdScoreImage.hidden = false
+                    isLoadingPlace = false;
+                    let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
             } else {
-                crowdScoreImage.hidden = false
-                isLoadingPlace = false;
-                let alert = UIAlertController(title: "No Interwebs", message: "An Internet connection is required to score this crowd.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                DDLogError("Reachability object is nil.")
             }
-        } else {
-            DDLogError("Reachability object is nil.")
-        }
         } else {
             crowdScoresTableView.reloadData()
             crowdScore?.fetchInBackgroundWithBlock({ (refreshedCrowdScore, error) -> Void in
@@ -867,25 +867,28 @@ UISearchResultsUpdating, UISearchBarDelegate {
         }
     }
     
-    private func isUserAbleToScore(completionBlock: Bool -> ()) {
+    private func isUserAbleToScore(completionBlock: (Bool, String?) -> ()) {
         
         if reachability!.isReachable() {
             if let user = PFUser.currentUser() {
                 let query = PFQuery(className:"UserScore")
-                query.whereKey("place", equalTo: self.place!)
                 query.whereKey("user", equalTo: user)
                 query.whereKey("createdAt", greaterThan: NSDate().dateByAddingTimeInterval(-60*15))
                 query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
                     if error == nil {
-                        if objects?.count > 0 {
-                            completionBlock(false)
+                        if let _ = objects?.indexOf({ object -> Bool in
+                            return object["place"].objectId == self.place!.objectId
+                        }) {
+                            completionBlock(false, "You'll have to wait 15 minutes before you can score this crowd again. You can always edit your previous score!")
+                        } else if objects?.count > 5 {
+                            completionBlock(false, "You can only score 5 crowds within 15 minutes. You can always edit a previous score!")
                         } else {
-                            completionBlock(true)
+                            completionBlock(true, nil)
                         }
                     } else {
                         DDLogError("An error occurred while checking if user was able to score: \(error)")
                         // let them score anyway
-                        completionBlock(true)
+                        completionBlock(true, nil)
                     }
                 })
             }

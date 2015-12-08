@@ -18,6 +18,10 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet var logoutCell: UITableViewCell!
     
+    @IBOutlet weak var termsOfServiceCell: UITableViewCell!
+    
+    @IBOutlet weak var privacyPolicyCell: UITableViewCell!
+    
     @IBOutlet var deactivateCell: UITableViewCell!
     @IBOutlet var displayProfilePictureSwitch: UISwitch!
     @IBOutlet var userNameTextField: UITextField!
@@ -79,6 +83,10 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
                 popPresenter.sourceRect = cell.bounds
             }
             self.presentViewController(deactivateActionSheet, animated: true, completion: nil)
+        } else if cell == privacyPolicyCell {
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.crowdlessapp.com/pp.html")!)
+        } else if cell == termsOfServiceCell {
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.crowdlessapp.com/tos.html")!)
         }
     }
     
