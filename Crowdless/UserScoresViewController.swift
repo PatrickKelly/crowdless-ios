@@ -12,7 +12,7 @@ import ReachabilitySwift
 import CocoaLumberjack
 
 class UserScoresViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,
-UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
+UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop, CrowdSearchControllerDismissable {
     
     @IBOutlet var userScoresTableView: UITableView!
     
@@ -31,6 +31,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
     private var isLoadingUserScores = false
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     private var currentCalendar = NSCalendar.autoupdatingCurrentCalendar();
+    private var initialScoresLoaded = false
     
     private var reachability: Reachability?
     
@@ -53,24 +54,30 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
             definesPresentationContext = true
         }
         
-        isLoadingUserScores = true
-        userScores.removeAll()
-        userScoresTableView.reloadData()
-        
-        super.viewWillAppear(animated);
-        
-        if let reachability = reachability {
-            if(reachability.isReachable()) {
-                loadingSpinner.startAnimating()
-                loadInitialUserScores()
+        if !initialScoresLoaded {
+            isLoadingUserScores = true
+            userScores.removeAll()
+            userScoresTableView.reloadData()
+            
+            super.viewWillAppear(animated);
+            
+            if let reachability = reachability {
+                if(reachability.isReachable()) {
+                    loadingSpinner.startAnimating()
+                    loadInitialUserScores()
+                } else {
+                    isLoadingUserScores = false;
+                    let alert = UIAlertController(title: "Error", message: "An Internet connection is required to get your scores.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                }
             } else {
-                isLoadingUserScores = false;
-                let alert = UIAlertController(title: "Error", message: "An Internet connection is required to get your scores.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                DDLogError("Reachability object is nil.")
             }
         } else {
-            DDLogError("Reachability object is nil.")
+            userScoresTableView.reloadData()
         }
+        
+        super.viewWillAppear(animated);
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
@@ -86,7 +93,13 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
     }
     
     func scrollToTop() {
-        userScoresTableView.setContentOffset(CGPointZero, animated:true)
+        userScoresTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition:.Top, animated: true)
+    }
+    
+    func dismissSearchController() {
+        if searchController != nil {
+            searchController.active = false
+        }
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
@@ -310,6 +323,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         let currentUser = PFUser.currentUser()!
         
         isLoadingUserScores = true
+        currentPage = 0
         let query = PFQuery(className: "UserScore")
         query.orderByDescending("createdAt")
         query.whereKey("user", equalTo: currentUser)
@@ -320,6 +334,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
                 self.userScores = scores;
                 self.currentPage++;
                 self.isLoadingUserScores = false
+                self.initialScoresLoaded = true
                 self.userScoresTableView.reloadData()
                 if(self.refreshControl.refreshing) {
                     self.refreshControl.endRefreshing()
@@ -427,7 +442,7 @@ UISearchResultsUpdating, UISearchBarDelegate, ScrollableToTop {
         refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         userScoresTableView.addSubview(refreshControl)
         userScoresTableView.backgroundColor = UIColor.clearColor()
-        
+                
         userScoresTableView.estimatedRowHeight = 158
         userScoresTableView.rowHeight = UITableViewAutomaticDimension
         userScoresTableView.tableFooterView = UIView(frame: CGRect.zero)

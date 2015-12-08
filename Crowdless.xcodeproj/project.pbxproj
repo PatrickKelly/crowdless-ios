@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BA4DA161C173D7800A50DD8 /* CrowdSearchControllerDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA4DA151C173D7800A50DD8 /* CrowdSearchControllerDismissable.swift */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* WelcomeViewController.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		23A1B8D870BAC5020546D888 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		56624D778A9A32F9CB7EA585 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BA4DA151C173D7800A50DD8 /* CrowdSearchControllerDismissable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrowdSearchControllerDismissable.swift; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Crowdless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crowdless.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +165,7 @@
 				D82A9CCD1C05047F00EF5A5D /* LocationHelper.swift */,
 				D8212B6C1C0EAFFB00A8883C /* CZPickerView.h */,
 				D8212B6D1C0EB03400A8883C /* CZPickerView.m */,
+				5BA4DA151C173D7800A50DD8 /* CrowdSearchControllerDismissable.swift */,
 			);
 			path = Crowdless;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				D8488E401BFD14DA0036165D /* GooglePlacesHelper.swift in Sources */,
 				D80C72E21BD97D7400A5D6FA /* ScorecardViewController.swift in Sources */,
 				D8A489721C03C3AB00AEEB35 /* UserScoresViewController.swift in Sources */,
+				5BA4DA161C173D7800A50DD8 /* CrowdSearchControllerDismissable.swift in Sources */,
 				D87A39C11BFF88F700A91857 /* GooglePlaceTableViewCell.swift in Sources */,
 				D82A9CCC1C04CEC300EF5A5D /* UserScoreTableViewCell.swift in Sources */,
 				D803A1D11BD9644200DA1B02 /* CrowdScoreViewController.swift in Sources */,

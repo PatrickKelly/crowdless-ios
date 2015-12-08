@@ -587,6 +587,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
     private func loadInitialUserCrowdScores() {
         
         isLoadingCrowdScores = true
+        currentPage = 0
         let query = PFQuery(className: "UserScore")
         query.orderByDescending("createdAt")
         query.whereKey("place", equalTo: self.place!)

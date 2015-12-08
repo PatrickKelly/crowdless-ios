@@ -14,7 +14,7 @@ import MPCoachMarks
 
 public let ErrorDomain: String! = "CrowdsTrendingViewControllerErrorDomain"
 
-class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource, ScrollableToTop, CZPickerViewDelegate, CZPickerViewDataSource {
+class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource, ScrollableToTop, CZPickerViewDelegate, CZPickerViewDataSource, CrowdSearchControllerDismissable {
     
     @IBOutlet var crowdsTableView: UITableView!
     @IBOutlet var sortImage: UIImageView!
@@ -31,7 +31,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     private var reachability: Reachability?
     private let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .White)
     private let googlePlacesHelper = GooglePlacesHelper()
-    private var searchController:UISearchController!
+    private var searchController: UISearchController!
     private var searchResultsController: UITableViewController!
     private var userGeoPoint: PFGeoPoint?
     private var picker: CZPickerView!
@@ -93,6 +93,12 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         crowdsTableView.setContentOffset(CGPointZero, animated:true)
     }
     
+    func dismissSearchController() {
+        if searchController != nil {
+            searchController.active = false
+        }
+    }
+    
     func numberOfRowsInPickerView(pickerView: CZPickerView!) -> Int {
         return SortOption.allValues.count
     }
@@ -109,7 +115,6 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         
         if let reachability = reachability {
             if(reachability.isReachable()) {
-                currentPage = 0
                 scrollToTop()
                 loadingSpinner.startAnimating()
                 currentSortSelection.text = SortOption.allValues[row].rawValue
@@ -444,6 +449,7 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
     
     private func loadInitialPlaces() {
         isLoadingPlaces = true
+        currentPage = 0
         LocationHelper.sharedInstance.getRecentUserLocationInBackground {
             (geoPoint: PFGeoPoint?, error: NSError?) -> Void in
             if let geoPoint = geoPoint {
