@@ -32,6 +32,9 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     private var deactivateActionSheet: UIAlertController!
     let loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
     
+    let darkGrayColor = UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
+    let midGrayColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,7 +63,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1.0)
+        view.backgroundColor = darkGrayColor
         return view
     }
     
@@ -152,6 +155,16 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     private func initView() {
+        
+        // fixes a bug where bar crowd from welcome screen occasionally appeared
+        self.view.backgroundColor = UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
+        
+        // set background color of cells; have to do this because the accessory arrow appears as white
+        // on iPads unless this is done programmatically
+        termsOfServiceCell.backgroundColor = midGrayColor
+        privacyPolicyCell.backgroundColor = midGrayColor
+        logoutCell.backgroundColor = midGrayColor
+        deactivateCell.backgroundColor = midGrayColor
         
         let anChar = NSMutableCharacterSet(charactersInString: " ")
         anChar.formUnionWithCharacterSet(NSCharacterSet.alphanumericCharacterSet())

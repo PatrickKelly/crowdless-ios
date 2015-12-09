@@ -238,7 +238,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         let coachMarks = [["rect": NSValue(CGRect: crowdScoreSummaryMark), "caption": "View The Crowd Summary For This Place...", "showArrow": true], ["rect": NSValue(CGRect: crowdScoreButtonMark), "caption": "...Score This Crowd...", "showArrow": true], ["rect": NSValue(CGRect: recentScoresMark), "caption": "...And View Other People's Scores!", "showArrow": true, "position": LabelPosition.LABEL_POSITION_TOP.rawValue]]
         let coachMarksView = MPCoachMarks(frame: navigationController!.view.bounds, coachMarks: coachMarks)
         coachMarksView.maskColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.9)
-        coachMarksView.lblCaption.font = UIFont(name:"Comfortaa", size: 24)
+        coachMarksView.lblCaption.font = UIFont(name:"Comfortaa", size: 20)
         navigationController!.view.addSubview(coachMarksView)
         coachMarksView.start()
     }
