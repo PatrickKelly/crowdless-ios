@@ -226,20 +226,20 @@ UISearchResultsUpdating, UISearchBarDelegate {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "CrowdScoreTutorialShown")
         NSUserDefaults.standardUserDefaults().synchronize()
         
-        let crowdScoreSummaryViewFrame = navigationController!.view.convertRect(crowdScoreSummaryView.frame, fromView: crowdScoreSummaryView)
-        let crowdScoreSummarySeparatorFrame = navigationController!.view.convertRect(crowdScoreSummarySeparator.frame, fromView: crowdScoreSummarySeparator.superview)
+        let crowdScoreSummaryViewFrame = tabBarController!.view.convertRect(crowdScoreSummaryView.frame, fromView: crowdScoreSummaryView)
+        let crowdScoreSummarySeparatorFrame = tabBarController!.view.convertRect(crowdScoreSummarySeparator.frame, fromView: crowdScoreSummarySeparator.superview)
         
         let crowdScoreSummaryMark = CGRect(origin: crowdScoreSummaryViewFrame.origin, size: CGSize(width: crowdScoreSummaryViewFrame.width, height: crowdScoreSummarySeparatorFrame.origin.y - crowdScoreSummaryViewFrame.origin.y))
         
         let crowdScoreButtonMark = CGRect(origin: crowdScoreSummarySeparatorFrame.origin, size: CGSize(width: crowdScoreSummarySeparatorFrame.width, height: (crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y) - crowdScoreSummarySeparatorFrame.origin.y))
         
-        let recentScoresMark = CGRect(origin: CGPoint(x: crowdScoresTableView.frame.origin.x, y: crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y), size: CGSize(width: crowdScoresTableView.frame.width, height: navigationController!.view.frame.height - (crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y)))
+        let recentScoresMark = CGRect(origin: CGPoint(x: crowdScoresTableView.frame.origin.x, y: crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y), size: CGSize(width: crowdScoresTableView.frame.width, height: tabBarController!.view.frame.height - (crowdScoreSummaryViewFrame.height + crowdScoreSummaryViewFrame.origin.y) - tabBarController!.tabBar.frame.size.height))
         
         let coachMarks = [["rect": NSValue(CGRect: crowdScoreSummaryMark), "caption": "View The Crowd Summary For This Place...", "showArrow": true], ["rect": NSValue(CGRect: crowdScoreButtonMark), "caption": "...Score This Crowd...", "showArrow": true], ["rect": NSValue(CGRect: recentScoresMark), "caption": "...And View Other People's Scores!", "showArrow": true, "position": LabelPosition.LABEL_POSITION_TOP.rawValue]]
-        let coachMarksView = MPCoachMarks(frame: navigationController!.view.bounds, coachMarks: coachMarks)
+        let coachMarksView = MPCoachMarks(frame: tabBarController!.view.bounds, coachMarks: coachMarks)
         coachMarksView.maskColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.9)
         coachMarksView.lblCaption.font = UIFont(name:"Comfortaa", size: 20)
-        navigationController!.view.addSubview(coachMarksView)
+        tabBarController!.view.addSubview(coachMarksView)
         coachMarksView.start()
     }
     

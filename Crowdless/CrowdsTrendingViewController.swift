@@ -135,10 +135,10 @@ class CrowdsTrendingViewController: UIViewController, UITableViewDelegate, UISea
         let crowdsTableFrame = crowdsTableView.frame
         let crowdsTableMark = CGRect(origin: crowdsTableView.frame.origin, size: CGSize(width: crowdsTableFrame.width, height: 180))
         let coachMarks = [["rect": NSValue(CGRect: crowdsTableMark), "caption": "Browse Trending Crowds Around You...", "showArrow": true], ["rect": NSValue(CGRect: searchCoachMark), "caption": "... Or Search For Nearby Crowds!", "showArrow": true]]
-        let coachMarksView = MPCoachMarks(frame: navigationController!.view.bounds, coachMarks: coachMarks)
+        let coachMarksView = MPCoachMarks(frame: tabBarController!.view.bounds, coachMarks: coachMarks)
         coachMarksView.maskColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.9)
         coachMarksView.lblCaption.font = UIFont(name:"Comfortaa", size: 20)
-        navigationController!.view.addSubview(coachMarksView)
+        tabBarController!.view.addSubview(coachMarksView)
         coachMarksView.start()
     }
     

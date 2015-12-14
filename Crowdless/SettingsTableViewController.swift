@@ -76,9 +76,15 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let cell = self.tableView.cellForRowAtIndexPath(indexPath)!
         if cell == logoutCell {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CrowdsTrendingTutorialShown")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CrowdScoreTutorialShown")
+            NSUserDefaults.standardUserDefaults().synchronize()
             let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
             delegate.logout()
         } else if cell == deactivateCell {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CrowdsTrendingTutorialShown")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "CrowdScoreTutorialShown")
+            NSUserDefaults.standardUserDefaults().synchronize()
             if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
                 let popPresenter: UIPopoverPresentationController = deactivateActionSheet.popoverPresentationController!
                 popPresenter.permittedArrowDirections = .Up
