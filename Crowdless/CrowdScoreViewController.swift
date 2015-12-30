@@ -507,17 +507,14 @@ UISearchResultsUpdating, UISearchBarDelegate {
                         crowdScores, error) -> Void in
                         if error == nil && crowdScores?.count > 0 {
                             self.isLoadingPlace = false;
-                            if (self.loadingSpinner.isAnimating()) {
-                                self.loadingSpinner.stopAnimating()
-                            }
+                            self.loadingSpinner.stopAnimating()
                             self.crowdScore = crowdScores![0]
                             placeResult(place)
                         } else {
                             DDLogError("Error retrieving Crowd Score from Parse by Place Id: \(error)")
                             self.isLoadingPlace = false;
-                            if (self.loadingSpinner.isAnimating()) {
-                                self.loadingSpinner.stopAnimating()
-                            }
+                            self.loadingSpinner.stopAnimating()
+
                         }
                     }
                     
@@ -560,25 +557,19 @@ UISearchResultsUpdating, UISearchBarDelegate {
                                         crowdScores, error) -> Void in
                                         if error == nil && crowdScores?.count > 0 {
                                             self.isLoadingPlace = false;
-                                            if (self.loadingSpinner.isAnimating()) {
-                                                self.loadingSpinner.stopAnimating()
-                                            }
+                                            self.loadingSpinner.stopAnimating()
                                             self.crowdScore = crowdScores![0]
                                             placeResult(place)
                                         } else {
                                             DDLogError("Error retrieving Crowd Score from Parse by Place Id: \(error)")
                                             self.isLoadingPlace = false;
-                                            if (self.loadingSpinner.isAnimating()) {
-                                                self.loadingSpinner.stopAnimating()
-                                            }
+                                            self.loadingSpinner.stopAnimating()
                                         }
                                     }
                                 } else {
                                     DDLogError("Error saving place to Parse: \(error)")
                                     self.isLoadingPlace = false;
-                                    if (self.loadingSpinner.isAnimating()) {
-                                        self.loadingSpinner.stopAnimating()
-                                    }
+                                    self.loadingSpinner.stopAnimating()
                                 }
                             }
                             
@@ -586,9 +577,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
                             // Log details of the failure
                             DDLogError("Error retrieving Place from Parse by Google Place Id: \(error)")
                             self.isLoadingPlace = false;
-                            if (self.loadingSpinner.isAnimating()) {
-                                self.loadingSpinner.stopAnimating()
-                            }
+                            self.loadingSpinner.stopAnimating()
                         }
                     }
                 }
@@ -653,19 +642,14 @@ UISearchResultsUpdating, UISearchBarDelegate {
                     if(self.refreshControl.refreshing) {
                         self.refreshControl.endRefreshing()
                     }
-                    
-                    if(self.loadingSpinner.isAnimating()) {
-                        self.loadingSpinner.stopAnimating()
-                    }
+                    self.loadingSpinner.stopAnimating()
+
                 } else {
                     DDLogError("Could not load additional crowd score results \(error!.localizedDescription)")
                     if(self.refreshControl.refreshing) {
                         self.refreshControl.endRefreshing()
                     }
-                    
-                    if(self.loadingSpinner.isAnimating()) {
-                        self.loadingSpinner.stopAnimating()
-                    }
+                    self.loadingSpinner.stopAnimating()
                     self.isLoadingCrowdScores = false
                     let alert = UIAlertController(title: "Error", message: "An error occurred loading additional crowd score results.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Darn it Crowdless!", style: UIAlertActionStyle.Default, handler: nil))
