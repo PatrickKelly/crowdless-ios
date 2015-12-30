@@ -466,7 +466,7 @@ UISearchResultsUpdating, UISearchBarDelegate {
         let currentUser = PFUser.currentUser()!
         userScorePeerComment["user"] = currentUser
         userScorePeerComment["userScore"] = userScore
-        userScorePeerComment.saveEventually {
+        userScorePeerComment.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if (success) {
                 DDLogInfo("User score comment successfully saved for score: " + self.userScore.objectId!)

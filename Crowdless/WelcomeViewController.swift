@@ -26,9 +26,16 @@ class WelcomeViewController: UIViewController {
                             self.displayErrorAlert("Registration failed. Please try again.")
                         }
                     })
-                } else {
-                    self.dismissLoginScreen()
-                    //self.dismissViewControllerAnimated(true, completion: nil)
+                } else {                    
+                    //update user anyway
+                    self.saveNewUser(user, withcompletionHandler: { (success) -> () in
+                        if(success) {
+                            self.dismissLoginScreen()
+                            //self.dismissViewControllerAnimated(true, completion: nil)
+                        } else {
+                            self.displayErrorAlert("Registration failed. Please try again.")
+                        }
+                    })
                 }
             } else if let error = error {
                 DDLogError("\(error)")
@@ -55,7 +62,7 @@ class WelcomeViewController: UIViewController {
     }
     
     private func saveNewUser(user: PFUser, withcompletionHandler: (success:Bool) ->()) {
-        let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, gender, age"])
+        let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, gender"])
         graphRequest.startWithCompletionHandler { (
             connection, result, error) -> Void in
             
