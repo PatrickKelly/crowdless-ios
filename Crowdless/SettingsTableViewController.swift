@@ -93,9 +93,9 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate {
             }
             self.presentViewController(deactivateActionSheet, animated: true, completion: nil)
         } else if cell == privacyPolicyCell {
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.crowdlessapp.com/pp.html")!)
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.crowdlessapp.com/privacy")!)
         } else if cell == termsOfServiceCell {
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.crowdlessapp.com/tos.html")!)
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.crowdlessapp.com/terms")!)
         }
     }
     
